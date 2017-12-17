@@ -203,4 +203,20 @@ command! Inspython :normal i#!/usr/bin/env python3<CR><ESC>
 command! Inshtml :normal i<!doctype html><head><meta charset="utf-8"><title></title></head><body><CR></body></html><CR><ESC>
 command! JSON %!python -m json.tool
 
+function CommentHeader()
+    let a:hash_line = '#' . repeat('=', 79)
+    normal! 0i#
+    normal! k
+    :put =a:hash_line
+    normal! j
+    :put =a:hash_line
+    normal! k
+endfunction
+
+function UncommentHeader()
+    normal! 0xxjddkkdd
+endfunction
+
+map <leader>4 :call CommentHeader()<CR>
+map <leader>5 :call UncommentHeader()<CR>
 
