@@ -205,7 +205,7 @@ command! JSON %!python -m json.tool
 
 function CommentHeader()
     let a:hash_line = '#' . repeat('=', 79)
-    normal! 0i#
+    normal! 0i# 
     normal! k
     :put =a:hash_line
     normal! j
