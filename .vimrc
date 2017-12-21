@@ -159,7 +159,7 @@ nmap <silent> [A <C-w>k
 nmap <silent> [C <C-w>l
 
 nmap <silent> <C-Left> <C-w>h
-nmap <silent> <C-Left> <C-w>h
+nmap <silent> <C-Down> <C-w>j
 nmap <silent> <C-Up> <C-w>k
 nmap <silent> <C-Right> <C-w>l
 
