@@ -31,6 +31,9 @@ Plugin 'scrooloose/nerdtree'
 Plugin 'jistr/vim-nerdtree-tabs'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'vim-scripts/dbext.vim'
+" Tagbar install ctags: sudo apt install exuberant-ctags
+" Tagbar toggle: TagbarToggle
+Plugin 'majutsushi/tagbar'
 
 Bundle 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
 
@@ -155,6 +158,11 @@ nmap <silent> [B <C-w>j
 nmap <silent> [A <C-w>k
 nmap <silent> [C <C-w>l
 
+nmap <silent> <C-Left> <C-w>h
+nmap <silent> <C-Left> <C-w>h
+nmap <silent> <C-Up> <C-w>k
+nmap <silent> <C-Right> <C-w>l
+
 " map Tab / Shift-Tab to indent / undindent selected lines
 vmap <TAB> >gv
 vmap <S-TAB> <gv
@@ -189,6 +197,7 @@ imap <F6> <c-x><c-o>
 " map to move to new tab
 nmap <F7> <C-w>T
 nmap <F8> :NERDTreeTabsToggle<CR>
+nmap <leader><F8> :TagbarToggle<CR> 
 " map F9 to start Python script!
 nmap <F9> :exec '!python3' shellescape(@%, 1)<cr>
 " map F10 to execute current line in shell!
