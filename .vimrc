@@ -51,10 +51,16 @@ filetype plugin indent on    " required
 let mapleader = " "
 
 " Customize auto complete
-" let g:ycm_autoclose_preview_window_after_completion=1
-" map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
-" disable ycm for sql files -> can use omni complete!
 " let g:ycm_filetype_blacklist = {'sql':1}
+" map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
+" let g:ycm_autoclose_preview_window_after_completion=1
+" let g:ycm_key_list_select_completion = ['<TAB>']
+" inoremap <Down> <C-R>=pumvisible() ? "\<lt>C-y>\<lt>Down>" : "\<lt>Down>"<CR>
+" let g:ycm_key_list_previous_completion = ['<S-TAB>']
+" inoremap <Up> <C-R>=pumvisible() ? "\<lt>C-y>\<lt>Up>" : "\<lt>Up>"<CR>
+" let g:ycm_key_list_stop_completion = ['<C-y>']
+" let g:ycm_key_invoke_completion = '<C-Space>'
+
 
 "make your code look pretty
 let python_highlight_all=1
@@ -212,7 +218,7 @@ command! Inspython :normal i#!/usr/bin/env python3<CR><ESC>
 command! Inshtml :normal i<!doctype html><head><meta charset="utf-8"><title></title></head><body><CR></body></html><CR><ESC>
 command! JSON %!python -m json.tool
 
-function CommentHeader()
+function! CommentHeader()
     let a:hash_line = '#' . repeat('=', 79)
     normal! 0i# 
     normal! k
@@ -222,7 +228,7 @@ function CommentHeader()
     normal! k
 endfunction
 
-function UncommentHeader()
+function! UncommentHeader()
     normal! 0xxjddkkdd
 endfunction
 
