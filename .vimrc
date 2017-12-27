@@ -62,8 +62,8 @@ let mapleader = " "
 " let g:ycm_key_list_stop_completion = ['<C-y>']
 " let g:ycm_key_invoke_completion = '<C-Space>'
 
-"customize easymotion
-let g:EasyMotion_do_mapping = 0 " Disable default mappings
+" customize easymotion
+" let g:EasyMotion_do_mapping = 0 " Disable default mappings
 hi link EasyMotionTarget Statement
 hi link EasyMotionTarget2First Statement
 hi link EasyMotionTarget2Second Statement
