@@ -34,6 +34,7 @@ Plugin 'vim-scripts/dbext.vim'
 " Tagbar install ctags: sudo apt install exuberant-ctags
 " Tagbar toggle: TagbarToggle
 Plugin 'majutsushi/tagbar'
+Plugin 'easymotion/vim-easymotion'
 
 Bundle 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
 
@@ -61,6 +62,15 @@ let mapleader = " "
 " let g:ycm_key_list_stop_completion = ['<C-y>']
 " let g:ycm_key_invoke_completion = '<C-Space>'
 
+"customize easymotion
+let g:EasyMotion_do_mapping = 0 " Disable default mappings
+hi link EasyMotionTarget Statement
+hi link EasyMotionTarget2First Statement
+hi link EasyMotionTarget2Second Statement
+hi link EasyMotionShade Comment
+let g:EasyMotion_keys='hkluzopnmqwertxcvbasdgjf'
+nmap <leader> <Plug>(easymotion-prefix)
+let g:EasyMotion_smartcase = 1
 
 "make your code look pretty
 let python_highlight_all=1
