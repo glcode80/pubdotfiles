@@ -179,6 +179,9 @@ nmap <silent> <C-Down> <C-w>j
 nmap <silent> <C-Up> <C-w>k
 nmap <silent> <C-Right> <C-w>l
 
+" set timeout limit for ESC and escape sequences
+set timeoutlen=1000 ttimeoutlen=10
+
 " map Tab / Shift-Tab to indent / undindent selected lines
 vmap <TAB> >gv
 vmap <S-TAB> <gv
