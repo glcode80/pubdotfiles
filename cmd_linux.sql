@@ -136,6 +136,8 @@ vmstat 1 20 [check io issues]
 htop [monitor memory etc, install first]
 dpkg -l [find all installed packages]
 
+size of directories below
+du -h --max-depth=1
 
 * remove directory including everything
 rm -rf xxxxx
