@@ -302,8 +302,9 @@ function! SaveAndExecutePythonBuffer()
     setlocal noswapfile
     setlocal nobuflisted
     setlocal winfixheight
-    setlocal cursorline " make it easy to distinguish
-    setlocal nonumber
+    " setlocal cursorline " make it easy to distinguish
+    " setlocal nonumber
+    setlocal number
     setlocal norelativenumber
     setlocal showbreak=""
     " clear the buffer
@@ -320,7 +321,7 @@ function! SaveAndExecutePythonBuffer()
     "execute 'resize' . line('$')
 
     " make the buffer non modifiable
-    setlocal readonly
-    setlocal nomodifiable
+    " setlocal readonly
+    " setlocal nomodifiable
 endfunction
 
