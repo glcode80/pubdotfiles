@@ -9,7 +9,7 @@ set nocompatible              " required
 filetype off                  " required
 
 " Install Vundle: git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
-" 
+"									
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
@@ -35,6 +35,7 @@ Plugin 'vim-scripts/dbext.vim'
 " Tagbar toggle: TagbarToggle
 Plugin 'majutsushi/tagbar'
 Plugin 'easymotion/vim-easymotion'
+Plugin 'tpope/vim-fugitive'
 
 Bundle 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
 
@@ -134,6 +135,10 @@ hi Search ctermfg=White ctermbg=63
 " hi StatusLine ctermbg=DarkGrey
 " hi StatusLineNC ctermbg=DarkGrey
 " hi VertSplit ctermbg=DarkGrey
+hi DiffAdd ctermfg=White
+hi DiffChange ctermfg=White
+hi DiffDelete ctermbg=Grey
+hi IncSearch ctermfg=White
 
 " always have nerdtree open on all tabs by default
 " Command to Toogle :NERDTreeTabsToggle
@@ -217,8 +222,11 @@ imap <F6> <c-x><c-o>
 nmap <F7> <C-w>T
 nmap <F8> :NERDTreeTabsToggle<CR>
 nmap <leader><F8> :TagbarToggle<CR> 
-" map F9 to start Python script!
-nmap <F9> :exec '!python3' shellescape(@%, 1)<cr>
+" map F9 to start Python script / leader-F9 to get output in window
+nnoremap <F9> :w<cr>:exec '!python3' shellescape(@%, 1)<cr>
+vnoremap <F9> :w<cr>:exec '!python3' shellescape(@%, 1)<cr>
+nnoremap <silent> <leader><F9> :call SaveAndExecutePythonBuffer()<CR>
+vnoremap <silent> <leader><F9> :<C-u>call SaveAndExecutePythonBuffer()<CR>
 " map F10 to execute current line in shell!
 nmap <F10> :exec '!'.getline('.')
 map <F12> :q<CR>
@@ -247,4 +255,72 @@ endfunction
 
 map <leader>4 :call CommentHeader()<CR>
 map <leader>5 :call UncommentHeader()<CR>
+
+"Map to quickly copy/paste via mouse (insert mode) -> do this +i
+nmap <leader>i :NERDTreeClose<cr>:set invnumber<cr>
+
+"** Fugitive mappings
+nnoremap <leader>gp :Gpull<cr>
+"Gstatus -> - to add/remove, cc to commit, o for open
+nnoremap <leader>gs :Gstatus<cr>
+"Gwrite = add current file to list to be commited (no need to add in gstatus)
+nnoremap <leader>gw :Gwrite<cr>
+"Gcommit -> wq to execute
+nnoremap <leader>gc :Gcommit<cr>
+nnoremap <leader>gP :Gpush origin master<cr>
+"Gdiff -> :diffput / :diffget to adjust /:diffupdate
+nnoremap <leader>gd :Gdiff<cr>
+"Gread = back to last version in repo
+nnoremap <leader>gr :Gread<cr>
+" Gblame -> open with o
+nnoremap <leader>gb :Gblame<cr>
+nnoremap <leader>gB :Gbrowse<cr>
+" nnoremap <leader>gm :Gremove<cr>
+
+
+
+function! SaveAndExecutePythonBuffer()
+    " save and reload current file
+    silent execute "update | edit"
+    " get file path of current file
+    let s:current_buffer_file_path = expand("%")
+    let s:output_buffer_name = "Python"
+    let s:output_buffer_filetype = "output"
+    " reuse existing buffer window if it exists otherwise create a new one
+    if !exists("s:buf_nr") || !bufexists(s:buf_nr)
+        silent execute 'botright new ' . s:output_buffer_name
+        let s:buf_nr = bufnr('%')
+    elseif bufwinnr(s:buf_nr) == -1
+        silent execute 'botright new'
+        silent execute s:buf_nr . 'buffer'
+    elseif bufwinnr(s:buf_nr) != bufwinnr('%')
+        silent execute bufwinnr(s:buf_nr) . 'wincmd w'
+    endif
+    silent execute "setlocal filetype=" . s:output_buffer_filetype
+    setlocal bufhidden=delete
+    setlocal buftype=nofile
+    setlocal noswapfile
+    setlocal nobuflisted
+    setlocal winfixheight
+    setlocal cursorline " make it easy to distinguish
+    setlocal nonumber
+    setlocal norelativenumber
+    setlocal showbreak=""
+    " clear the buffer
+    setlocal noreadonly
+    setlocal modifiable
+    %delete _
+    " add the console output
+    silent execute ".!python " . shellescape(s:current_buffer_file_path, 1)
+
+    " resize window to content length
+    " Note: This is annoying because if you print a lot of lines then your code buffer is forced to a height of one line every time you run this function.
+    "       However without this line the buffer starts off as a default size and if you resize the buffer then it keeps that custom size after repeated runs of this function.
+    "       But if you close the output buffer then it returns to using the default size when its recreated
+    "execute 'resize' . line('$')
+
+    " make the buffer non modifiable
+    setlocal readonly
+    setlocal nomodifiable
+endfunction
 
