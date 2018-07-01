@@ -235,6 +235,18 @@ map <leader><F12> :qa<CR>
 "nmap <silent> <leader>/ :nohls<CR> " disable highlight until next time opened
 nnoremap <esc><esc> :silent! nohls<cr>
 
+"fix esc arrow to enter characters
+nnoremap <silent> <ESC><ESC>OA k
+nnoremap <silent> <ESC><ESC>OB j
+nnoremap <silent> <ESC><ESC>OC l
+nnoremap <silent> <ESC><ESC>OD h
+
+" fix capital W to get error after :
+:command! WQ wq
+:command! Wq wq
+:command! W w
+:command! Q q
+
 command! Inspython :normal i#!/usr/bin/env python3<CR><ESC>
 command! Inshtml :normal i<!doctype html><head><meta charset="utf-8"><title></title></head><body><CR></body></html><CR><ESC>
 command! JSON %!python -m json.tool
