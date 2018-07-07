@@ -248,6 +248,12 @@ nnoremap <silent> <ESC><ESC>OD h
 :command! W w
 :command! Q q
 
+" process to get xxxx=values(xxx) in mysql for update on duplicate key
+" 1) leader slc = list column -> paste
+" 2) each item leader sv to convert to item=values(item)
+:command! ValuesSql :normal f a<CR><ESC>kywEi=VALUES(<ESC>pa)<ESC>j^
+nnoremap <leader>sv :ValuesSql<CR>
+
 command! Inspython :normal i#!/usr/bin/env python3<CR><ESC>
 command! Inshtml :normal i<!doctype html><head><meta charset="utf-8"><title></title></head><body><CR></body></html><CR><ESC>
 command! JSON %!python -m json.tool
