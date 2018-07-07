@@ -30,7 +30,8 @@ Plugin 'nvie/vim-flake8'
 Plugin 'scrooloose/nerdtree'
 Plugin 'jistr/vim-nerdtree-tabs'
 Plugin 'scrooloose/nerdcommenter'
-Plugin 'vim-scripts/dbext.vim'
+" Plugin 'vim-scripts/dbext.vim'
+Plugin 'glcode80/dbext'
 " Tagbar install ctags: sudo apt install exuberant-ctags
 " Tagbar toggle: TagbarToggle
 Plugin 'majutsushi/tagbar'
