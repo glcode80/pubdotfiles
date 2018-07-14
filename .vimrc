@@ -141,6 +141,10 @@ hi DiffChange ctermfg=White
 hi DiffDelete ctermbg=Grey
 hi IncSearch ctermfg=White
 
+" colors for gvim
+hi Normal guifg=Black guibg=White
+hi Nontext guifg=Black guibg=White
+
 " always have nerdtree open on all tabs by default
 " Command to Toogle :NERDTreeTabsToggle
 :let g:nerdtree_tabs_open_on_console_startup = 0
