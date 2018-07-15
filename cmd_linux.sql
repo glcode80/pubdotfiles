@@ -163,7 +163,10 @@ find . -name testfile.xt => in current directory
 
 *** grep details => find  -- https://www.linode.com/docs/tools-reference/linux-system-administration-basics / https://www.linode.com/docs/tools-reference/search-and-filter-text-with-grep
 grep
+including subdirectories
 grep -rnw '/path/to/somewhere/' -e 'pattern'
+only in current directory
+grep -s "patern" * .*
 sed [search and replace accross files]
 
 find . -type f -exec sed -i.bak "s/foo/bar/g" {} \;
