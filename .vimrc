@@ -37,6 +37,13 @@ Plugin 'glcode80/dbext'
 Plugin 'majutsushi/tagbar'
 Plugin 'easymotion/vim-easymotion'
 Plugin 'tpope/vim-fugitive'
+Plugin 'tpope/vim-surround'
+" cs"' = change, ds" = delete
+" yss" = full line, ysiw" = one word, ys2w" = two words, ...
+" <b> = tag -> remove with cst"
+" visual, then S<b> to add around top/bottom
+" ) = no space ( = space
+Plugin 'tpope/vim-repeat'
 
 Bundle 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
 
