@@ -54,6 +54,7 @@ sudo apt-get install python3
 sudo apt-get install python3-pip
 sudo pip3 install pymysql
 sudo pip3 install requests
+sudo pip3 install pytz
 sudo pip3 install flake8
 sudo pip3 install pylint
 sudo pip3 install matplotlib
