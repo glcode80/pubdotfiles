@@ -56,6 +56,8 @@ sudo pip3 install pymysql
 sudo pip3 install requests
 sudo pip3 install flake8
 sudo pip3 install pylint
+sudo pip3 install matplotlib
+sudo pip3 install numpy
 
 6) install programs needed
 sudo apt-get install screen
