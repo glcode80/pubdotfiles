@@ -23,10 +23,10 @@ Plugin 'gmarik/Vundle.vim'
 " Add all your plugins here (note older versions of Vundle used Bundle instead of Plugin)
 Plugin 'tmhedberg/SimpylFold'
 Plugin 'vim-scripts/indentpython.vim'
-" for youcompleteme -> follow detailed install instructions online!
-" Bundle 'Valloric/YouCompleteMe'
+" for youcompleteme -> follow detailed install instructions in install file
+Bundle 'Valloric/YouCompleteMe'
 Plugin 'scrooloose/syntastic'
-Plugin 'nvie/vim-flake8'
+" Plugin 'nvie/vim-flake8'
 Plugin 'scrooloose/nerdtree'
 Plugin 'jistr/vim-nerdtree-tabs'
 Plugin 'scrooloose/nerdcommenter'
@@ -38,11 +38,6 @@ Plugin 'majutsushi/tagbar'
 Plugin 'easymotion/vim-easymotion'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-surround'
-" cs"' = change, ds" = delete
-" yss" = full line, ysiw" = one word, ys2w" = two words, ...
-" <b> = tag -> remove with cst"
-" visual, then S<b> to add around top/bottom
-" ) = no space ( = space
 Plugin 'tpope/vim-repeat'
 
 Bundle 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
@@ -62,14 +57,14 @@ let mapleader = " "
 
 " Customize auto complete
 " let g:ycm_filetype_blacklist = {'sql':1}
-" map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
-" let g:ycm_autoclose_preview_window_after_completion=1
-" let g:ycm_key_list_select_completion = ['<TAB>']
-" inoremap <Down> <C-R>=pumvisible() ? "\<lt>C-y>\<lt>Down>" : "\<lt>Down>"<CR>
-" let g:ycm_key_list_previous_completion = ['<S-TAB>']
-" inoremap <Up> <C-R>=pumvisible() ? "\<lt>C-y>\<lt>Up>" : "\<lt>Up>"<CR>
-" let g:ycm_key_list_stop_completion = ['<C-y>']
-" let g:ycm_key_invoke_completion = '<C-Space>'
+map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
+let g:ycm_autoclose_preview_window_after_completion=1
+let g:ycm_key_list_select_completion = ['<TAB>']
+inoremap <Down> <C-R>=pumvisible() ? "\<lt>C-y>\<lt>Down>" : "\<lt>Down>"<CR>
+let g:ycm_key_list_previous_completion = ['<S-TAB>']
+inoremap <Up> <C-R>=pumvisible() ? "\<lt>C-y>\<lt>Up>" : "\<lt>Up>"<CR>
+let g:ycm_key_list_stop_completion = ['<C-y>']
+let g:ycm_key_invoke_completion = '<C-Space>'
 
 " customize easymotion
 " let g:EasyMotion_do_mapping = 0 " Disable default mappings
@@ -169,12 +164,16 @@ let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 
+" let g:syntastic_python_checkers = ['pylint']
+let g:syntastic_python_checkers = ['flake8']
+
+
 " dbext connection profiles
 "NEW: saved in dbextprofiles.vim -> import here!
 source ~/.dbextprofiles.vim
 
-"to make sure to always prompt limit:
-map <leader>st <leader>sT 
+" to make sure to always prompt limit:
+" map <leader>st <leader>sT 
 
 " open splits always on the right/bottom
 set splitright

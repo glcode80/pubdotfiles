@@ -6,6 +6,7 @@ temporarily exit vim to get to shell
 
 main: esc = command mode
 :w = write
+:sav = save as (open save filed)
 :q = exit
 :q! = exit without writing
 i = insert
@@ -97,6 +98,15 @@ c$ = comments to end of line
 
 cu = uncomment selected lines
 
+vim surround
+----------------------
+cs"' = change, ds" = delete
+yss" = full line, ysiw" = one word, ys2w" = two words, ...
+<b> = tag -> remove with cst"
+visual, then S<b> to add around top/bottom
+) = no space ( = space
+
+
 
 marks and registers
 -----------------------
@@ -168,9 +178,16 @@ Paste without indents!!
 : set paste
 -> right-click / shift-insert
 
+Vimdiff / compare two files with diff view
+--------------------------------------
+vim -d file1 file2
+fold/unfold like normal!
+
+
 dbext - MySql
 ------------------------
-let g:dbext_default_profile_ProfileDB = 'type=MYSQL:user=analyst:passwd=xxxx:dbname=Analyst:host=xxxx.com'
+let g:dbext_default_profile_ProfileA = 'type=DBI:user=username:passwd=xxxx:driver=mysql:conn_parms=database=DBNAME;host=localhost' 
+let g:dbext_default_profile_ProfileB_nonDBI='type=MYSQL:user=username:passwd=xxxx:dbname=DBNAME:host=examplehost12345.com'
 <leader>se = run selected query
 <leader>sel = run selected line
 <leader>sbp = define default profile to use
@@ -185,7 +202,7 @@ q = close results
 ctrl-x / ctrl-o = enable omni complete (direct db contents completion)
 
 modeline at beginning of sql file:
-// dbext:profile=ProfileDB
+// dbext:profile=Coindb
 
 
 Nerdtree commands:
@@ -213,6 +230,39 @@ m = file mode => delete/copy .... !!
 :vertical resize 60 / +5 / -5
 
 :split filename = neues file öffnen
+
+:cd /xx/xxx = change file directory in vim
+CD = change NerdTree home directory to same directory!
+U = up home directory by one directory (keep tree open, alterantive: u)
+C = set current directory as home directory
+
+
+--******************
+--** setup VIM
+--******************
+
+apt install vim
+settings from .vimrc frmom dotfiles in git account!
+putty settnigs from putty-sessions.reg in dotfiles
+more putty settings: http://dag.wiee.rs/blog/content/improving-putty-settings-on-windows
+
+
+
+
+
+ 
+Links:
+https://www.digitalocean.com/community/tutorials/how-to-use-vundle-to-manage-vim-plugins-on-a-linux-vps
+https://www.digitalocean.com/community/tutorials/how-to-use-vim-for-advanced-editing-of-plain-text-or-code-on-a-vps--2
+https://www.digitalocean.com/community/tutorials/installing-and-using-the-vim-text-editor-on-a-cloud-server
+http://askubuntu.com/questions/123392/how-can-i-customize-vim-for-web-development-and-programming
+http://michael.peopleofhonoronly.com/vim/vim_cheat_sheet_for_programmers_screen.png
+http://chrisstrelioff.ws/sandbox/2014/05/29/install_and_setup_vim_on_ubuntu_14_04.html
+http://vimawesome.com
+
+
+http://regexr.com/
+
 
 
 **** summary all commands from vimtutor

@@ -56,6 +56,9 @@ e) detach/restart screen
 ctrl-a d
 screen -r
 
+** check memory consumed => RSS = memory in kb
+ps aux --sort -rss | head -n15
+
 
 ** Output to textfile / console / logfile / stdout
 output to new file: >
@@ -142,12 +145,33 @@ du -h --max-depth=1
 * remove directory including everything
 rm -rf xxxxx
 
+* rename file in mc
+shift-f5 = copy to now new
+shift-f6 = rename with template
+(attention: need to set shortcuts=no in kitty.ini)
+
 * create smybolic link
 - set symoblic link -> this places "sourcefolder" into "targetfolder"
   ln -s /PATH_FOR_ACTUAL_DATA/sourcefolder /PATH_TO_LINK_TO/targetfolder
 
 - delete symbolic link
   rm sourcefolder
+
+** copy whole structure via encrypted ftp to local directory
+ -> nur ein file: curl
+
+1) screen -S 1
+2) mirror with output to logs and using encrypted ftp connectiion
+wget -nv -m -o /home/xxx/ftplog.txt --secure-protocol=SSLv3 --no-proxy --passive-ftp --ftp-user=xxxx --ftp-password=xxxx ftp://xxx.xxx.xxx.xxx/
+
+(nv=less output, [q=quiet], m=mirror, o=logging to file)
+
+2b) securly copy only one file!
+wget --secure-protocol=SSLv3 --no-proxy --passive-ftp --ftp-user=USER --ftp-password=xxxxxxx ftp://xxx.xxx.xxx.xxx/xxxxx
+
+3) then check with du directory size OR tail log file
+watch du -h --max-depth=1
+tail -f ftplog.txt
 
 
 *** remove unused network-facing services
@@ -213,4 +237,6 @@ sudo apt-get iozone3
 iozone -e -I -a -s 100M -r 4k -i 0 -i 1 -i 2 
 [-f /path/to/file]
 
+*** processor speed / info
+cat /proc/cpuinfo
 
