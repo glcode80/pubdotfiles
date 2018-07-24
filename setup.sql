@@ -149,15 +149,15 @@ sudo ln -s /home/USERNAME/git/GITFOLDER/index.php /var/www/main/
 sudo ln -s /home/USERNAME/git/GITFOLDER/configfile.conf /etc/nginx/conf.d/
 
 -- redirect
-wget https://raw.githubusercontent.com/glcode80/pubdotfiles/master/nginx-redirect.conf -P /etc/nginx/conf.d
+sudo wget https://raw.githubusercontent.com/glcode80/pubdotfiles/master/nginx-redirect.conf -P /etc/nginx/conf.d
 sudo vim /etc/nginx/conf.d/nginx-redirect.conf
 
 -- www with php
-wget https://raw.githubusercontent.com/glcode80/pubdotfiles/master/nginx-www-php.conf -P /etc/nginx/conf.d
+sudo wget https://raw.githubusercontent.com/glcode80/pubdotfiles/master/nginx-www-php.conf -P /etc/nginx/conf.d
 sudo vim /etc/nginx/conf.d/nginx-www-php.conf
 
 -- php with wordpress
-wget https://raw.githubusercontent.com/glcode80/pubdotfiles/master/nginx-wordpress.conf -P /etc/nginx/conf.d
+sudo wget https://raw.githubusercontent.com/glcode80/pubdotfiles/master/nginx-wordpress.conf -P /etc/nginx/conf.d
 sudo vim /etc/nginx/conf.d/nginx-wordpress.conf
 
 7) enable gzip compression AND enable max file size upload php!! [for wordpress download manager -> upload files! also adjust php.ini!]
@@ -178,7 +178,7 @@ sudo apt-get install python-certbot-nginx
 sudo certbot --nginx -d example.com -d www.example.com
 
 update script:
-wget https://raw.githubusercontent.com/glcode80/pubdotfiles/master/certbotupdate.sh -P /usr/bin
+sudo wget https://raw.githubusercontent.com/glcode80/pubdotfiles/master/certbotupdate.sh -P /usr/bin
 sudo chmod +x /usr/bin/certbotupdate.sh
 sudo certbotupdate.sh
 sudo crontab -e
@@ -286,16 +286,16 @@ sudo service monit reload
 
 
 14) backup
-wget https://raw.githubusercontent.com/glcode80/pubdotfiles/master/make_sql_backups.sh -P /usr/bin
+sudo wget https://raw.githubusercontent.com/glcode80/pubdotfiles/master/make_sql_backups.sh -P /usr/bin
 sudo chmod +x /usr/bin/make_sql_backups.sh
 sudo vim /usr/bin/make_sql_backups.sh
-wget https://raw.githubusercontent.com/glcode80/pubdotfiles/master/make_data_backups.sh -P /usr/bin
+sudo wget https://raw.githubusercontent.com/glcode80/pubdotfiles/master/make_data_backups.sh -P /usr/bin
 sudo chmod +x /usr/bin/make_data_backups.sh
 sudo vim /usr/bin/make_data_backups.sh
-wget https://raw.githubusercontent.com/glcode80/pubdotfiles/master/make_data_backups_delete.sh -P /usr/bin
+sudo wget https://raw.githubusercontent.com/glcode80/pubdotfiles/master/make_data_backups_delete.sh -P /usr/bin
 sudo chmod +x /usr/bin/make_data_backups_delete.sh
 sudo vim /usr/bin/make_data_backups_delete.sh
-wget https://raw.githubusercontent.com/glcode80/pubdotfiles/master/make_rclone.sh -P /usr/bin
+sudo wget https://raw.githubusercontent.com/glcode80/pubdotfiles/master/make_rclone.sh -P /usr/bin
 sudo chmod +x /usr/bin/make_rclone.sh
 sudo vim /usr/bin/make_rclone.sh
 
