@@ -148,9 +148,17 @@ sudo ln -s /home/USERNAME/git/GITFOLDER/index.php /var/www/main/
 * config -> link to /etc/nginx/conf.d/
 sudo ln -s /home/USERNAME/git/GITFOLDER/configfile.conf /etc/nginx/conf.d/
 
+-- 1) remove default file!
+cd /etc/nginx/conf.d
+ls
+
 -- redirect
 sudo wget https://raw.githubusercontent.com/glcode80/pubdotfiles/master/nginx-redirect.conf -P /etc/nginx/conf.d
 sudo vim /etc/nginx/conf.d/nginx-redirect.conf
+
+-- www
+sudo wget https://raw.githubusercontent.com/glcode80/pubdotfiles/master/nginx-www.conf -P /etc/nginx/conf.d
+sudo vim /etc/nginx/conf.d/nginx-www.conf
 
 -- www with php
 sudo wget https://raw.githubusercontent.com/glcode80/pubdotfiles/master/nginx-www-php.conf -P /etc/nginx/conf.d
