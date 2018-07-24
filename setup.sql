@@ -194,10 +194,13 @@ sudo crontab -e
 
 
 10) php
-sudo apt install php7.2-mysql
-  sudo apt install php7.0-mysql
+
 sudo apt install php7.2-fpm
   sudo apt install php7.0-fpm
+sudo sed -i 's/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/g' /etc/php/7.2/fpm/php.ini
+  sudo sed -i 's/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/g' /etc/php/7.0/fpm/php.ini
+sudo apt install php7.2-mysql
+  sudo apt install php7.0-mysql
 sudo apt-get install php-curl php-gd php-mbstring php-mcrypt php-xml php-xmlrpc php-json
 sudo apt-get install php7.2-zip
   sudo apt-get install php7.0-zip
