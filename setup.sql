@@ -69,6 +69,7 @@ source ~/venv/testvenv/bin/activate
 deactivate
 
 5b) install php plugins
+sudo apt-get install php-pear
 sudo pear install PHP_CodeSniffer
 
 
