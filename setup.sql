@@ -68,9 +68,14 @@ source ~/venv/testvenv/bin/activate
 => install with pip3 things here
 deactivate
 
-5b) install php plugins
-sudo apt-get install php-pear
-sudo pear install PHP_CodeSniffer
+5b) install php plugins (for Vim)
+-> more plugins php-tools-install.sql
+#PHPCS
+sudo curl -LsS https://squizlabs.github.io/PHP_CodeSniffer/phpcs.phar -o /usr/local/bin/phpcs
+sudo chmod a+x /usr/local/bin/phpcs
+#PHPMD
+sudo curl -LsS http://static.phpmd.org/php/latest/phpmd.phar -o /usr/local/bin/phpmd
+sudo chmod a+x /usr/local/bin/phpmd
 
 
 6) install programs needed
