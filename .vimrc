@@ -167,6 +167,8 @@ let g:syntastic_check_on_wq = 0
 " let g:syntastic_python_checkers = ['pylint']
 let g:syntastic_python_checkers = ['flake8']
 
+" let g:syntastic_php_checkers = ['php']
+let g:syntastic_php_checkers = ['php','phpcs']
 
 " dbext connection profiles
 "NEW: saved in dbextprofiles.vim -> import here!
@@ -269,7 +271,7 @@ command! Inshtml :normal i<!doctype html><head><meta charset="utf-8"><title></ti
 command! JSON %!python -m json.tool
 
 function! CommentHeader()
-    let a:hash_line = '#' . repeat('=', 79)
+    let a:hash_line = '# ' . repeat('=', 79)
     normal! 0i# 
     normal! k
     :put =a:hash_line

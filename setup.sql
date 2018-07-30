@@ -68,6 +68,9 @@ source ~/venv/testvenv/bin/activate
 => install with pip3 things here
 deactivate
 
+5b) install php plugins
+sudo pear install PHP_CodeSniffer
+
 
 6) install programs needed
 sudo apt-get install screen
