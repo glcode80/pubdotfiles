@@ -253,6 +253,10 @@ autopep8 --in-place --max-line-length=100 xxx.py
 --select="E226"
 --ignore="E226"
 
+flake8 - inline ignore comment
+# noqa: E731
+
+
 ctrlp = fuzzy search
 -----------------------------------------------
 ctrl-p = start search in current directory (:cd to other if needed)
