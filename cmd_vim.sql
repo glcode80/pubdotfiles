@@ -253,6 +253,21 @@ autopep8 --in-place --max-line-length=100 xxx.py
 --select="E226"
 --ignore="E226"
 
+ctrlp = fuzzy search
+-----------------------------------------------
+ctrl-p = start search in current directory (:cd to other if needed)
+=> can type anything: beginning, end, combination, ...
+ctrl-f = toggle mode (current, full)
+ctrl-t = open in tab
+ctrl-v = open on side
+ctrl-x = open below
+ctrl-z = mark multiple files, ctrl-o = open them
+
+fix ctrl-s accidential command
+------------------------------
+ctrl-s freezes everything!
+ctrl-q to unfreeze
+
 
 --******************
 --** setup VIM

@@ -39,6 +39,7 @@ Plugin 'easymotion/vim-easymotion'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-repeat'
+Plugin 'kien/ctrlp.vim'
 
 Bundle 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
 
@@ -202,6 +203,10 @@ nmap <silent> <C-Left> <C-w>h
 nmap <silent> <C-Down> <C-w>j
 nmap <silent> <C-Up> <C-w>k
 nmap <silent> <C-Right> <C-w>l
+
+" map for loc-list -> move to previous / next error
+nmap <silent> <leader><Up> :lprevious<CR>
+nmap <silent> <leader><Down> :lnext<CR>
 
 " set timeout limit for ESC and escape sequences
 set timeoutlen=1000 ttimeoutlen=10
