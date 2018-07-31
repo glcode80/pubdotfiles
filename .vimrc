@@ -168,8 +168,13 @@ let g:syntastic_check_on_wq = 0
 let g:syntastic_python_checkers = ['flake8']
 
 " let g:syntastic_php_checkers = ['php']
-let g:syntastic_php_checkers = ['php', 'phpcs', 'phpmd']
-let g:syntastic_php_phpcs_args = '--standard=psr2'
+let g:syntastic_php_checkers = ['php', 'phpcs']
+" let g:syntastic_php_checkers = ['php', 'phpcs', 'phpmd']
+" let g:syntastic_php_phpcs_args = '--standard=psr2'
+let g:syntastic_php_phpcs_args = '--standard=~/.phpcsruleset.xml'
+" How to run it on command line to auto-fix:
+" phpcbs xxx.php -s --standard=~/.phpcsruleset.xml
+" phpcbf xxx.php -s --standard=~/.phpcsruleset.xml
 let g:syntastic_php_phpmd_post_args = 'cleancode,codesize,controversial,design,unusedcode'
 
 " dbext connection profiles

@@ -236,6 +236,15 @@ CD = change NerdTree home directory to same directory!
 U = up home directory by one directory (keep tree open, alterantive: u)
 C = set current directory as home directory
 
+phpcs = syntax correction in PHP files
+---------------------------------------------
+0) install it (see setup.sql) -> extension + .phpcsruleset.xml
+1) check error codes -> can be exluded -> add to .phpcsruleset.xml
+phpcbs xxx.php -s --standard=~/.phpcsruleset.xml
+2) fix automatically, what can be fixed!
+phpcbf xxx.php -s --standard=~/.phpcsruleset.xml
+
+
 
 --******************
 --** setup VIM

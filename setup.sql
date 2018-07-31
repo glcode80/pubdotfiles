@@ -12,6 +12,8 @@ wget https://raw.githubusercontent.com/glcode80/pubdotfiles/master/cmd_vim.sql
 wget https://raw.githubusercontent.com/glcode80/pubdotfiles/master/.dbextprofiles.vim
 wget https://raw.githubusercontent.com/glcode80/pubdotfiles/master/.flake8
 wget https://raw.githubusercontent.com/glcode80/pubdotfiles/master/.pylintrc
+wget https://raw.githubusercontent.com/glcode80/pubdotfiles/master/.phpcsruleset.xml
+
 
 2) set up git
 sudo apt-get install git
@@ -76,6 +78,9 @@ sudo chmod a+x /usr/local/bin/phpcs
 #PHPMD
 sudo curl -LsS http://static.phpmd.org/php/latest/phpmd.phar -o /usr/local/bin/phpmd
 sudo chmod a+x /usr/local/bin/phpmd
+#PHPCBF
+sudo curl -LsS https://squizlabs.github.io/PHP_CodeSniffer/phpcbf.phar -o /usr/local/bin/phpcbf
+sudo chmod a+x /usr/local/bin/phpcbf
 
 
 6) install programs needed

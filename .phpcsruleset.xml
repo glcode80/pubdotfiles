@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<ruleset name="Custom Standard" namespace="MyProject\CS\Standard">
+
+ <description>MH adjusted standard</description>
+
+<!-- Main standards -->
+<!-- PEAR = most basis -->
+<!-- PSR2 = most common -->
+<!-- Squiz = most strict -->
+
+
+ <!-- <rule ref="PEAR"> -->
+ <!-- <rule ref="Squiz"> -->
+ <rule ref="PSR2">
+  <!-- <exclude name="Generic"/> -->
+  <exclude name="Generic.Files.LineLength.TooLong"/>
+  <!-- <exclude name="PEAR.Commenting.FileComment.Missing"/> -->
+  <!-- <exclude name="PEAR.Commenting.FunctionComment.Missing"/> -->
+  <!-- <exclude name="PEAR.NamingConventions.ValidFunctionName.FunctionNameInvalid"/> -->
+  <!-- <exclude name="PEAR.ControlStructures.ControlSignature.Found"/> -->
+ </rule>
+
+</ruleset>
