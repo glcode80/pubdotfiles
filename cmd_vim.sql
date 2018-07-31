@@ -246,6 +246,14 @@ phpcbf xxx.php -s --standard=~/.phpcsruleset.xml
 in-file exclusions:
 // phpcs:disable PSR1.Files.SideEffects
 
+
+autopep8 = automatically fix python files
+----------------------------------------------
+autopep8 --in-place --max-line-length=100 xxx.py
+--select="E226"
+--ignore="E226"
+
+
 --******************
 --** setup VIM
 --******************
