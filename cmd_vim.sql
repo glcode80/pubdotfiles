@@ -243,8 +243,8 @@ phpcs = syntax correction in PHP files
 phpcbs xxx.php -s --standard=~/.phpcsruleset.xml
 2) fix automatically, what can be fixed!
 phpcbf xxx.php -s --standard=~/.phpcsruleset.xml
-
-
+in-file exclusions:
+// phpcs:disable PSR1.Files.SideEffects
 
 --******************
 --** setup VIM
