@@ -101,8 +101,8 @@ set clipboard=unnamedplus
 
 " sane editing
 set tabstop=4
-set shiftwidth=2
-set softtabstop=2
+set shiftwidth=4
+set softtabstop=4
 
 " set all typed tabs with spaces "
 set expandtab
@@ -178,7 +178,6 @@ let g:syntastic_php_phpcs_args = '--standard=~/.phpcsruleset.xml'
 let g:syntastic_php_phpmd_post_args = 'cleancode,codesize,controversial,design,unusedcode'
 
 " dbext connection profiles
-"NEW: saved in dbextprofiles.vim -> import here!
 source ~/.dbextprofiles.vim
 
 " to make sure to always prompt limit:

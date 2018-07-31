@@ -4,6 +4,9 @@ Summary setup file for server setup
 *************************************
 
 1) get this setup file from github, get vimrc and all other config files
+* Option A - git clone, copy over to user directory
+git clone https://github.com/glcode80/pubdotfiles.git
+* Option B - pull individual files
 wget https://raw.githubusercontent.com/glcode80/pubdotfiles/master/setup.sql
 wget https://raw.githubusercontent.com/glcode80/pubdotfiles/master/.vimrc
 wget https://raw.githubusercontent.com/glcode80/pubdotfiles/master/.screenrc
