@@ -246,6 +246,13 @@ phpcbf xxx.php -s --standard=~/.phpcsruleset.xml
 in-file exclusions:
 // phpcs:disable PSR1.Files.SideEffects
 
+phpmd = php code guidelines (comes after php, phpcs)
+Way to comment out ** --> check file:
+~/.phpmdruleset.xml
+1) uncomment global rules in here
+2) add Comment text SuppressWarnings to php funciton etc
+Combine -> add more with * in between, easy!
+
 
 autopep8 = automatically fix python files
 ----------------------------------------------

@@ -1,0 +1,174 @@
+<?xml version="1.0"?>
+<ruleset name="My first PHPMD rule set"
+         xmlns="http://pmd.sf.net/ruleset/1.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://pmd.sf.net/ruleset/1.0.0
+                     http://pmd.sf.net/ruleset_xml_schema.xsd"
+         xsi:noNamespaceSchemaLocation="
+                     http://pmd.sf.net/ruleset_xml_schema.xsd">
+    <description>
+        MH PHPMD ruleset
+    </description>
+
+    <!-- ** Way to comment out ** -->
+    <!-- ** 1) uncomment global rules in here -->
+    <!-- ** 2) add Comment text SuppressWarnings to php funciton etc -->
+    <!-- ** Combine -> add more with * in between, easy! -->
+
+
+    <rule ref="rulesets/unusedcode.xml">
+        <!-- <exclude name="UnusedPrivateField" /> -->
+        /** * @SuppressWarnings(PHPMD.UnusedPrivateField) */
+        <!-- <exclude name="UnusedLocalVariable" /> -->
+        /** * @SuppressWarnings(PHPMD.UnusedLocalVariable) */
+        <!-- <exclude name="UnusedPrivateMethod" /> -->
+        /** * @SuppressWarnings(PHPMD.UnusedPrivateMethod) */
+        <!-- <exclude name="UnusedFormalParameter" /> -->
+        /** * @SuppressWarnings(PHPMD.UnusedFormalParameter) */
+    </rule>
+
+    <rule ref="rulesets/naming.xml">
+        <!-- <exclude name="ShortVariable" /> -->
+        /** * @SuppressWarnings(PHPMD.ShortVariable) */
+        <!-- <exclude name="LongVariable" /> -->
+        /** * @SuppressWarnings(PHPMD.LongVariable) */
+        <!-- <exclude name="ShortMethodName" /> -->
+        /** * @SuppressWarnings(PHPMD.ShortMethodName) */
+        <!-- <exclude name="ConstructorWithNameAsEnclosingClass" /> -->
+        /** * @SuppressWarnings(PHPMD.ConstructorWithNameAsEnclosingClass) */
+        <!-- <exclude name="ConstantNamingConventions" /> -->
+        /** * @SuppressWarnings(PHPMD.ConstantNamingConventions) */
+        <!-- <exclude name="BooleanGetMethodName" /> -->
+        /** * @SuppressWarnings(PHPMD.BooleanGetMethodName) */
+        <!-- <exclude name="VariableNamingConventions" /> -->
+        /** * @SuppressWarnings(PHPMD.VariableNamingConventions) */
+        <!-- <exclude name="MethodNamingConventions" /> -->
+        /** * @SuppressWarnings(PHPMD.MethodNamingConventions) */
+        <!-- <exclude name="ClassNamingConventions" /> -->
+        /** * @SuppressWarnings(PHPMD.ClassNamingConventions) */
+        <!-- <exclude name="AbstractNaming" /> -->
+        /** * @SuppressWarnings(PHPMD.AbstractNaming) */
+        <!-- <exclude name="AvoidFieldNameMatchingTypeName" /> -->
+        /** * @SuppressWarnings(PHPMD.AvoidFieldNameMatchingTypeName) */
+        <!-- <exclude name="AvoidFieldNameMatchingMethodName" /> -->
+        /** * @SuppressWarnings(PHPMD.AvoidFieldNameMatchingMethodName) */
+        <!-- <exclude name="NoPackage" /> -->
+        /** * @SuppressWarnings(PHPMD.NoPackage) */
+        <!-- <exclude name="MisleadingVariableName" /> -->
+        /** * @SuppressWarnings(PHPMD.MisleadingVariableName) */
+    </rule>
+
+    <rule ref="rulesets/design.xml">
+        <!-- <exclude name="ExitExpression" /> -->
+        /** * @SuppressWarnings(PHPMD.ExitExpression) */
+        <!-- <exclude name="EvalExpression" /> -->
+        /** * @SuppressWarnings(PHPMD.EvalExpression) */
+        <!-- <exclude name="GotoStatement" /> -->
+        /** * @SuppressWarnings(PHPMD.GotoStatement) */
+        <!-- <exclude name="NumberOfChildren" /> -->
+        /** * @SuppressWarnings(PHPMD.NumberOfChildren) */
+        <!-- <exclude name="DepthOfInheritance" /> -->
+        /** * @SuppressWarnings(PHPMD.DepthOfInheritance) */
+        <!-- <exclude name="CouplingBetweenObjects" /> -->
+        /** * @SuppressWarnings(PHPMD.CouplingBetweenObjects) */
+        <!-- <exclude name="DevelopmentCodeFragment" /> -->
+        /** * @SuppressWarnings(PHPMD.DevelopmentCodeFragment) */
+    </rule>
+
+    <rule ref="rulesets/controversial.xml">
+        <exclude name="Superglobals" />
+        /** * @SuppressWarnings(PHPMD.Superglobals) */
+        <!-- <exclude name="CamelCaseClassName" /> -->
+        /** * @SuppressWarnings(PHPMD.CamelCaseClassName) */
+        <!-- <exclude name="CamelCasePropertyName" /> -->
+        /** * @SuppressWarnings(PHPMD.CamelCasePropertyName) */
+        <!-- <exclude name="CamelCaseMethodName" /> -->
+        /** * @SuppressWarnings(PHPMD.CamelCaseMethodName) */
+        <!-- <exclude name="CamelCaseParameterName" /> -->
+        /** * @SuppressWarnings(PHPMD.CamelCaseParameterName) */
+        <!-- <exclude name="CamelCaseVariableName" /> -->
+        /** * @SuppressWarnings(PHPMD.CamelCaseVariableName) */
+    </rule>
+
+    <rule ref="rulesets/codesize.xml">
+        <!-- <exclude name="CyclomaticComplexity" /> -->
+        /** * @SuppressWarnings(PHPMD.CyclomaticComplexity) */
+        <!-- <exclude name="NPathComplexity" /> -->
+        /** * @SuppressWarnings(PHPMD.NPathComplexity) */
+        <!-- <exclude name="ExcessiveMethodLength" /> -->
+        /** * @SuppressWarnings(PHPMD.ExcessiveMethodLength) */
+        <!-- <exclude name="ExcessiveClassLength" /> -->
+        /** * @SuppressWarnings(PHPMD.ExcessiveClassLength) */
+        <!-- <exclude name="ExcessiveParameterList" /> -->
+        /** * @SuppressWarnings(PHPMD.ExcessiveParameterList) */
+        <!-- <exclude name="ExcessivePublicCount" /> -->
+        /** * @SuppressWarnings(PHPMD.ExcessivePublicCount) */
+        <!-- <exclude name="TooManyFields" /> -->
+        /** * @SuppressWarnings(PHPMD.TooManyFields) */
+        <!-- <exclude name="NcssMethodCount" /> -->
+        /** * @SuppressWarnings(PHPMD.NcssMethodCount) */
+        <!-- <exclude name="NcssTypeCount" /> -->
+        /** * @SuppressWarnings(PHPMD.NcssTypeCount) */
+        <!-- <exclude name="NcssConstructorCount" /> -->
+        /** * @SuppressWarnings(PHPMD.NcssConstructorCount) */
+        <!-- <exclude name="TooManyMethods" /> -->
+        /** * @SuppressWarnings(PHPMD.TooManyMethods) */
+        <!-- <exclude name="TooManyPublicMethods" /> -->
+        /** * @SuppressWarnings(PHPMD.TooManyPublicMethods) */
+        <!-- <exclude name="ExcessiveClassComplexity" /> -->
+        /** * @SuppressWarnings(PHPMD.ExcessiveClassComplexity) */
+    </rule>
+
+    <rule ref="rulesets/cleancode.xml">
+        <!-- <exclude name="BooleanArgumentFlag" /> -->
+        /** * @SuppressWarnings(PHPMD.BooleanArgumentFlag) */
+        <exclude name="ElseExpression" />
+        /** * @SuppressWarnings(PHPMD.ElseExpression) */
+        <!-- <exclude name="StaticAccess" /> -->
+        /** * @SuppressWarnings(PHPMD.StaticAccess) */
+        <!-- <exclude name="BooleanGetMethodName" /> -->
+        /** * @SuppressWarnings(PHPMD.BooleanGetMethodName) */
+        <!-- <exclude name="ConstantNamingConventions" /> -->
+        /** * @SuppressWarnings(PHPMD.ConstantNamingConventions) */
+        <!-- <exclude name="ConstructorWithNameAsEnclosingClass" /> -->
+        /** * @SuppressWarnings(PHPMD.ConstructorWithNameAsEnclosingClass) */
+        <!-- <exclude name="CouplingBetweenObjects" /> -->
+        /** * @SuppressWarnings(PHPMD.CouplingBetweenObjects) */
+        <!-- <exclude name="CyclomaticComplexity" /> -->
+        /** * @SuppressWarnings(PHPMD.CyclomaticComplexity) */
+        <!-- <exclude name="DepthOfInheritance" /> -->
+        /** * @SuppressWarnings(PHPMD.DepthOfInheritance) */
+        <!-- <exclude name="EvalExpression" /> -->
+        /** * @SuppressWarnings(PHPMD.EvalExpression) */
+        <!-- <exclude name="ExcessiveClassComplexity" /> -->
+        /** * @SuppressWarnings(PHPMD.ExcessiveClassComplexity) */
+        <!-- <exclude name="ExcessiveClassLength" /> -->
+        /** * @SuppressWarnings(PHPMD.ExcessiveClassLength) */
+        <!-- <exclude name="ExcessiveMethodLength" /> -->
+        /** * @SuppressWarnings(PHPMD.ExcessiveMethodLength) */
+        <!-- <exclude name="ExcessiveParameterList" /> -->
+        /** * @SuppressWarnings(PHPMD.ExcessiveParameterList) */
+        <!-- <exclude name="ExcessivePublicCount" /> -->
+        /** * @SuppressWarnings(PHPMD.ExcessivePublicCount) */
+        <!-- <exclude name="GotoStatement" /> -->
+        /** * @SuppressWarnings(PHPMD.GotoStatement) */
+        <!-- <exclude name="LongVariable" /> -->
+        /** * @SuppressWarnings(PHPMD.LongVariable) */
+        <!-- <exclude name="NPathComplexity" /> -->
+        /** * @SuppressWarnings(PHPMD.NPathComplexity) */
+        <!-- <exclude name="NumberOfChildren" /> -->
+        /** * @SuppressWarnings(PHPMD.NumberOfChildren) */
+        <!-- <exclude name="ShortMethodName" /> -->
+        /** * @SuppressWarnings(PHPMD.ShortMethodName) */
+        <!-- <exclude name="ShortVariable" /> -->
+        /** * @SuppressWarnings(PHPMD.ShortVariable) */
+        <!-- <exclude name="TooManyFields" /> -->
+        /** * @SuppressWarnings(PHPMD.TooManyFields) */
+        <!-- <exclude name="TooManyMethods" /> -->
+        /** * @SuppressWarnings(PHPMD.TooManyMethods) */
+        <!-- <exclude name="UnusedLocalVariable" /> -->
+        /** * @SuppressWarnings(PHPMD.UnusedLocalVariable) */
+        <!-- <exclude name="UnusedPrivateMethod" /> -->
+        /** * @SuppressWarnings(PHPMD.UnusedPrivateMethod) */
+    </rule>
+</ruleset>

@@ -16,6 +16,7 @@ wget https://raw.githubusercontent.com/glcode80/pubdotfiles/master/.dbextprofile
 wget https://raw.githubusercontent.com/glcode80/pubdotfiles/master/.flake8
 wget https://raw.githubusercontent.com/glcode80/pubdotfiles/master/.pylintrc
 wget https://raw.githubusercontent.com/glcode80/pubdotfiles/master/.phpcsruleset.xml
+wget https://raw.githubusercontent.com/glcode80/pubdotfiles/master/.phpmdruleset.xml
 
 
 2) set up git
@@ -75,6 +76,10 @@ source ~/venv/testvenv/bin/activate
 deactivate
 
 5b) install php plugins (for Vim)
+php needs to be installed to work (see below)
+ php -v
+ sudo apt-get install php
+ sudo apt-get install php7.2-xml
 -> more plugins php-tools-install.sql
 #PHPCS
 sudo curl -LsS https://squizlabs.github.io/PHP_CodeSniffer/phpcs.phar -o /usr/local/bin/phpcs
