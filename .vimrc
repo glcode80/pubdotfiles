@@ -40,6 +40,7 @@ Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-repeat'
 Plugin 'kien/ctrlp.vim'
+" Plugin 'airblade/vim-gitgutter'
 
 Bundle 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
 
@@ -139,10 +140,17 @@ hi Search ctermfg=White ctermbg=63
 " hi StatusLine ctermbg=DarkGrey
 " hi StatusLineNC ctermbg=DarkGrey
 " hi VertSplit ctermbg=DarkGrey
-hi DiffAdd ctermfg=White
-hi DiffChange ctermfg=White
-hi DiffDelete ctermbg=Grey
-hi IncSearch ctermfg=White
+
+hi DiffAdd    ctermfg=Black ctermbg=40
+hi DiffChange ctermfg=240 ctermbg=51
+hi DiffDelete cterm=none ctermfg=240 ctermbg=51
+hi DiffText   cterm=bold ctermfg=White ctermbg=Blue
+
+" hi DiffAdd ctermfg=White
+" hi DiffChange ctermfg=White
+" hi DiffDelete ctermbg=Grey
+
+hi IncSearch  ctermfg=White
 
 " colors for gvim
 hi Normal guifg=Black guibg=White
@@ -156,9 +164,9 @@ hi Nontext guifg=Black guibg=White
 let NERDSpaceDelims=1
 
 " LATER - neeed for syntastic plugin "
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}p<p<
-set statusline+=%*
+" set statusline+=%#warningmsg#
+" set statusline+=%{SyntasticStatuslineFlag()}p<p<
+" set statusline+=%*
 
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
@@ -180,6 +188,9 @@ let g:syntastic_php_phpcs_args = '--standard=~/.phpcsruleset.xml'
 let g:syntastic_php_phpmd_post_args = '~/.phpmdruleset.xml'
 
 " let g:ctrlp_show_hidden =1
+
+" Update time for vim-gitgutter
+" set updatetime=100
 
 " dbext connection profiles
 source ~/.dbextprofiles.vim
