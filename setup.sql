@@ -78,9 +78,10 @@ deactivate
 5b) install php plugins (for Vim)
 php needs to be installed to work (see below)
  php -v
- sudo apt-get install php
+ sudo apt-get install php7.2-cli
  sudo apt-get install php7.2-xml
--> more plugins php-tools-install.sql
+   sudo apt-get install php
+ -> more plugins php-tools-install.sql
 #PHPCS
 sudo curl -LsS https://squizlabs.github.io/PHP_CodeSniffer/phpcs.phar -o /usr/local/bin/phpcs
 sudo chmod a+x /usr/local/bin/phpcs
