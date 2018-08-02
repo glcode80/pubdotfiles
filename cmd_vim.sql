@@ -182,7 +182,13 @@ Vimdiff / compare two files with diff view
 --------------------------------------
 vim -d file1 file2
 fold/unfold like normal!
-
+]c :        - next difference
+[c :        - previous difference
+do          - diff obtain
+dp          - diff put
+zo          - open folded text
+zc          - close folded text
+:diffupdate - re-scan the files for differences
 
 dbext - MySql
 ------------------------
