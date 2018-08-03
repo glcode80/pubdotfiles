@@ -41,6 +41,8 @@ Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-repeat'
 Plugin 'kien/ctrlp.vim'
 " Plugin 'airblade/vim-gitgutter'
+Plugin 'SirVer/ultisnips'
+Plugin 'honza/vim-snippets'
 
 Bundle 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
 
@@ -68,6 +70,9 @@ inoremap <Up> <C-R>=pumvisible() ? "\<lt>C-y>\<lt>Up>" : "\<lt>Up>"<CR>
 let g:ycm_key_list_stop_completion = ['<C-y>']
 let g:ycm_key_invoke_completion = '<C-Space>'
 
+" UltiSnips Trigger C-j / C-k -> toggle tab/s-tab like normal
+let g:UltiSnipsExpandTrigger="<C-j>"
+"
 " customize easymotion
 " let g:EasyMotion_do_mapping = 0 " Disable default mappings
 hi link EasyMotionTarget Statement
