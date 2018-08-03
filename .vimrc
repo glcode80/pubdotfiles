@@ -290,7 +290,7 @@ map <leader><F12> :qa<CR>
 
 "nmap <silent> <leader>/ :nohls<CR> " disable highlight until next time opened
 " nnoremap <esc><esc> :silent! nohls<cr>
-nnoremap <esc><esc> :silent! let @/=""<cr>
+nnoremap <silent> <esc><esc> :let @/=""<cr>
 
 "fix esc arrow to enter characters
 nnoremap <silent> <ESC><ESC>OA k
