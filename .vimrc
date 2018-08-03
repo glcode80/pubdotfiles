@@ -256,8 +256,8 @@ nnoremap <silent> <S-Up> <C-y>
 nnoremap <silent> <S-Down> <C-e>
 
 " leave cursor at end of yanked text
-vmap y y`]
-
+" vmap y y`]
+vmap y ygv<Esc>
 
 " MAP FUNCTION KEYS
 
