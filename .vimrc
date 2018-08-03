@@ -95,7 +95,7 @@ syntax on
 set ignorecase
 set hlsearch
 set linebreak
-
+set incsearch
 
 colorscheme desert
 
@@ -250,6 +250,14 @@ nmap <leader><enter> O<esc> " to add a new line and exit insert - no need
 " map - to ` for going to exact location of marks
 " ma = define, 'a = beginning of line -a = exact mark
 nmap - `
+
+" map scrolling buffer up/down
+nnoremap <silent> <S-Up> <C-y>
+nnoremap <silent> <S-Down> <C-e>
+
+" leave cursor at end of yanked text
+vmap y y`]
+
 
 " MAP FUNCTION KEYS
 
