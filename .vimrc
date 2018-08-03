@@ -157,6 +157,10 @@ hi DiffText   cterm=bold ctermfg=White ctermbg=Blue
 
 hi IncSearch  ctermfg=White
 
+" Syntastic error colors
+" hi SpellBad cterm=bold ctermbg=172 ctermfg=Black
+" hi SpellCap ctermfg=Yellow ctermbg=Blue
+
 " colors for gvim
 hi Normal guifg=Black guibg=White
 hi Nontext guifg=Black guibg=White
@@ -177,7 +181,8 @@ let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
-
+let g:syntastic_loc_list_height=5
+"
 " let g:syntastic_python_checkers = ['pylint']
 let g:syntastic_python_checkers = ['flake8']
 
@@ -284,7 +289,8 @@ map <F12> :q<CR>
 map <leader><F12> :qa<CR>
 
 "nmap <silent> <leader>/ :nohls<CR> " disable highlight until next time opened
-nnoremap <esc><esc> :silent! nohls<cr>
+" nnoremap <esc><esc> :silent! nohls<cr>
+nnoremap <esc><esc> :silent! let @/=""<cr>
 
 "fix esc arrow to enter characters
 nnoremap <silent> <ESC><ESC>OA k
