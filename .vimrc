@@ -337,7 +337,7 @@ nmap <leader>i :NERDTreeClose<cr>:set invnumber<cr>
 "** Fugitive mappings
 nnoremap <leader>gp :Gpull<cr>
 "Gstatus -> - to add/remove, cc to commit, o for open
-nnoremap <leader>gs :Gstatus<cr>
+nnoremap <leader>gs :Gstatus<cr>8gg
 "Gwrite = add current file to list to be commited (no need to add in gstatus)
 nnoremap <leader>gw :Gwrite<cr>
 "Gcommit -> wq to execute
