@@ -38,6 +38,9 @@ sudo apt-get install vim-gtk
 sudo apt-get install libdbi-perl
 sudo apt-get install libdbd-mysql-perl
 
+* avoid ctrl-s hanging terminal (could stop with ctrl-q)
+echo "stty -ixon" >> .bashrc
+
 * Ctags / YouCompleteMe *
 sudo apt install exuberant-ctags
 sudo apt-get install build-essential cmake
