@@ -211,6 +211,9 @@ esc-$ = word wrap!
 export to CSV (export in tab format -> transform to commas):
 mysql -u root -p mydb -e "select * from mytable" -B | sed "s/'/\'/;s/\t/\",\"/g;s/^/\"/;s/$/\"/;s/\n//g" > mytable.csv 
 
+*** Block an IP with sudo ufw
+sudo ufw insert 1 deny from xx.xx.xx.xx to any
+
 
 -- ********************
 -- get access logs sorted by IP
