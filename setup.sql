@@ -95,6 +95,8 @@ sudo chmod a+x /usr/local/bin/phpmd
 sudo curl -LsS https://squizlabs.github.io/PHP_CodeSniffer/phpcbf.phar -o /usr/local/bin/phpcbf
 sudo chmod a+x /usr/local/bin/phpcbf
 
+5c) install lint for bash
+sudo apt install shellcheck
 
 6) install programs needed
 sudo apt-get install screen
