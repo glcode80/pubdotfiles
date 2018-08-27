@@ -88,8 +88,9 @@ Commands:
 => immer mit [count] voraus möglich!!
 => immer mit leader key => mapped to space!
 c<space> = toggle comment state for selected lines
+cl = comment ,left alligned
 cc = comment, algined with code
-cb = comment, aligned at left
+-- cb = comment, aligned at left
 -- cn = comment, force nesting
 ci = toggle comment state individually (on/off each line)
 cs = comment selection with block format
