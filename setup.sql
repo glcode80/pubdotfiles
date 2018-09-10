@@ -67,6 +67,7 @@ sudo pip3 install pytz
 sudo pip3 install flake8
 sudo pip3 install autopep8
 sudo pip3 install pylint
+sudo pip3 install tld
 sudo pip3 install matplotlib
 sudo pip3 install numpy
 
