@@ -125,7 +125,20 @@ sudo apt-get install mysql-server
 sudo apt-get install mariadb-server
 sudo mysql_secure_installation
 
-mysql -u root -p
+MariaDB 10.3 (starting 10.2 supports subqueries in views, default is 10.1 in 18.04)
+sudo apt-get install software-properties-common
+sudo apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xF1656F24C74CD1D8
+- ubuntu 18.04
+sudo add-apt-repository 'deb [arch=amd64,arm64,ppc64el] http://mirror.mva-n.net/mariadb/repo/10.3/ubuntu bionic main'
+- ubuntu 16.04
+sudo add-apt-repository 'deb [arch=amd64,arm64,i386,ppc64el] http://mirror.mva-n.net/mariadb/repo/10.3/ubuntu xenial main'
+sudo apt update
+sudo apt install mariadb-server
+sudo vim /etc/mysql/mariadb.conf.d/50-server.cnf
+[mysqld]
+plugin-load-add = auth_socket.so
+sudo systemctl restart mariadb.service
+sudo mysql -u root -p
 
 select User,host,plugin from mysql.user;
 
@@ -137,6 +150,9 @@ grant SELECT,INSERT,UPDATE,DELETE ON `db`.* TO 'user'@'host';
 revoke all privileges on *.* from 'user'@'host';
 FLUSH PRIVILEGES;
 quit
+
+* check status of all tables in a schema
+mysqlcheck -u mydbuser -p mydbname
 
 * enable remote access:
 sudo ufw allow 3306
