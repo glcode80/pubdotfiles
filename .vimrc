@@ -307,7 +307,7 @@ nnoremap <silent> <ESC><ESC>OD h
 " process to get xxxx=values(xxx) in mysql for update on duplicate key
 " 1) leader slc = list column -> paste
 " 2) each item leader sv to convert to item=values(item)
-:command! ValuesSql :normal f a<CR><ESC>kywEi=VALUES(<ESC>pa)<ESC>j^
+:command! ValuesSql :normal f r<CR><ESC>kywEi=VALUES(<ESC>pa)<ESC>j^
 nnoremap <leader>sv :ValuesSql<CR>
 
 command! Inspython :normal i#!/usr/bin/env python3<CR><ESC>
