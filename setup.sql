@@ -356,4 +356,18 @@ sudo wget https://raw.githubusercontent.com/glcode80/pubdotfiles/master/make_rcl
 sudo chmod +x /usr/bin/make_rclone.sh
 sudo vim /usr/bin/make_rclone.sh
 
+15) remove/adjust message of the day / motd - https://oitibs.com/ubuntu-16-04-dynamic-motd/
+cd /etc/update-motd.d/
+sudo chmod -x /etc/update-motd.d/10-help-text
+sudo chmod -x /etc/update-motd.d/50-motd-news 
+sudo chmod -x /etc/update-motd.d/80-livepatch
+
+sudo apt-get install lsb-release figlet update-motd update-notifier-common
+sudo wget https://raw.githubusercontent.com/glcode80/pubdotfiles/master/10-sysinfo -P /etc/update-motd.d/
+sudo chmod +x /etc/update-motd.d/10-sysinfo
+
+
+
+
+
 
