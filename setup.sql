@@ -120,6 +120,16 @@ sudo vim jail.local
 - bantime = default: 600 =10 minutes => change to 31536000 = 1 year
 sudo fail2ban-client start
 
+7b) ssh keys
+ssh-keygen -b 4096
+mkdir ~/.ssh
+touch ~/.ssh/authorized_keys
+chmod 700 ~/.ssh && chmod 600 ~/.ssh/authorized_keys
+sudo vim /etc/ssh/sshd_config
+PasswordAuthentication no
+sudo systemctl restart sshd
+
+
 8) mariadb / mysql
 sudo apt-get install mysql-server
 sudo apt-get install mariadb-server
