@@ -57,9 +57,6 @@ sudo dpkg-reconfigure tzdata
 vim /etc/hosts 
 adduser [USERNAME]
 adduser [USERNAME] sudo
-- update kernel
-sudo apt-get upgrade linux-image
-uname -r
 
 5) install python plugins
 sudo apt-get install python3
