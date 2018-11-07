@@ -127,6 +127,8 @@ touch ~/.ssh/authorized_keys
 chmod 700 ~/.ssh && chmod 600 ~/.ssh/authorized_keys
 sudo vim /etc/ssh/sshd_config
 PasswordAuthentication no
+ChallengeResponseAuthentication no
+UsePAM no
 sudo systemctl restart sshd
 
 
