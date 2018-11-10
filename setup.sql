@@ -377,8 +377,9 @@ sudo apt-get install lsb-release figlet update-motd update-notifier-common
 sudo wget https://raw.githubusercontent.com/glcode80/pubdotfiles/master/10-sysinfo -P /etc/update-motd.d/
 sudo chmod +x /etc/update-motd.d/10-sysinfo
 
-
-
-
-
+16) fix local ip instead of dhcp on 18.04
+sudo cp /etc/netplan/50-cloud-init.yaml /etc/netplan/01-netcfg.yaml
+sudo vim /etc/netplan/01-netcfg.yaml
+addresses: [192.168.2.xxx/24]
+sudo netplan apply
 
