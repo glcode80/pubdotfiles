@@ -357,12 +357,19 @@ sudo service monit reload
 sudo wget https://raw.githubusercontent.com/glcode80/pubdotfiles/master/make_sql_backups.sh -P /usr/bin
 sudo chmod +x /usr/bin/make_sql_backups.sh
 sudo vim /usr/bin/make_sql_backups.sh
+
+sudo wget https://raw.githubusercontent.com/glcode80/pubdotfiles/master/make_sql_backups_delete.sh -P /usr/bin
+sudo chmod +x /usr/bin/make_sql_backups_delete.sh
+sudo vim /usr/bin/make_sql_backups_delete.sh
+
 sudo wget https://raw.githubusercontent.com/glcode80/pubdotfiles/master/make_data_backups.sh -P /usr/bin
 sudo chmod +x /usr/bin/make_data_backups.sh
 sudo vim /usr/bin/make_data_backups.sh
+
 sudo wget https://raw.githubusercontent.com/glcode80/pubdotfiles/master/make_data_backups_delete.sh -P /usr/bin
 sudo chmod +x /usr/bin/make_data_backups_delete.sh
 sudo vim /usr/bin/make_data_backups_delete.sh
+
 sudo wget https://raw.githubusercontent.com/glcode80/pubdotfiles/master/make_rclone.sh -P /usr/bin
 sudo chmod +x /usr/bin/make_rclone.sh
 sudo vim /usr/bin/make_rclone.sh
