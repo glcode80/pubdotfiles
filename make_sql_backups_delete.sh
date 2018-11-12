@@ -3,7 +3,7 @@
 echo "$(date '+%Y-%m-%d %H:%M:%S') - Start - Script to delete if not enough space, then run backup"
 
 DIR="/home/USERNAME/backups"
-reqSpace=12000000
+reqSpace=6000000
 
 availSpace=$(df "$HOME" | awk 'NR==2 { print $4 }')
 
@@ -22,7 +22,7 @@ if (( availSpace < reqSpace )); then
     # we are below the limit. Just
     # delete regular files, ignore directories.
     #
-    ls *html-folders* -rt | while read FILE
+    ls *sql* -rt | while read FILE
     do
         if [ -f $FILE ]
         then
