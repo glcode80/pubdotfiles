@@ -233,7 +233,7 @@ sudo vim /etc/nginx/conf.d/nginx-www-php.conf
 sudo wget https://raw.githubusercontent.com/glcode80/pubdotfiles/master/nginx-wordpress.conf -P /etc/nginx/conf.d
 sudo vim /etc/nginx/conf.d/nginx-wordpress.conf
 
-7) enable gzip compression AND enable max file size upload php!! [for wordpress download manager -> upload files! also adjust php.ini!]
+10) enable gzip compression AND enable max file size upload php!! [for wordpress download manager -> upload files! also adjust php.ini!]
 sudo vim /etc/nginx/nginx.conf
 	gzip on;
 	gzip_disable "mise6";
@@ -258,7 +258,7 @@ sudo crontab -e
 0 3,15 * * * /usr/bin/certbotupdate.sh >> /home/USERNAME/logs/sudologs.txt 2>&1
 
 
-10) php
+11) php
 
 sudo apt install php7.2-fpm
   sudo apt install php7.0-fpm
@@ -314,7 +314,7 @@ pm.max_requests = 500 [leave]
 
 
 
-11) memcached
+12) memcached
 sudo apt-get install memcached 
 sudo apt-get install php-memcached
 sudo vim /etc/memcached.conf
@@ -328,8 +328,9 @@ sudo service memcached restart
 sudo service php7.2-fpm restart
 sudo service nginx restart
 
+Wordpress -> use W3TC -> memcached
 
-12) geoip database & update script
+13) geoip database & update script
 sudo apt-get install geoip-bin
 -> directory: /usr/share/GeoIP/
 geoiplookup 8.8.8.8
@@ -339,11 +340,11 @@ sudo geoipupdate.sh
 0 16 * * 3 /home/USERNAME/geoipupdate.sh >> /home/USERNAME/logs/sudologs.txt 2>&1
 
 
-12) cron job 
+14) cron job 
 */5 * * * * /home/USERNAME/directory/script.py >> /home/USERNAME/logs/logs.txt 2>&1
 sudo service cron restart
 
-13) monit
+15) monit
 sudo apt-get install monit
 sudo vim /etc/monit/conf.d/php7-fpm
 
@@ -361,7 +362,7 @@ sudo monit -t
 sudo service monit reload
 
 
-14) backup
+16) backup
 sudo wget https://raw.githubusercontent.com/glcode80/pubdotfiles/master/make_sql_backups.sh -P /usr/bin
 sudo chmod +x /usr/bin/make_sql_backups.sh
 sudo vim /usr/bin/make_sql_backups.sh
@@ -382,7 +383,7 @@ sudo wget https://raw.githubusercontent.com/glcode80/pubdotfiles/master/make_rcl
 sudo chmod +x /usr/bin/make_rclone.sh
 sudo vim /usr/bin/make_rclone.sh
 
-15) remove/adjust message of the day / motd - https://oitibs.com/ubuntu-16-04-dynamic-motd/
+17) remove/adjust message of the day / motd - https://oitibs.com/ubuntu-16-04-dynamic-motd/
 cd /etc/update-motd.d/
 sudo chmod -x /etc/update-motd.d/10-help-text
 sudo chmod -x /etc/update-motd.d/50-motd-news 
@@ -392,7 +393,7 @@ sudo apt-get install lsb-release figlet update-motd update-notifier-common
 sudo wget https://raw.githubusercontent.com/glcode80/pubdotfiles/master/10-sysinfo -P /etc/update-motd.d/
 sudo chmod +x /etc/update-motd.d/10-sysinfo
 
-16) fix local ip instead of dhcp on 18.04
+18) fix local ip instead of dhcp on 18.04
 ifconfig
 sudo cp /etc/netplan/50-cloud-init.yaml /etc/netplan/01-netcfg.yaml
 sudo vim /etc/netplan/01-netcfg.yaml
