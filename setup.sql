@@ -233,15 +233,13 @@ sudo vim /etc/nginx/conf.d/nginx-www-php.conf
 sudo wget https://raw.githubusercontent.com/glcode80/pubdotfiles/master/nginx-wordpress.conf -P /etc/nginx/conf.d
 sudo vim /etc/nginx/conf.d/nginx-wordpress.conf
 
-10) enable gzip compression AND enable max file size upload php!! [for wordpress download manager -> upload files! also adjust php.ini!]
+-- 2) enable gzip compression AND enable max file size upload php!! [for wordpress download manager -> upload files! also adjust php.ini!]
 sudo vim /etc/nginx/nginx.conf
 	gzip on;
 	gzip_disable "mise6";
 	gzip_vary on;
 	gzip_types text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript;
 	client_max_body_size 128M;
-
-
 
 * certbot
 sudo apt-get install software-properties-common python-software-properties
@@ -256,6 +254,46 @@ sudo chmod +x /usr/bin/certbotupdate.sh
 sudo certbotupdate.sh
 sudo crontab -e
 0 3,15 * * * /usr/bin/certbotupdate.sh >> /home/USERNAME/logs/sudologs.txt 2>&1
+	
+	
+10) Nginx FastCGI Page Cache -> caches pages in memory (like varnish)
+-> test by checking response headers: HIT/MISS/BYPASS
+
+/var/run = ram disk! -> can also put to normal disk. be careful with size of cache
+
+sudo vim /etc/nginx/nginx.conf
+
+# ** NGINX PAGE CACHE START - nginx.conf http **
+fastcgi_cache_path /var/run/nginxcacheGLOBAL levels=1:2 keys_zone=cacheGLOBAL:100m inactive=60m;
+# can have second cache for other page with different params, if no intention to share
+# fastcgi_cache_path /var/run/nginxcacheSITE1 levels=1:2 keys_zone=cacheSITE1:100m inactive=60m;
+# fastcgi_cache_path /var/run/nginxcacheSITE2 levels=1:2 keys_zone=cacheSITE2:100m inactive=60m;
+fastcgi_cache_key "$scheme$request_method$host$request_uri";
+fastcgi_cache_use_stale error timeout invalid_header http_500;
+fastcgi_ignore_headers Cache-Control Expires Set-Cookie;
+# ** NGINX PAGE CACHE END - nginx.conf http**
+
++ add two blocks to nginx conf file -> see examples
+
+-- www with php with fastcgi pache cache
+sudo wget https://raw.githubusercontent.com/glcode80/pubdotfiles/master/nginx-www-php-fastcgi-cache.conf -P /etc/nginx/conf.d
+sudo vim /etc/nginx/conf.d/nginx-www-php-fastcgi-cache.conf
+
+-- php with wordpress with fastcgi pache cache
+sudo wget https://raw.githubusercontent.com/glcode80/pubdotfiles/master/nginx-wordpress-fastcgi-cache.conf -P /etc/nginx/conf.d
+sudo vim /etc/nginx/conf.d/nginx-wordpress-fastcgi-cache.conf
+
+sudo nginx -t
+sudo service nginx restart
+
+to clear manually -> empty everythin in directory:
+sudo rm -rf /var/run/nginxcacheGLOBAL/*
+
+*/Wordrepss Plugin to purge -> Nginx Cache Tim Krüss
+  /var/run/nginxcacheGLOBAL
+  (or custom cache path)
+
+benchmark testing: loader.io
 
 
 11) php
