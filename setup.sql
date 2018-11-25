@@ -205,9 +205,13 @@ sudo ln -s /home/USERNAME/git/GITFOLDER/index.php /var/www/main/
 * config -> link to /etc/nginx/conf.d/
 sudo ln -s /home/USERNAME/git/GITFOLDER/configfile.conf /etc/nginx/conf.d/
 
--- 1) remove default file!
+-- 1) remove default file! / add default for empty server response / others
 cd /etc/nginx/conf.d
 ls
+
+-- default: empty file -> ip not going to first server
+sudo wget https://raw.githubusercontent.com/glcode80/pubdotfiles/master/nginx-default-empty.conf -P /etc/nginx/conf.d
+sudo vim /etc/nginx/conf.d/nginx-default-empty.conf
 
 -- redirect
 sudo wget https://raw.githubusercontent.com/glcode80/pubdotfiles/master/nginx-redirect.conf -P /etc/nginx/conf.d
