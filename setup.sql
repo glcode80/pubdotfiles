@@ -205,12 +205,16 @@ sudo ln -s /home/USERNAME/git/GITFOLDER/index.php /var/www/main/
 * config -> link to /etc/nginx/conf.d/
 sudo ln -s /home/USERNAME/git/GITFOLDER/configfile.conf /etc/nginx/conf.d/
 
--- 1) remove default file! / add default for empty server response / others
+-- 1) remove default file! / add default for empty server response / others !!!
+-- => need to get certificate for default https
+sudo mkdir /etc/nginx/owncert
+sudo openssl req -x509 -nodes -days 9999 -newkey rsa:2048 -keyout /etc/nginx/owncert/privateKey.key -out /etc/nginx/owncert/certificate.crt -subj '/CN=<SERVERIP_ADD_HERE>'
 cd /etc/nginx/conf.d
 ls
 
 -- default: empty file -> ip not going to first server
 sudo wget https://raw.githubusercontent.com/glcode80/pubdotfiles/master/nginx-default-empty.conf -P /etc/nginx/conf.d
+-> put in server IP!
 sudo vim /etc/nginx/conf.d/nginx-default-empty.conf
 
 -- redirect
