@@ -207,6 +207,9 @@ sudo ln -s /home/USERNAME/git/GITFOLDER/configfile.conf /etc/nginx/conf.d/
 
 -- 1) remove default file! / add default for empty server response / others !!!
 -- => need to get certificate for default https
+
+sudo rm /etc/nginx/sites-enabled/default
+
 sudo mkdir /etc/nginx/owncert
 sudo openssl req -x509 -nodes -days 9999 -newkey rsa:2048 -keyout /etc/nginx/owncert/privateKey.key -out /etc/nginx/owncert/certificate.crt -subj '/CN=<SERVERIP_ADD_HERE>'
 cd /etc/nginx/conf.d
