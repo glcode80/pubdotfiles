@@ -181,9 +181,10 @@ sudo vim /etc/mysql/conf.d/mysql.cnf
 event_scheduler = ON 
 
 
-9) nginx / certbot
+9) nginx / certbot [on 18.04 not working -> use normal package]
 sudo vim /etc/apt/sources.list
-deb http://nginx.org/packages/mainline/ubuntu/ xenial nginx
+deb http://nginx.org/packages/mainline/ubuntu/ bionic nginx
+  deb http://nginx.org/packages/mainline/ubuntu/ xenial nginx
 sudo wget http://nginx.org/keys/nginx_signing.key
 sudo apt-key add nginx_signing.key
 sudo apt update
