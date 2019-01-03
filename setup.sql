@@ -464,6 +464,12 @@ rm ~/test.tmp
 sudo apt-get iozone3
 iozone -e -I -a -s 100M -r 4k -i 0 -i 1 -i 2 
 [-f /path/to/file]
-- cpu
+- cpu: sysbench -> check events per second / total number of events
 sudo apt install sysbench
-sysbench --test=cpu run
+sysbench --test=cpu --cpu-max-prime=10000 run
+sysbench --test=cpu --num-threads=8 --cpu-max-prime=10000 run
+sysbench --test=memory run
+sysbench --test=fileio --file-test-mode=seqwr run
+sysbench --test=fileio --file-test-mode=rndwr run
+ -> test mode {seqwr, seqrewr, seqrd, rndrd, rndwr, rndrw}
+
