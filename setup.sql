@@ -215,6 +215,11 @@ sudo openssl req -x509 -nodes -days 9999 -newkey rsa:2048 -keyout /etc/nginx/own
 cd /etc/nginx/conf.d
 ls
 
+-- test: hello world
+sudo wget https://raw.githubusercontent.com/glcode80/pubdotfiles/master/nginx-default-helloworld.conf -P /etc/nginx/conf.d
+sudo vim /etc/nginx/conf.d/nginx-default-helloworld.conf
+
+
 -- default: empty file -> ip not going to first server
 sudo wget https://raw.githubusercontent.com/glcode80/pubdotfiles/master/nginx-default-empty.conf -P /etc/nginx/conf.d
 -> put in server IP!
@@ -448,7 +453,7 @@ sudo visudo
 # no password required for user at all -> add to end
 # USERNAME ALL=(ALL)  NOPASSWD: ALL
 
-20) goldmaster after install
+20) goldmaster after install [enable=auto-start => everything disabled by default on master]
 sudo apt update
 sudo apt upgrade
 sudo hostnamectl set-hostname [HOSTNAME]
@@ -456,14 +461,19 @@ sudo dpkg-reconfigure tzdata
 
 - firewall: open ports needed
 sudo ufw status
-sudo ufw allow nginx http
-sudo ufw allow nginx https
+sudo ufw allow 80
+sudo ufw allow 443
+
 - mysql: add/remove default DB/user 'analyst' + start/stop service overall + mysqltune?
-sudo systemctl status/start/stop/restart mariadb.service
+sudo systemctl enable/disable/status/start/stop/restart mariadb.service
+
 - nginx: start/stop + setup services
+sudo systemctl enable/disable/status/start/stop/restart nginx
+
+- php-fpm: adjsut/finetune settings
+sudo systemctl enable/disable/status/start/stop/restart php7.2-fpm
+
 - wordpress: install more php modules + caching (memcached/nginx cache)
 - monit: start/stop + setup services
-- php-fpm: adjsut/finetune settings
-
 
 
