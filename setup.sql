@@ -139,10 +139,11 @@ sudo mysql_secure_installation
 MariaDB 10.3 (starting 10.2 supports subqueries in views, default is 10.1 in 18.04)
 sudo apt-get install software-properties-common
 sudo apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xF1656F24C74CD1D8
-- ubuntu 18.04
-sudo add-apt-repository 'deb [arch=amd64,arm64,ppc64el] http://mirror.mva-n.net/mariadb/repo/10.3/ubuntu bionic main'
-- ubuntu 16.04
-sudo add-apt-repository 'deb [arch=amd64,arm64,i386,ppc64el] http://mirror.mva-n.net/mariadb/repo/10.3/ubuntu xenial main'
+sudo vim /etc/apt/sources.list.d/mariadb.list
+# MariaDB 10.3 Repository
+deb [arch=amd64,arm64,ppc64el] http://sfo1.mirrors.digitalocean.com/mariadb/repo/10.3/ubuntu bionic main
+deb-src http://sfo1.mirrors.digitalocean.com/mariadb/repo/10.3/ubuntu bionic main
+
 sudo apt update
 sudo apt install mariadb-server
 sudo vim /etc/mysql/mariadb.conf.d/50-server.cnf
