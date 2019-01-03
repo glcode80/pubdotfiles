@@ -8,6 +8,9 @@ sudo apt upgrade
 sudo hostnamectl set-hostname [HOSTNAME]
 sudo dpkg-reconfigure tzdata 
 
+- add new key for server / remove default
+vim .ssh/authorized_keys
+
 - firewall: open ports needed
 sudo ufw status
 
