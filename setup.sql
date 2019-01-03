@@ -453,3 +453,17 @@ sudo visudo
 # no password required for user at all -> add to end
 # USERNAME ALL=(ALL)  NOPASSWD: ALL
 
+20) speed tests
+- read/write
+Write speed:
+sync; dd if=/dev/zero of=~/test.tmp bs=500K count=1024
+Read speed:
+sync; echo 3 | sudo tee /proc/sys/vm/drop_caches
+sync; time dd if=~/test.tmp of=/dev/null bs=500K count=1024
+rm ~/test.tmp
+sudo apt-get iozone3
+iozone -e -I -a -s 100M -r 4k -i 0 -i 1 -i 2 
+[-f /path/to/file]
+- cpu
+sudo apt install sysbench
+sysbench --test=cpu run
