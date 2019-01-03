@@ -448,3 +448,22 @@ sudo visudo
 # no password required for user at all -> add to end
 # USERNAME ALL=(ALL)  NOPASSWD: ALL
 
+20) goldmaster after install
+sudo apt update
+sudo apt upgrade
+sudo hostnamectl set-hostname [HOSTNAME]
+sudo dpkg-reconfigure tzdata 
+
+- firewall: open ports needed
+sudo ufw status
+sudo ufw allow nginx http
+sudo ufw allow nginx https
+- mysql: add/remove default DB/user 'analyst' + start/stop service overall + mysqltune?
+sudo systemctl status/start/stop/restart mariadb.service
+- nginx: start/stop + setup services
+- wordpress: install more php modules + caching (memcached/nginx cache)
+- monit: start/stop + setup services
+- php-fpm: adjsut/finetune settings
+
+
+
