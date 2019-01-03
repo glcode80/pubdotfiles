@@ -312,7 +312,7 @@ sudo sed -i 's/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/g' /etc/php/7.2/fpm/php.in
   sudo sed -i 's/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/g' /etc/php/7.0/fpm/php.ini
 sudo apt install php7.2-mysql
   sudo apt install php7.0-mysql
-sudo apt-get install php-curl php-gd php-mbstring php-mcrypt php-xml php-xmlrpc php-json
+sudo apt-get install php-curl php-gd php-mbstring php-xml php-xmlrpc php-json
 sudo apt-get install php7.2-zip
   sudo apt-get install php7.0-zip
 sudo apt-get install php7.2-tidy
@@ -380,10 +380,10 @@ Wordpress -> use W3TC -> memcached
 sudo apt-get install geoip-bin
 -> directory: /usr/share/GeoIP/
 geoiplookup 8.8.8.8
-wget https://raw.githubusercontent.com/glcode80/pubdotfiles/master/geoipupdate.sh -P /usr/bin
+sudo wget https://raw.githubusercontent.com/glcode80/pubdotfiles/master/geoipupdate.sh -P /usr/bin
 sudo chmod +x /usr/bin/geoipupdate.sh
 sudo geoipupdate.sh
-0 16 * * 3 /home/USERNAME/geoipupdate.sh >> /home/USERNAME/logs/sudologs.txt 2>&1
+0 16 * * 3 /usr/bin/geoipupdate.sh >> /home/USERNAME/logs/sudologs.txt 2>&1
 
 
 14) cron job 
@@ -452,28 +452,4 @@ sudo visudo
 # Defaults    timestamp_timeout=180
 # no password required for user at all -> add to end
 # USERNAME ALL=(ALL)  NOPASSWD: ALL
-
-20) goldmaster after install [enable=auto-start => everything disabled by default on master]
-sudo apt update
-sudo apt upgrade
-sudo hostnamectl set-hostname [HOSTNAME]
-sudo dpkg-reconfigure tzdata 
-
-- firewall: open ports needed
-sudo ufw status
-sudo ufw allow 80
-sudo ufw allow 443
-
-- mysql: add/remove default DB/user 'analyst' + start/stop service overall + mysqltune?
-sudo systemctl enable/disable/status/start/stop/restart mariadb.service
-
-- nginx: start/stop + setup services
-sudo systemctl enable/disable/status/start/stop/restart nginx
-
-- php-fpm: adjsut/finetune settings
-sudo systemctl enable/disable/status/start/stop/restart php7.2-fpm
-
-- wordpress: install more php modules + caching (memcached/nginx cache)
-- monit: start/stop + setup services
-
 
