@@ -442,3 +442,10 @@ sudo vim /etc/netplan/01-netcfg.yaml
 addresses: [192.168.2.xxx/24]
 sudo netplan apply
 
+19) adjust sudo settings
+sudo visudo
+# increase sudo timeout (-1 = never timeout / default = 5 min)
+# Defaults    timestamp_timeout=180
+# no password required for user at all -> add to end
+# USERNAME ALL=(ALL)  NOPASSWD: ALL
+
