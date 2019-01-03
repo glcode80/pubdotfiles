@@ -3,10 +3,6 @@ goldmaster after install [enable=auto-start]
  => everything enabled by default on master + port 80 open (443 / 3306 closed)
 *****************************************
 
-- link test files to main folder
-sudo ln -s /home/moon/pubdotfiles/sqltest.sql /home/moon/
-sudo ln -s /home/moon/pubdotfiles/setup_goldmaster.sql /home/moon/
-
 sudo apt update
 sudo apt upgrade
 sudo hostnamectl set-hostname [HOSTNAME]
