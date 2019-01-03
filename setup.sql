@@ -146,9 +146,7 @@ deb-src http://sfo1.mirrors.digitalocean.com/mariadb/repo/10.3/ubuntu bionic mai
 
 sudo apt update
 sudo apt install mariadb-server
-sudo vim /etc/mysql/mariadb.conf.d/50-server.cnf
-[mysqld]
-plugin-load-add = auth_socket.so
+sudo mysql_secure_installation
 sudo systemctl restart mariadb.service
 sudo mysql -u root -p
 
