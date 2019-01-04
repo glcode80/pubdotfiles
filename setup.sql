@@ -396,6 +396,7 @@ mysqlcheck -u mydbuser -p mydbname
 * enable remote access:
 sudo ufw allow 3306
 sudo vim /etc/mysql/mysql.conf.d/mysqld.cnf
+sudo vim /etc/mysql/my.cnf.dpkg-new
 -> #bind 127.0.0.1 => comment it out
 sudo systemctl restart mysql
 
@@ -534,7 +535,8 @@ sudo vim /etc/nginx/conf.d/nginx-www-php.conf
 sudo wget https://raw.githubusercontent.com/glcode80/pubdotfiles/master/nginx-wordpress.conf -P /etc/nginx/conf.d
 sudo vim /etc/nginx/conf.d/nginx-wordpress.conf
 
-* certbot
+* certbot -> make sure to open port first!!
+sudo ufw allow 443
 sudo apt install software-properties-common
   sudo apt install software-properties-common python-software-properties
 sudo add-apt-repository ppa:certbot/certbot
