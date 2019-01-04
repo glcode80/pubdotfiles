@@ -408,11 +408,11 @@ mysql -u root -p SOMEDATABASENAME < DATABASENAME.sql
 
 2) backup everyting -> newer versions support skip-definer, olders not
 i) all data (attention: do it only from same db to same db!)
-mysqldump -u root -p --all-databases --routines --triggers --skip-definer > alldb.sql
-mysqldump -u root -p --all-databases --routines --triggers | sed -e 's/DEFINER[ ]*=[ ]*[^*]*\*/\*/' | sed -e 's/DEFINER[ ]*=[ ]*[^*]*PROCEDURE/PROCEDURE/' | sed -e 's/DEFINER[ ]*=[ ]*[^*]*FUNCTION/FUNCTION/' > alldb.sql
+mysqldump -u root -p --all-databases --routines --triggers --events --skip-definer > alldb.sql
+mysqldump -u root -p --all-databases --routines --triggers --events  | sed -e 's/DEFINER[ ]*=[ ]*[^*]*\*/\*/' | sed -e 's/DEFINER[ ]*=[ ]*[^*]*PROCEDURE/PROCEDURE/' | sed -e 's/DEFINER[ ]*=[ ]*[^*]*FUNCTION/FUNCTION/' > alldb.sql
 
 ii) all data specifying database names
-mysqldump -u root -p --databases db1 db2 db3 --routines --triggers | sed -e 's/DEFINER[ ]*=[ ]*[^*]*\*/\*/' | sed -e 's/DEFINER[ ]*=[ ]*[^*]*PROCEDURE/PROCEDURE/' | sed -e 's/DEFINER[ ]*=[ ]*[^*]*FUNCTION/FUNCTION/' > alldb.sql
+mysqldump -u root -p --databases db1 db2 db3 --routines --triggers --events | sed -e 's/DEFINER[ ]*=[ ]*[^*]*\*/\*/' | sed -e 's/DEFINER[ ]*=[ ]*[^*]*PROCEDURE/PROCEDURE/' | sed -e 's/DEFINER[ ]*=[ ]*[^*]*FUNCTION/FUNCTION/' > alldb.sql
 
 iii) all grants (escape special characters in password)
 select concat("'",user,"'@'",host,"'") from mysql.user;
