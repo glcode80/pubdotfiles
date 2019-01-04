@@ -259,8 +259,9 @@ mysql -u root -p
 
 - a) change root password
 USE mysql;
-UPDATE user SET authentication_string=PASSWORD('xxxx') WHERE User='root' AND Host ='localhost';
-  UPDATE user SET password=PASSWORD('xxxx') WHERE User='root' AND Host ='localhost';
+select user,host,authentication_string,password from user;
+UPDATE user SET password=PASSWORD('xxxx') WHERE User='root';
+  UPDATE user SET authentication_string=PASSWORD('xxxx') WHERE User='root' and host='xxx';
 FLUSH PRIVILEGES;
 exit;
 
@@ -379,9 +380,11 @@ quit
 
 * change password
 USE mysql;
-UPDATE user SET authentication_string=PASSWORD('xxxx') WHERE User='zzzz' AND Host ='localhost';
-  UPDATE user SET password=PASSWORD('xxxx') WHERE User='zzz' AND Host ='localhost';
+select user,host,authentication_string,password from user;
+UPDATE user SET password=PASSWORD('xxxx') WHERE User='zzz' AND Host ='localhost';
+  UPDATE user SET authentication_string=PASSWORD('xxxx') WHERE User='zzzz' AND Host ='localhost';
 FLUSH PRIVILEGES;
+exit;
 
 
 * check status of all tables in a schema
