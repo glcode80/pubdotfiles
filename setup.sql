@@ -367,7 +367,10 @@ sysbench --test=fileio --file-test-mode=rndwr run
 *** Mysql Cheat Sheet           ***
 *********************************** 
  
-select User,host from mysql.user;
+select User,host,password,authentication_string from mysql.user;
+select concat("'",user,"'@'",host,"'") from mysql.user;
+select concat("show grants for '",user,"'@'",host,"';") from mysql.user;
+select concat("create user '",user,"'@'",host,"' identified by '';") from mysql.user;
 
 CREATE USER 'exampleuser'@'localhost' IDENTIFIED BY 'xxxx';
 CREATE USER 'userremote'@'%' IDENTIFIED BY 'xxxx';
@@ -411,10 +414,14 @@ ii) all data specifying database names
 mysqldump -u root -p --databases db1 db2 db3 --routines --triggers | sed -e 's/DEFINER[ ]*=[ ]*[^*]*\*/\*/' | sed -e 's/DEFINER[ ]*=[ ]*[^*]*PROCEDURE/PROCEDURE/' | sed -e 's/DEFINER[ ]*=[ ]*[^*]*FUNCTION/FUNCTION/' > alldb.sql
 
 iii) all grants (escape special characters in password)
+select concat("'",user,"'@'",host,"'") from mysql.user;
+select concat("show grants for '",user,"'@'",host,"';") from mysql.user;
+
 MYSQL_CONN="-uroot -pPASSWORD"
 mysql ${MYSQL_CONN} --skip-column-names -A -e"SELECT CONCAT('SHOW GRANTS FOR ''',user,'''@''',host,''';') FROM mysql.user WHERE user<>''" | mysql ${MYSQL_CONN} --skip-column-names -A | sed 's/$/;/g' > MySQLUserGrants.sql
 
 iv) recreate users (if not specified datbase names)
+select concat("create user '",user,"'@'",host,"' identified by '';") from mysql.user;
 
 v) import on other server (remove lines that produce error in grants)
 mysql -u root -p < alldb.sql
