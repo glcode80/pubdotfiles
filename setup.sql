@@ -317,6 +317,11 @@ sudo wget https://raw.githubusercontent.com/glcode80/pubdotfiles/master/make_sql
 sudo chmod +x /usr/bin/make_sql_backups.sh
 sudo vim /usr/bin/make_sql_backups.sh
 
+NEW:
+wget https://raw.githubusercontent.com/glcode80/pubdotfiles/master/backup_sql.sh -P /home/moon
+chmod +x /home/moon/backup_sql.sh
+vim /home/moon/backup_sql.sh
+
 sudo wget https://raw.githubusercontent.com/glcode80/pubdotfiles/master/make_sql_backups_delete.sh -P /usr/bin
 sudo chmod +x /usr/bin/make_sql_backups_delete.sh
 sudo vim /usr/bin/make_sql_backups_delete.sh
