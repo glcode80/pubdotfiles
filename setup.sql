@@ -330,6 +330,11 @@ sudo wget https://raw.githubusercontent.com/glcode80/pubdotfiles/master/make_dat
 sudo chmod +x /usr/bin/make_data_backups.sh
 sudo vim /usr/bin/make_data_backups.sh
 
+NEW:
+wget https://raw.githubusercontent.com/glcode80/pubdotfiles/master/backup_data.sh -P /home/moon
+chmod +x /home/moon/backup_data.sh
+vim /home/moon/backup_data.sh
+
 sudo wget https://raw.githubusercontent.com/glcode80/pubdotfiles/master/make_data_backups_delete.sh -P /usr/bin
 sudo chmod +x /usr/bin/make_data_backups_delete.sh
 sudo vim /usr/bin/make_data_backups_delete.sh
