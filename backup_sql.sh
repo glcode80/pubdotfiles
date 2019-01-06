@@ -44,8 +44,8 @@ elif [ "$1" = "--all-databases" ]; then
     filename="$backupdir$today-alldbs.sql"
 
     executestring="mysqldump -u $sqlusername -p$sqlpassword --all-databases $dumparguments > $filename"
-    echo "$executestring"
-    # eval "$executestring"
+    # echo "$executestring"
+    eval "$executestring"
 
     if [ -f "$filename" ] && [ $compress = "1" ]; then
         gzip "$filename"
