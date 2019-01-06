@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Define overall variables
-htmldir="/var/www/"
+datadir="/var/www/"
 backupdir="/home/moon/backups/"
 
 # will slow down the process to not occupy 100% of cpu
@@ -11,7 +11,7 @@ slowdown="0"
 # Calculate variables
 today=$(date '+%Y-%m-%d-%H-%M-%S');
 
-# arguments = folders in /var/html to back up
+# arguments = folders in datadir to back up
 
 echo
 echo "$(date '+%Y-%m-%d %H:%M:%S') - Start - Data folders backup"
@@ -22,14 +22,14 @@ mkdir -p $backupdir
 if [ $# -eq 0 ]
     then
         echo "No arguments supplied"
-        echo "Please provide folder names within $htmldir to export, options:"
-        eval "ls $htmldir"
+        echo "Please provide folder names within $datadir to export, options:"
+        eval "ls $datadir"
 
 else
     echo "Backup into individual files"
     for foldername in "$@"
     do
-        fullfoldername=$htmldir$foldername/
+        fullfoldername=$datadir$foldername/
         filename="$backupdir$today-$foldername.tar.gz"
 
         echo
