@@ -34,7 +34,23 @@ mkdir -p $backupdir
 if [ $# -eq 0 ]
     then
         echo "No arguments supplied"
-        echo "Please provide database name as argument"
+        echo "Please provide database names as argument"
+        echo "'--all-databases' will export all databases"
+
+#special argument alldb will export all databases
+elif [ "$1" = "--all-databases" ]; then
+    echo "* Processing all databases export"
+
+    filename="$backupdir$today-alldbs.sql"
+
+    executestring="mysqldump -u $sqlusername -p$sqlpassword --all-databases $dumparguments > $filename"
+    echo "$executestring"
+    # eval "$executestring"
+
+    if [ -f "$filename" ] && [ $compress = "1" ]; then
+        gzip "$filename"
+    fi
+
 
 else
     # combinefiles = 1 means that only one command is executed for all databases at the same time
