@@ -95,6 +95,9 @@ sudo pip3 install tld
 sudo pip3 install matplotlib
 sudo pip3 install numpy
 
+update all packages with pip3:
+sudo pip3 freeze — local | grep -v ‘^\-e’ | cut -d = -f 1 | xargs -n1 sudo pip3 install -U
+
 sudo apt-get install -y python3-venv
 mkdir venv
 cd ~/venv
