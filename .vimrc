@@ -60,7 +60,7 @@ filetype plugin indent on    " required
 let mapleader = " "
 
 " show powerline on single buffer
-set laststatus = 2
+set laststatus=2
 
 " Customize auto complete
 " let g:ycm_filetype_blacklist = {'sql':1}
