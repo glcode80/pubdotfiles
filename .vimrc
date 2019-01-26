@@ -41,8 +41,8 @@ Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-repeat'
 Plugin 'kien/ctrlp.vim'
 " Plugin 'airblade/vim-gitgutter'
-Plugin 'SirVer/ultisnips'
-Plugin 'honza/vim-snippets'
+" Plugin 'SirVer/ultisnips'
+" Plugin 'honza/vim-snippets'
 
 Bundle 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
 
@@ -59,6 +59,9 @@ filetype plugin indent on    " required
 " now you can define map <leader>x command
 let mapleader = " "
 
+" show powerline on single buffer
+set laststatus = 2
+
 " Customize auto complete
 " let g:ycm_filetype_blacklist = {'sql':1}
 map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
@@ -71,7 +74,7 @@ let g:ycm_key_list_stop_completion = ['<C-y>']
 let g:ycm_key_invoke_completion = '<C-Space>'
 
 " UltiSnips Trigger C-j / C-k -> toggle tab/s-tab like normal
-let g:UltiSnipsExpandTrigger="<C-j>"
+" let g:UltiSnipsExpandTrigger="<C-j>"
 "
 " customize easymotion
 " let g:EasyMotion_do_mapping = 0 " Disable default mappings
