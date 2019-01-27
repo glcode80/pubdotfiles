@@ -171,7 +171,18 @@ event_scheduler = ON
 
 
 13) Nginx
+-- get most recent version from source
+wget http://nginx.org/keys/nginx_signing.key
+sudo apt-key add nginx_signing.key
+
+sudo vim /etc/apt/sources.list.d/nginx.list
+
+# Nginx repository
+deb [arch=amd64,arm64] http://nginx.org/packages/ubuntu/ bionic nginx
+deb-src http://nginx.org/packages/ubuntu/ bionic nginx
+
 sudo apt update
+sudo apt remove nginx
 sudo apt install nginx
 sudo systemctl start nginx
 sudo systemctl enable nginx
