@@ -187,9 +187,14 @@ sudo apt install nginx
 sudo systemctl start nginx
 sudo systemctl enable nginx
 
+
+
 sudo vim /etc/nginx/nginx.conf
 => www-data
 [from nginx] - if not, you get a 502 gateway error!!
+worker_processes 1
+
+
 
 sudo rm /etc/nginx/sites-enabled/default
 
