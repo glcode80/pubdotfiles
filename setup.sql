@@ -271,6 +271,10 @@ sudo chmod +x /etc/update-motd.d/10-sysinfo
 goldmaster after install [enable=auto-start]
  => everything enabled by default on master + port 80 open (443 / 3306 closed)
 
+check: php7.2-fpm working after restart?
+if not: use monit to make sure it restarts OR change to GRUB2! (issue with linode kernel!)
+
+ 
 sudo apt update
 sudo apt upgrade
 sudo hostnamectl set-hostname [HOSTNAME]
@@ -331,20 +335,50 @@ sudo systemctl enable/disable/status/start/stop/restart php7.2-fpm
 
 1) monit
 sudo apt-get install monit
-sudo vim /etc/monit/conf.d/php7-fpm
 
+* php7.2-fpm
+sudo vim /etc/monit/conf.d/php7.2-fpm
 # make sure to use 7.0 / 7.2 everywhere!!
-check process php7-fpm with pidfile /run/php/php7.2-fpm.pid
+check process php7.2-fpm with pidfile /run/php/php7.2-fpm.pid
 	group www-data #change accordingly
     start program = "/usr/sbin/service php7.2-fpm start" with timeout 60 seconds
     stop program  = "/usr/sbin/service php7.2-fpm stop"
     if failed unixsocket /var/run/php/php7.2-fpm.sock then restart
 
+* mariadb	
+sudo cp /etc/monit/conf-available/mysql /etc/monit/conf.d/
+sudo vim /etc/monit/conf.d/mysql
+find pid files: sudo find / -name "*.pid"
+replace pid for mariadb: /var/lib/mysql/localhost.pid
+
+* nginx
 sudo ln -s /etc/monit/conf-available/nginx /etc/monit/conf-enabled/
-sudo ln -s /etc/monit/conf-available/mysql /etc/monit/conf-enabled/
-sudo ln -s /etc/monit/conf-available/openssh-server /etc/monit/conf-enabled/
+
+* openssh
+sudo cp /etc/monit/conf-available/openssh-server /etc/monit/conf.d/
+sudo vim /etc/monit/conf.d/openssh-server
+-> comment out line 12 / 29-28 (dsa_key sections)
+
+* memcached (tbd)
+
+* cron (tbd)
+
+* enable httpd service on localhost:
+sudo vim /etc/monit/monitrc
+set httpd port 2812 and
+    use address localhost  # only accept connection from localhost
+    allow localhost        # allow localhost to connect to the server and
+
+	
 sudo monit -t
 sudo service monit reload
+-> then
+sudo monit summary
+sudo monit status nginx
+sudo monit status
+
+logfile:
+sudo vim /var/log/monit.log
 
 
 2) Backup scripts
