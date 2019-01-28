@@ -193,6 +193,17 @@ sudo cp /home/moon/pubdotfiles/nginx.conf.1.14.0_use   /etc/nginx/nginx.conf
 sudo systemctl restart nginx
 sudo systemctl status nginx
 
+* fix bug with "can't open pid" on status
+sudo mkdir /etc/systemd/system/nginx.service.d
+sudo vim /etc/systemd/system/nginx.service.d/override.conf
+[Service]
+ExecStartPost=/bin/sleep 0.1
+
+sudo systemctl daemon-reload
+sudo systemctl restart nginx
+sudo systemctl status nginx
+
+
 sudo vim /etc/nginx/nginx.conf
 => www-data
 [from nginx] - if not, you get a 502 gateway error!!
