@@ -187,7 +187,10 @@ sudo apt install nginx
 sudo systemctl start nginx
 sudo systemctl enable nginx
 
-
+* replace default conf file with old file with proper settings
+sudo rm /etc/nginx/nginx.conf
+sudo cp /home/moon/pubdotfiles/nginx.conf.1.14.0_use   /etc/nginx/nginx.conf
+sudo systemctl restart nginx
 
 sudo vim /etc/nginx/nginx.conf
 => www-data
