@@ -191,6 +191,7 @@ sudo systemctl enable nginx
 sudo rm /etc/nginx/nginx.conf
 sudo cp /home/moon/pubdotfiles/nginx.conf.1.14.0_use   /etc/nginx/nginx.conf
 sudo systemctl restart nginx
+sudo systemctl status nginx
 
 sudo vim /etc/nginx/nginx.conf
 => www-data
@@ -200,6 +201,7 @@ worker_processes 1
 
 
 sudo rm /etc/nginx/sites-enabled/default
+sudo rm /etc/nginx/conf.d/default.conf
 
 -- test: hello world
 sudo wget https://raw.githubusercontent.com/glcode80/pubdotfiles/master/nginx-default-helloworld.conf -P /etc/nginx/conf.d
