@@ -7,6 +7,8 @@ Summary setup file for server setup
 *** Setup basic LEMP image      ***
 ***********************************
 
+0) config: GRUB2 on some hosts better for php-fpm - check if running/restarting!
+
 1) overall server setup
 sudo apt-get update
 sudo apt-get upgrade
@@ -263,6 +265,54 @@ sudo apt-get install lsb-release figlet update-motd update-notifier-common
 sudo wget https://raw.githubusercontent.com/glcode80/pubdotfiles/master/10-sysinfo -P /etc/update-motd.d/
 sudo chmod +x /etc/update-motd.d/10-sysinfo
 
+17) monit
+sudo apt-get install monit
+
+* php7.2-fpm
+sudo vim /etc/monit/conf.d/php7.2-fpm
+# make sure to use 7.0 / 7.2 everywhere!!
+check process php7.2-fpm with pidfile /run/php/php7.2-fpm.pid
+	group www-data #change accordingly
+    start program = "/usr/sbin/service php7.2-fpm start" with timeout 60 seconds
+    stop program  = "/usr/sbin/service php7.2-fpm stop"
+    if failed unixsocket /var/run/php/php7.2-fpm.sock then restart
+
+* mariadb	
+sudo cp /etc/monit/conf-available/mysql /etc/monit/conf.d/
+sudo vim /etc/monit/conf.d/mysql
+find pid files: sudo find / -name "*.pid"
+replace pid for mariadb: /var/lib/mysql/localhost.pid
+
+* nginx
+sudo ln -s /etc/monit/conf-available/nginx /etc/monit/conf-enabled/
+
+* openssh
+sudo cp /etc/monit/conf-available/openssh-server /etc/monit/conf.d/
+sudo vim /etc/monit/conf.d/openssh-server
+-> comment out line 12 / 29-28 (dsa_key sections)
+
+* cron
+sudo ln -s /etc/monit/conf-available/cron /etc/monit/conf-enabled/
+
+* memcached (tbd)
+
+* enable httpd service on localhost:
+sudo vim /etc/monit/monitrc
+set httpd port 2812 and
+    use address localhost  # only accept connection from localhost
+    allow localhost        # allow localhost to connect to the server and
+
+	
+sudo monit -t
+sudo service monit reload
+-> then
+sudo monit summary
+sudo monit status nginx
+sudo monit status
+
+logfile:
+sudo vim /var/log/monit.log
+
 
 ***********************************
 *** Fine-tune gold master       ***
@@ -270,9 +320,11 @@ sudo chmod +x /etc/update-motd.d/10-sysinfo
 
 goldmaster after install [enable=auto-start]
  => everything enabled by default on master + port 80 open (443 / 3306 closed)
-
+ => monit enabled
+ 
 check: php7.2-fpm working after restart?
-if not: use monit to make sure it restarts OR change to GRUB2! (issue with linode kernel!)
+if not: use GRUB2 (and or monit to make sure it restarts) -> issue with linode kernel!
+sudo monit summary
 
  
 sudo apt update
@@ -324,64 +376,23 @@ sudo systemctl enable/disable/status/start/stop/restart nginx
 sudo systemctl disable php7.2-fpm
 sudo systemctl enable/disable/status/start/stop/restart php7.2-fpm
 
+7) adjust monit accordingly
+cd /etc/monit/conf-enabled
+cd /etc/monit/conf.d
+rm files
+sudo monit summary
+
+
 7) nginx: default profile, certificate, certbot, settings
 8) php/wordpress: caching (memcached/nginx cache/opcache/settings)
-9) monit: install (see below)
-
+9) monit memcached
 
 ****************************************
 *** Additional settings/adjustments  ***
 ****************************************
 
-1) monit
-sudo apt-get install monit
 
-* php7.2-fpm
-sudo vim /etc/monit/conf.d/php7.2-fpm
-# make sure to use 7.0 / 7.2 everywhere!!
-check process php7.2-fpm with pidfile /run/php/php7.2-fpm.pid
-	group www-data #change accordingly
-    start program = "/usr/sbin/service php7.2-fpm start" with timeout 60 seconds
-    stop program  = "/usr/sbin/service php7.2-fpm stop"
-    if failed unixsocket /var/run/php/php7.2-fpm.sock then restart
-
-* mariadb	
-sudo cp /etc/monit/conf-available/mysql /etc/monit/conf.d/
-sudo vim /etc/monit/conf.d/mysql
-find pid files: sudo find / -name "*.pid"
-replace pid for mariadb: /var/lib/mysql/localhost.pid
-
-* nginx
-sudo ln -s /etc/monit/conf-available/nginx /etc/monit/conf-enabled/
-
-* openssh
-sudo cp /etc/monit/conf-available/openssh-server /etc/monit/conf.d/
-sudo vim /etc/monit/conf.d/openssh-server
--> comment out line 12 / 29-28 (dsa_key sections)
-
-* memcached (tbd)
-
-* cron (tbd)
-
-* enable httpd service on localhost:
-sudo vim /etc/monit/monitrc
-set httpd port 2812 and
-    use address localhost  # only accept connection from localhost
-    allow localhost        # allow localhost to connect to the server and
-
-	
-sudo monit -t
-sudo service monit reload
--> then
-sudo monit summary
-sudo monit status nginx
-sudo monit status
-
-logfile:
-sudo vim /var/log/monit.log
-
-
-2) Backup scripts
+1) Backup scripts
 sudo wget https://raw.githubusercontent.com/glcode80/pubdotfiles/master/make_sql_backups.sh -P /usr/bin
 sudo chmod +x /usr/bin/make_sql_backups.sh
 sudo vim /usr/bin/make_sql_backups.sh
@@ -413,7 +424,7 @@ sudo chmod +x /usr/bin/make_rclone.sh
 sudo vim /usr/bin/make_rclone.sh
 
 
-3) fix local ip instead of dhcp on 18.04
+2) fix local ip instead of dhcp on 18.04
 ifconfig
 sudo cp /etc/netplan/50-cloud-init.yaml /etc/netplan/01-netcfg.yaml
 sudo vim /etc/netplan/01-netcfg.yaml
@@ -421,7 +432,7 @@ addresses: [192.168.2.xxx/24]
 sudo netplan apply
 
 
-4) speed tests
+3) speed tests
 - read/write
 Write speed:
 sync; dd if=/dev/zero of=~/test.tmp bs=500K count=1024
