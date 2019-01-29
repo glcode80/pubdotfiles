@@ -381,7 +381,25 @@ cd /etc/monit/conf-enabled
 cd /etc/monit/conf.d
 rm files
 sudo monit summary
+sudo vim /etc/monit/monitrc
 
+* enable email alerts from monit
+sudo vim /etc/monit/monitrc
+#Mail settings via Mailgun SMTP
+set mail-format {
+  from: monit@**MONITDOMAIN**.com
+  subject: $HOST - Monit Alert -- $EVENT
+  message: $EVENT Service $SERVICE
+                Date:        $DATE
+                Action:      $ACTION
+                Host:        $HOST
+                Description: $DESCRIPTION
+				}
+set mailserver smtp.mailgun.org port 587
+  username postmaster@mg.**MONITDOMAIN**.com password "**MAILGUN_SMTP_PASSWORD**"
+  using TLSV1 with timeout 30 seconds
+set alert **RECEIVING_EMAIL** #email address which will receive monit alerts
+sudo monit restart
 
 7) nginx: default profile, certificate, certbot, settings
 8) php/wordpress: caching (memcached/nginx cache/opcache/settings)
