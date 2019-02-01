@@ -175,6 +175,9 @@ hi Nontext guifg=Black guibg=White
 " NerdCommenter - always add space after comment sign
 let NERDSpaceDelims=1
 
+" NerdCommenter - change default character from /* * to #
+let g:NERDCustomDelimiters = { '': { 'left': '#'} }
+
 " LATER - neeed for syntastic plugin "
 " set statusline+=%#warningmsg#
 " set statusline+=%{SyntasticStatuslineFlag()}p<p<
