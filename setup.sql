@@ -282,6 +282,7 @@ sudo cp /etc/monit/conf-available/mysql /etc/monit/conf.d/
 sudo vim /etc/monit/conf.d/mysql
 find pid files: sudo find / -name "*.pid"
 replace pid for mariadb: /var/lib/mysql/localhost.pid
+-> attention: this is always the hostname!
 
 * nginx
 sudo ln -s /etc/monit/conf-available/nginx /etc/monit/conf-enabled/
@@ -382,6 +383,13 @@ cd /etc/monit/conf.d
 rm files
 sudo monit summary
 sudo vim /etc/monit/monitrc
+
+* attention need to adjust mysql pid in hostname
+sudo vim /etc/monit/conf.d/mysql
+find pid files: sudo find / -name "*.pid"
+replace pid for mariadb: /var/lib/mysql/localhost.pid
+-> attention: this is always the hostname!
+
 
 * enable email alerts from monit
 sudo vim /etc/monit/monitrc
