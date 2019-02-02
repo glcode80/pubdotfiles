@@ -171,6 +171,11 @@ sudo vim /etc/mysql/conf.d/mysql.cnf
 [mysqld]
 event_scheduler = ON 
 
+-- Fix error log for mysql to log file location
+sudo vim /etc/mysql/conf.d/mysql.cnf
+[mysqld]
+log_error = /var/log/mysql/error.log
+
 
 13) Nginx
 -- get most recent version from source
@@ -707,6 +712,46 @@ sudo rm -rf /var/run/nginxcacheGLOBAL/*
   (or custom cache path)
 
 benchmark testing: loader.io
+
+
+** tune php workers **
+
+sudo vim /etc/php/7.2/fpm/pool.d/www.conf
+-> user/group = www-data
+
+i) tune php-fpm - max children etc! => adjust if more RAM is available!
+a) get memory used per process:
+ps aux | grep "php-fpm"
+-> last before ? -> around 65mb
+
+=> how much ram available (after memcached)?
+-> maybe take 50% of "free -m"
+on 2GB droplet, maybre around 1.5GB free -> use 700MB
+-> set it to 12 children
+
+pm.max_children = 12
+pm.start_servers = 4 [ca 1/3]
+pm.min_spare_servers = 4 [ca/3]
+pm.max_spare_servers = 7 [ca 60%]
+pm.max_requests = 500 [leave]
+
+for 4GB Linode -> free 3.5GB -> use 2GB -> 
+pm.max_children = 24
+pm.start_servers = 8 [ca 1/3]
+pm.min_spare_servers = 8 [ca/3]
+pm.max_spare_servers = 16 [ca 60%]
+pm.max_requests = 500 [leave]
+
+ii) php-fpm emergency restart settings [not implemented yet, using monit]
+https://serverfault.com/questions/575457/constantly-have-to-reload-php-fpm
+sudo vim /etc/php/7.2/fpm/php-fpm.conf
+
+emergency_restart_threshold=3
+emergency_restart_interval=1m
+process_control_timeout=5s
+
+
+
 
 ***********************************
 *** Adjust PHP / Memcached      ***
