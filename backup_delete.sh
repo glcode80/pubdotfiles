@@ -2,12 +2,19 @@
 
 echo "$(date '+%Y-%m-%d %H:%M:%S') - Start - Script to delete if not enough space, then run backup"
 
-DIR="/home/USERNAME/backups"
+backupdir="/home/moon/backups"
 reqSpace=12000000
+
+searchstring="*.tar.gz" # for data files
+# searchstring="*sql*" # for sql files
+
+executestring="source /home/moon/backup_data.sh XXXX"
+# executestring = "source /home/moon/backup_sql.sh XXXX"
+
 
 availSpace=$(df "$HOME" | awk 'NR==2 { print $4 }')
 
-if ! cd $DIR
+if ! cd $backupdir
 then
     echo "ERROR: unable to chdir to directory '$DIR'"
     exit 2
@@ -22,11 +29,12 @@ if (( availSpace < reqSpace )); then
     # we are below the limit. Just
     # delete regular files, ignore directories.
     #
-    ls *html-folders* -rt | while read FILE
+    lsstring="ls $searchstring -rt"
+    eval "$lsstring" | while read -r FILE
     do
-        if [ -f $FILE ]
+        if [ -f "$FILE" ]
         then
-            if rm -f $FILE
+            if rm -f "$FILE"
             then
                 echo "Deleted $FILE"
                 availSpace=$(df "$HOME" | awk 'NR==2 { print $4 }')
@@ -52,8 +60,7 @@ echo "Available space after deleting files if not enough space: $availSpace"
 if (( availSpace > reqSpace )); then
     echo "Enough available space now - doing backup job"
 	# ADD BACKUP details here OR call backup script
-	# source /usr/bin/make_sql_backups.sh
-	source /usr/bin/make_data_backups.sh
+	eval "$executestring"
 else
 	echo "Available space still not sufficient, not doing anything!"
 fi

@@ -424,35 +424,21 @@ sudo monit restart
 
 
 1) Backup scripts
-sudo wget https://raw.githubusercontent.com/glcode80/pubdotfiles/master/make_sql_backups.sh -P /usr/bin
-sudo chmod +x /usr/bin/make_sql_backups.sh
-sudo vim /usr/bin/make_sql_backups.sh
-
-NEW:
 wget https://raw.githubusercontent.com/glcode80/pubdotfiles/master/backup_sql.sh -P /home/moon
 chmod +x /home/moon/backup_sql.sh
 vim /home/moon/backup_sql.sh
 
-sudo wget https://raw.githubusercontent.com/glcode80/pubdotfiles/master/make_sql_backups_delete.sh -P /usr/bin
-sudo chmod +x /usr/bin/make_sql_backups_delete.sh
-sudo vim /usr/bin/make_sql_backups_delete.sh
-
-sudo wget https://raw.githubusercontent.com/glcode80/pubdotfiles/master/make_data_backups.sh -P /usr/bin
-sudo chmod +x /usr/bin/make_data_backups.sh
-sudo vim /usr/bin/make_data_backups.sh
-
-NEW:
 wget https://raw.githubusercontent.com/glcode80/pubdotfiles/master/backup_data.sh -P /home/moon
 chmod +x /home/moon/backup_data.sh
 vim /home/moon/backup_data.sh
 
-sudo wget https://raw.githubusercontent.com/glcode80/pubdotfiles/master/make_data_backups_delete.sh -P /usr/bin
-sudo chmod +x /usr/bin/make_data_backups_delete.sh
-sudo vim /usr/bin/make_data_backups_delete.sh
+wget https://raw.githubusercontent.com/glcode80/pubdotfiles/master/backup_delete.sh -P /home/moon
+chmod +x /home/moon/backup_delete.sh
+vim /home/moon/backup_delete.sh
 
-sudo wget https://raw.githubusercontent.com/glcode80/pubdotfiles/master/make_rclone.sh -P /usr/bin
-sudo chmod +x /usr/bin/make_rclone.sh
-sudo vim /usr/bin/make_rclone.sh
+wget https://raw.githubusercontent.com/glcode80/pubdotfiles/master/backup_rclone.sh -P /home/moon
+chmod +x /home/moon/backup_rclone.sh
+vim /home/moon/backup_rclone.sh
 
 
 2) fix local ip instead of dhcp on 18.04
