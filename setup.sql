@@ -171,7 +171,7 @@ sudo vim /etc/mysql/conf.d/mysql.cnf
 [mysqld]
 event_scheduler = ON 
 
--- Fix error log for mysql to log file location
+* Fix error log for mysql to log file location
 sudo vim /etc/mysql/conf.d/mysql.cnf
 [mysqld]
 log_error = /var/log/mysql/error.log
