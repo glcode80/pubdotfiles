@@ -554,6 +554,8 @@ viii) check if everything is in order!
 * server name anpassen/ersetzen in der DB! -> benutze tool dazu!
 git clone https://github.com/interconnectit/Search-Replace-DB.git
 php srdb.cli.php -h localhost -n DBNAME -u USERNAME -p PASSWORT -s ALTEDOMAIN.com -r NEUEDOMAIN.COM
+** !! attention -> if wordpress gives 404
+  -> disable / delete nginx.conf file from w3tc in conf / foldder **
 
 
 * Mysqltuner - https://github.com/major/MySQLTuner-perl
