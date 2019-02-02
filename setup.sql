@@ -551,6 +551,10 @@ viii) check if everything is in order!
  -> this changes the import time from 6 hours to 20 mins on 4GB of data!!
  -> then add the index via sql, easy
 
+* server name anpassen/ersetzen in der DB! -> benutze tool dazu!
+git clone https://github.com/interconnectit/Search-Replace-DB.git
+php srdb.cli.php -h localhost -n DBNAME -u USERNAME -p PASSWORT -s ALTEDOMAIN.com -r NEUEDOMAIN.COM
+
 
 * Mysqltuner - https://github.com/major/MySQLTuner-perl
 mkdir /home/moon/mysqltuner
