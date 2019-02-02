@@ -606,7 +606,22 @@ sudo ufw insert 1 deny from xx.xx.xx.xx to any
 - unban an IP with ufw
 sudo ufw status numbered
 sudo ufw delete XXX
- 
+
+- add other jails to fail2ban -> add enabled=true + make sure to have proper log file
+sudo vim /etc/fail2ban/jail.local
+sudo fail2ban-client -t
+sudo service fail2ban restart
+sudo fail2ban-client status [xxx]
+
+example:
+[mysqld-auth]
+enabled = true
+port     = 3306
+logpath=/var/log/mysql/error.log
+# logpath  = %(mysql_log)s
+backend  = %(mysql_backend)s
+
+
 
 
 
