@@ -721,6 +721,38 @@ sudo rm -rf /var/run/nginxcacheGLOBAL/*
 benchmark testing: loader.io
 
 
+*** Ngxinx redirect based on country code from IP ***
+https://dzone.com/articles/nginx-with-geoip-maxmind-database-to-fetch-user-ge
+https://www.howtoforge.com/tutorial/how-to-use-geoip-with-nginx-on-ubuntu-16.04/
+
+1) install / load geoip module
+sudo apt-get install nginx-module-geoip
+sudo vim /etc/nginx/nginx.conf
+-> beginning
+load_module "modules/ngx_http_geoip_module.so";
+
+2) get geoip file into etc/nginx
+!! attention: not possible to update anymore! check!!
+sudo mkdir /etc/nginx/geoip
+sudo cp /usr/share/GeoIP/GeoIP.dat /etc/nginx/geoip
+
+3) adjust http section of nginx.conf
+sudo vim /etc/nginx/nginx.conf
+
+    # load db -> make field available to config scripts
+    # -> can use $geoip_country_code
+    geoip_country /etc/nginx/geoip/GeoIP.dat;
+
+sudo vim /etc/nginx/conf.d/CONFFILE.conf
+
+    # do temporary redirect (307) based on country code
+    if ($geoip_country_code ~ (US|DE) ) {
+        return 307 https://www.OTHERDOMAIN.com;
+		return 307 https://www.OTHERDOMAIN.com$request_uri;
+    }
+
+
+
 ** tune php workers **
 
 sudo vim /etc/php/7.2/fpm/pool.d/www.conf
