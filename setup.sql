@@ -745,13 +745,45 @@ sudo vim /etc/nginx/nginx.conf
 
 sudo vim /etc/nginx/conf.d/CONFFILE.conf
 
-    # do temporary redirect (307) based on country code
+    # do temporary redirect (307) based on country code -> add to server block
     if ($geoip_country_code ~ (US|DE) ) {
         return 307 https://www.OTHERDOMAIN.com;
 		return 307 https://www.OTHERDOMAIN.com$request_uri;
     }
 
+*** Nginx more redirect codes / Cookies ***
 
+* Redirect with rewrite -> add to location block (will cause 302="found")
+rewrite ^ $scheme://NEWURL break;
+# rewrite ^ $scheme://$NEWURL$request_uri break;
+
+* Redirect only the first time -> only if cookie is not set yet
+if ($http_cookie !~ "redirect=set") {
+	add_header Set-Cookie "redirect=set;Max-Age=31536000";
+	rewrite ^ $scheme://NEWURL break;
+	}
+
+* Multiple conditions -> do hack of seting $test = A, then $testB -> check for "AB"
+
+** Combine: redirect only first time for certain country codes 
+
+# general server section
+# first set redirect_goal to default uri entered, if geoip redirect -> change it
+# then below: only redirect, if http cookie is not set yet
+set $redirect_goal $host$request_uri;
+if ($geoip_country_code ~ (DE|CH) ) {
+	set $redirect_goal "CUSTOMURL";
+}
+
+# within location section (before nginx page cache)
+# Redirect only first time, if cookie is not set yet
+# redirect to URI defined above (based on country code)
+if ($http_cookie !~ "redirect=set") {
+	add_header Set-Cookie "redirect=set;Max-Age=31536000";
+	rewrite ^ $scheme://$redirect_goal break;
+	}
+
+	
 
 ** tune php workers **
 
