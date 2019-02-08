@@ -144,10 +144,9 @@ sudo ufw default deny incoming
 sudo ufw allow ssh
 sudo ufw logging on
 sudo apt-get install fail2ban
-cd /etc/fail2ban
-sudo cp fail2ban.conf fail2ban.local
-sudo cp jail.conf jail.local
-sudo vim jail.local
+sudo cp /etc/fail2banfail2ban.conf /etc/fail2banfail2ban.local
+sudo cp /etc/fail2banjail.conf /etc/fail2banjail.local
+sudo vim /etc/fail2banjail.local
 - bantime = default: 600 =10 minutes => change to 31536000 = 1 year
 sudo fail2ban-client start
 
