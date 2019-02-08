@@ -454,6 +454,17 @@ sudo vim /etc/netplan/01-netcfg.yaml
 addresses: [192.168.2.xxx/24]
 sudo netplan apply
 
+2b) fix dhcp ip release on 18.04 -> use max as identifier
+ifconfig
+sudo cp /etc/netplan/50-cloud-init.yaml /etc/netplan/01-netcfg.yaml
+sudo vim /etc/netplan/01-netcfg.yaml
+add:
+	dhcp-identifier: mac
+sudo netplan apply
+
+2c) -- if hostname doesn't change, run first:
+sudo apt remove cloud-init
+
 
 3) speed tests
 - read/write
