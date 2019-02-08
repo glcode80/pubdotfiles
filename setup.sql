@@ -301,7 +301,7 @@ sudo ln -s /etc/monit/conf-available/nginx /etc/monit/conf-enabled/
 * openssh
 sudo cp /etc/monit/conf-available/openssh-server /etc/monit/conf.d/
 sudo vim /etc/monit/conf.d/openssh-server
--> comment out line 12 / 29-28 (dsa_key sections)
+-> comment out line 12 / 26-28 (dsa_key sections)
 
 * cron
 sudo ln -s /etc/monit/conf-available/cron /etc/monit/conf-enabled/
