@@ -24,6 +24,12 @@ sudo visudo
 # no password required for user at all -> add to end
 moon ALL=(ALL)  NOPASSWD: ALL
 
+# if sudo crontab -e raises issues, add to visudo settings
+Defaults env_keep += "EDITOR"
+
+vim .bashrc
+export EDITOR=/usr/bin/vim
+
 
 3) ssh keys -> login with user
 ssh-keygen -b 4096
@@ -285,7 +291,8 @@ check process php7.2-fpm with pidfile /run/php/php7.2-fpm.pid
 * mariadb	
 sudo cp /etc/monit/conf-available/mysql /etc/monit/conf.d/
 sudo vim /etc/monit/conf.d/mysql
-find pid files: sudo find / -name "*.pid"
+find pid files: 
+	sudo find / -name "*.pid"
 replace pid for mariadb: /var/lib/mysql/localhost.pid
 -> attention: this is always the hostname!
 
