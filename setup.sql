@@ -259,6 +259,7 @@ sudo systemctl restart php7.2-fpm
 sudo apt-get install geoip-bin
 -> directory: /usr/share/GeoIP/
 geoiplookup 8.8.8.8
+sudo rm /usr/bin/geoipupdate.sh
 sudo wget https://raw.githubusercontent.com/glcode80/pubdotfiles/master/geoipupdate.sh -P /usr/bin
 sudo chmod +x /usr/bin/geoipupdate.sh
 sudo geoipupdate.sh
