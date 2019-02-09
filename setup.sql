@@ -769,6 +769,8 @@ sudo vim /etc/nginx/conf.d/CONFFILE.conf
 		return 307 https://www.OTHERDOMAIN.com$request_uri;
     }
 
+new test: geoip2 module -> compiled from github -> uploaded [does not work, need to be exactly the same build flags]
+
 *** Nginx more redirect codes / Cookies ***
 
 * Redirect with rewrite -> add to location block (will cause 302="found")
