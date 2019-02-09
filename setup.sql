@@ -749,27 +749,26 @@ sudo vim /etc/nginx/nginx.conf
 -> beginning
 load_module "modules/ngx_http_geoip_module.so";
 
-2) get geoip file into etc/nginx
+2) run new geoipupdate.sh script
 !! attention: not possible to update anymore! check!!
-sudo mkdir /etc/nginx/geoip
-sudo cp /usr/share/GeoIP/GeoIP.dat /etc/nginx/geoip
+ -> use new geoip update script from manual source
+ => /usr/share/GeoIP/maxmind.dat
 
 3) adjust http section of nginx.conf
 sudo vim /etc/nginx/nginx.conf
 
     # load db -> make field available to config scripts
     # -> can use $geoip_country_code
-    geoip_country /etc/nginx/geoip/GeoIP.dat;
+	# use manually downloaded db that is still updated for country 4/6
+	geoip_country /usr/share/GeoIP/maxmind.dat;
 
 sudo vim /etc/nginx/conf.d/CONFFILE.conf
 
     # do temporary redirect (307) based on country code -> add to server block
     if ($geoip_country_code ~ (US|DE) ) {
         return 307 https://www.OTHERDOMAIN.com;
-		return 307 https://www.OTHERDOMAIN.com$request_uri;
+		# return 307 https://www.OTHERDOMAIN.com$request_uri;
     }
-
-new test: geoip2 module -> compiled from github -> uploaded [does not work, need to be exactly the same build flags]
 
 *** Nginx more redirect codes / Cookies ***
 
