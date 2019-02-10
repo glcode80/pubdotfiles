@@ -703,15 +703,23 @@ sudo crontab -e
 -> test by checking response headers: HIT/MISS/BYPASS
 
 /var/run = ram disk! -> can also put to normal disk. be careful with size of cache
+/etc/nginx = normal disk -> instead of 50ms around 60-70ms (no big difference)
 
 sudo vim /etc/nginx/nginx.conf
 
 # ** NGINX PAGE CACHE START - nginx.conf http - options: 60m, 5h, 5d - adjust in conf too! **
+
 fastcgi_cache_path /var/run/nginxcacheGLOBAL levels=1:2 keys_zone=cacheGLOBAL:100m inactive=7d;
+# fastcgi_cache_path /etc/nginx/nginxcacheGLOBAL levels=1:2 keys_zone=cacheGLOBAL:300m inactive=7d;
+
 # can have second cache for other page with different params, if no intention to share
 # fastcgi_cache_path /var/run/nginxcacheSITE1 levels=1:2 keys_zone=cacheSITE1:100m inactive=7d;
 # fastcgi_cache_path /var/run/nginxcacheSITE2 levels=1:2 keys_zone=cacheSITE2:100m inactive=7d;
+
 fastcgi_cache_key "$scheme$request_method$host$request_uri";
+# for geoip cache, add countrycode (needs working geoip module!)
+fastcgi_cache_key "$scheme$request_method$host$request_uri$geoip_country_code";
+
 fastcgi_cache_use_stale error timeout invalid_header http_500;
 fastcgi_ignore_headers Cache-Control Expires Set-Cookie;
 # ** NGINX PAGE CACHE END - nginx.conf http**
