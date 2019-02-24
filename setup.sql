@@ -144,9 +144,9 @@ sudo ufw default deny incoming
 sudo ufw allow ssh
 sudo ufw logging on
 sudo apt-get install fail2ban
-sudo cp /etc/fail2banfail2ban.conf /etc/fail2banfail2ban.local
-sudo cp /etc/fail2banjail.conf /etc/fail2banjail.local
-sudo vim /etc/fail2banjail.local
+sudo cp /etc/fail2ban/fail2ban.conf /etc/fail2ban/fail2ban.local
+sudo cp /etc/fail2ban/jail.conf /etc/fail2ban/jail.local
+sudo vim /etc/fail2ban/jail.local
 - bantime = default: 600 =10 minutes => change to 31536000 = 1 year
 sudo fail2ban-client start
 
@@ -620,10 +620,46 @@ sudo ufw delete XXX
 - add other jails to fail2ban -> add enabled=true + make sure to have proper log file
 sudo vim /etc/fail2ban/jail.local
 sudo fail2ban-client -t
+sudo fail2ban-client reload
 sudo service fail2ban restart
 sudo fail2ban-client status [xxx]
 
-example:
+* important:
+- by default localhost is excluded
+- filter needs to be in /etc/fail2ban/filter.d
+- need "enabeld = true"
+- need filter = xxx (if different name from heading)
+- need proper log path
+- test filter on a file -> to show exact lines: --print-all-matched
+sudo fail2ban-regex /var/log/nginx/access.log /etc/fail2ban/filter.d/nginx-wordpress.conf
+sudo fail2ban-regex /var/log/mysql/error.log /etc/fail2ban/filter.d/mysqld-auth.conf
+sudo fail2ban-regex /var/log/nginx/error.log /etc/fail2ban/filter.d/nginx-http-auth.conf
+sudo fail2ban-regex /var/log/nginx/error.log /etc/fail2ban/filter.d/nginx-botsearch.conf
+
+* option [to ignore an ip on a filter]
+ignoreip = xxx.xxx
+
+* add own nginx-wordpress filter
+sudo vim /etc/fail2ban/filter.d/nginx-wordpress.conf
+[Definition]
+failregex = <HOST>.*POST.*(wp-login\.php|xmlrpc\.php).* (403|499|200)
+
+
+enable a new filters:
+sudo vim /etc/fail2ban/jail.local
+
+* uncomment -> to make sure monit still works for mysql
+ignoreip = 127.0.0.1/8 ::1
+
+
+[nginx-wordpress]
+enabled = true
+port = http,https
+filter = nginx-wordpress
+logpath = /var/log/nginx/*access.log
+maxretry = 6
+
+
 [mysqld-auth]
 enabled = true
 port     = 3306
@@ -632,7 +668,26 @@ logpath=/var/log/mysql/error.log
 backend  = %(mysql_backend)s
 
 
+* and enable for -> check later
+[nginx-http-auth]
+enabled = true
+logpath = /var/log/nginx/*error.log
 
+[nginx-botsearch]
+enabled = true
+logpath = /var/log/nginx/*error.log
+# logpath = %(nginx_error_log)s
+
+sudo fail2ban-client -t
+sudo fail2ban-client reload
+
+* check log files / status */
+sudo vim /var/log/fail2ban.log
+sudo fail2ban-client -t
+sudo fail2ban-client status
+sudo fail2ban-client status sshd
+sudo fail2ban-client status nginx-wordpress
+sudo systemctl status fail2ban.service
 
 
 ***********************************
