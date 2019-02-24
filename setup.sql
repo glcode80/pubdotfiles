@@ -814,6 +814,9 @@ if ($http_cookie !~ "redirect=set") {
 
 ** tune php workers **
 
+* Attention: if cpu 100% is the problem, then better to have not too many workers *
+* -> better to have 2 workers, if 2 cpus are available, otherwise just too much overhead *
+
 sudo vim /etc/php/7.2/fpm/pool.d/www.conf
 -> user/group = www-data
 
