@@ -385,7 +385,7 @@ sudo systemctl enable/disable/status/start/stop/restart mariadb.service
 sudo systemctl disable nginx
 sudo systemctl enable/disable/status/start/stop/restart nginx
 
-6) php-fpm: adjsut/finetune settings
+6) php-fpm: adjust/finetune settings
 sudo systemctl disable php7.2-fpm
 sudo systemctl enable/disable/status/start/stop/restart php7.2-fpm
 
@@ -421,9 +421,12 @@ set mailserver smtp.mailgun.org port 587
 set alert **RECEIVING_EMAIL** #email address which will receive monit alerts
 sudo monit restart
 
-7) nginx: default profile, certificate, certbot, settings
-8) php/wordpress: caching (memcached/nginx cache/opcache/settings)
-9) monit memcached
+8) nginx: default profile, certificate, certbot, settings
+
+9) fail2ban: nginx-wordpress, nginx-default, ...
+
+10) php/wordpress: caching (memcached/nginx cache/opcache/settings)
+
 
 ****************************************
 *** Additional settings/adjustments  ***
