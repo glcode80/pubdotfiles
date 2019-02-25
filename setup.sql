@@ -18,7 +18,7 @@ adduser moon sudo
 
 
 2) adjust sudo settings
-sudo visudo
+sudo EDITOR=vim visudo
 # increase sudo timeout (-1 = never timeout / default = 5 min)
 # Defaults    timestamp_timeout=180
 # no password required for user at all -> add to end
