@@ -16,6 +16,7 @@ set bs=2
 " set leader key to space instead of backslash
 " now you can define map <leader>x command
 let mapleader = " "
+autocmd BufReadPost * tab ball
 
 " show powerline on single buffer
 set laststatus=2
