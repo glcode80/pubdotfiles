@@ -6,8 +6,12 @@
 set nocompatible              " required
 filetype off                  " required
 
+" set layout for gvim
 set lines=60 columns=140
-set guifont=DejaVu_Sans_Mono_for_Powerline:h10:cDEFAULT
+set guifont=DejaVu_Sans_Mono_for_Powerline:h9:cDEFAULT
+set linespace=0
+" fix enter not working
+set bs=2
 
 " set leader key to space instead of backslash
 " now you can define map <leader>x command
@@ -38,7 +42,10 @@ set encoding=utf-8
 
 " always use system clipboard
 " set clipboard=unnamedplus
-set clipboard=
+" set clipboard=
+set clipboard=unnamed
+" map y "+y 
+
 
 " sane editing
 set tabstop=4
@@ -55,49 +62,51 @@ set background=light
 " see all options: so $VIMRUNTIME/syntax/hitest.vim
 " https://jonasjacek.github.io/colors/
 " ctermfg= ctermbg= cterm=bold
-hi Visual ctermbg=120
-hi Comment ctermfg=246
-hi LineNr ctermfg=249
-hi SpecialKey ctermfg=Blue
+hi Visual ctermbg=120 guibg=Blue
+hi Comment ctermfg=246 guifg=Grey58
+hi LineNr ctermfg=249 guifg=Grey70
+hi SpecialKey ctermfg=Blue guifg=Blue
 " things like for / in in Python
-hi Statement ctermfg=Blue cterm=bold
+hi Statement ctermfg=Blue cterm=bold guifg=Blue gui=bold
 " things in brackets in python
-hi Constant ctermfg=28  "28 /172
-hi Directory ctermbg=123
+hi Constant ctermfg=28  guifg=Green4
+hi Directory ctermbg=123 guibg=DarkSlateGray1
 " things like print etc in python
-hi Identifier ctermfg=4 " cterm=bold
+hi Identifier ctermfg=4 guifg=Blue
 " things like Visual/identiier, count(*) in sql etc
-hi Type ctermfg=Blue  " cterm=bold
+hi Type ctermfg=Blue guifg=Blue gui=none
 " things like system variables etc / where in sql
-hi Special ctermfg=4  " 4 cterm=bold
+hi Special ctermfg=4  guifg=Blue
 " others
-hi Question ctermfg=172 "172
+hi Question ctermfg=172 guifg = Orange3
 " import / from ... in Pyhton
-hi PreProc ctermfg=Blue
+hi PreProc ctermfg=Blue guifg=Blue
 " others
-hi Search ctermfg=White ctermbg=63
+hi Search ctermfg=White ctermbg=63 guifg=White guibg=RoyalBlue1
 " hi StatusLine ctermbg=DarkGrey
 " hi StatusLineNC ctermbg=DarkGrey
 " hi VertSplit ctermbg=DarkGrey
 
-hi DiffAdd    ctermfg=Black ctermbg=40
-hi DiffChange ctermfg=240 ctermbg=51
-hi DiffDelete cterm=none ctermfg=240 ctermbg=51
-hi DiffText   cterm=bold ctermfg=White ctermbg=Blue
+hi DiffAdd    ctermfg=Black ctermbg=40 guifg=Black guibg=Green3
+hi DiffChange ctermfg=240 ctermbg=51 guifg=Grey35 guibg=Cyan1
+hi DiffDelete cterm=none ctermfg=240 ctermbg=51 guifg=Grey35 guibg=Cyan1
+hi DiffText   cterm=bold ctermfg=White ctermbg=Blue guifg=White guibg=Blue
 
 " hi DiffAdd ctermfg=White
 " hi DiffChange ctermfg=White
 " hi DiffDelete ctermbg=Grey
 
-hi IncSearch  ctermfg=White
+hi IncSearch  ctermfg=White guifg=White
 
 " Syntastic error colors
 " hi SpellBad cterm=bold ctermbg=172 ctermfg=Black
 " hi SpellCap ctermfg=Yellow ctermbg=Blue
 
-" colors for gvim
+" colors for gvim - optino for bold/normal: gui=normal/bold cterm=normal/bold
 hi Normal guifg=Black guibg=White
 hi Nontext guifg=Black guibg=White
+hi Cursor         guifg=White           guibg=Grey50
+
 
 " always have nerdtree open on all tabs by default
 " Command to Toogle :NERDTreeTabsToggle
@@ -114,25 +123,25 @@ let g:NERDCustomDelimiters = { '': { 'left': '#'} }
 " set statusline+=%{SyntasticStatuslineFlag()}p<p<
 " set statusline+=%*
 
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-let g:syntastic_loc_list_height=5
+" let g:syntastic_always_populate_loc_list = 1
+" let g:syntastic_auto_loc_list = 1
+" let g:syntastic_check_on_open = 1
+" let g:syntastic_check_on_wq = 0
+" let g:syntastic_loc_list_height=5
 "
 " let g:syntastic_python_checkers = ['pylint']
-let g:syntastic_python_checkers = ['flake8']
+" let g:syntastic_python_checkers = ['flake8']
 
 " let g:syntastic_php_checkers = ['php']
 " let g:syntastic_php_checkers = ['php', 'phpcs']
-let g:syntastic_php_checkers = ['php', 'phpcs', 'phpmd']
+" let g:syntastic_php_checkers = ['php', 'phpcs', 'phpmd']
 " let g:syntastic_php_phpcs_args = '--standard=psr2'
-let g:syntastic_php_phpcs_args = '--standard=~/.phpcsruleset.xml'
+" let g:syntastic_php_phpcs_args = '--standard=~/.phpcsruleset.xml'
 " How to run it on command line to auto-fix:
 " phpcbs xxx.php -s --standard=~/.phpcsruleset.xml
 " phpcbf xxx.php -s --standard=~/.phpcsruleset.xml
 " let g:syntastic_php_phpmd_post_args = 'cleancode,codesize,controversial,design,unusedcode'
-let g:syntastic_php_phpmd_post_args = '~/.phpmdruleset.xml'
+" let g:syntastic_php_phpmd_post_args = '~/.phpmdruleset.xml'
 
 " let g:ctrlp_show_hidden =1
 
@@ -163,8 +172,8 @@ nmap <silent> <C-Up> <C-w>k
 nmap <silent> <C-Right> <C-w>l
 
 " map for loc-list -> move to previous / next error
-nmap <silent> <leader><Up> :lprevious<CR>
-nmap <silent> <leader><Down> :lnext<CR>
+" nmap <silent> <leader><Up> :lprevious<CR>
+" nmap <silent> <leader><Down> :lnext<CR>
 
 " set timeout limit for ESC and escape sequences
 set timeoutlen=1000 ttimeoutlen=10
