@@ -57,6 +57,11 @@ others: copy
 sudo apt-get install screen
 sudo apt-get install mc
 
+5b) fix utf8 line drawing issues
+vim .bashrc
+# fix utf8 line drawing issues
+test "$TERM" = "putty" && export LC_ALL=C || export LC_ALL=en_US.utf8
+export TERM=xterm-256color
 
 6) set up git
 sudo apt-get install git
@@ -343,6 +348,9 @@ sudo monit summary
 sudo apt update
 sudo apt upgrade
 sudo hostnamectl set-hostname [HOSTNAME]
+sudo vim /etc/hosts
+-> if issues with hostname error message: add hostname after localhost
+-> 127.0.0.1       localhost xxx
 sudo dpkg-reconfigure tzdata 
 
 
