@@ -98,6 +98,7 @@ cd ~/.vim/bundle/YouCompleteMe
 8) install python plugins
 sudo apt-get install python3
 sudo apt-get install python3-pip
+sudo pip3 install --upgrade setuptools
 sudo pip3 install pymysql
 sudo pip3 install requests
 sudo pip3 install pytz
