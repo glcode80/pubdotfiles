@@ -52,6 +52,10 @@ ln -s /home/moon/pubdotfiles/sqltest.sql /home/moon/
 ln -s /home/moon/pubdotfiles/setup.sql /home/moon/
 others: copy
 
+4b) set up steal tracking
+sudo apt install jq
+crontab -e
+* * * * * /home/moon/pubdotfile/steal_tracking.sh >> /home/moon/steal_tracking.txt 2>&1
 
 5) install programs needed
 sudo apt-get install screen
