@@ -53,6 +53,7 @@ ln -s /home/moon/pubdotfiles/setup.sql /home/moon/
 others: copy
 
 4b) set up steal tracking
+sudo apt install sysstat
 sudo apt install jq
 crontab -e
 * * * * * /home/moon/pubdotfiles/steal_tracking.sh >> /home/moon/steal_tracking.txt 2>&1
