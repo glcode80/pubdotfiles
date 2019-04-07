@@ -39,7 +39,7 @@ print("- Average Steal:", steal_alert_avg)
 print("- Maximum Steal:", steal_alert_max, "\n")
 
 if steal_alert_avg > LIMIT_ALERT_AVG or steal_alert_max > LIMIT_ALERT_MAX:
-    result_msg = "{} - <b>{}%</b> avg steal, {}% max steal over {} hour".format(
+    result_msg = "{} - <b>{}%</b> avg steal, <b>{}%</b> max steal over {} hour".format(
         SERVER_NAME,
         steal_alert_avg,
         steal_alert_max,
