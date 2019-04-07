@@ -11,9 +11,9 @@
 interval=60
 
 # Calculate variables -> get beginning of minute time
-# save as "date, hour, minute" for easy csv analysis
-# starttime=$(date '+%Y-%m-%d-%H-%M-%S');
-starttime=$(date '+%Y-%m-%d,%H,%M');
+# save as "timestamp, steal"
+# starttime=$(date '+%Y-%m-%d,%H,%M');
+starttime=$(date '+%Y-%m-%dT%H:%M:00');
 
 steal=$(iostat -cy -d $interval 1 -o JSON | jq '.sysstat.hosts[0].statistics[0]["avg-cpu"].steal')
 
