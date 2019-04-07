@@ -60,6 +60,11 @@ mkdir /home/moon/steal
 * * * * * /home/moon/pubdotfiles/steal_tracking.sh >> /home/moon/steal/steal.csv 2>&1
 sudo pip3 install pandas
 ln -s /home/moon/pubdotfiles/steal_analysis.py /home/moon/steal/
+cp /home/moon/pubdotfiles/steal_alert.py /home/moon/steal/
+--> add toolsalert to steal folder
+vim /home/moon/steal/steal_alert.py
+crontab -e
+26 * * * * /home/moon/steal/steal_alert.py >> /home/moon/logs/stealalert.txt 2>&1
 
 5) install programs needed
 sudo apt-get install screen
