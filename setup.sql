@@ -56,9 +56,10 @@ others: copy
 sudo apt install sysstat
 sudo apt install jq
 crontab -e
-* * * * * /home/moon/pubdotfiles/steal_tracking.sh >> /home/moon/steal_tracking.txt 2>&1
+mkdir /home/moon/steal
+* * * * * /home/moon/pubdotfiles/steal_tracking.sh >> /home/moon/steal/steal.csv 2>&1
 sudo pip3 install pandas
-ln -s /home/moon/pubdotfiles/steal_analysis.py /home/moon/
+ln -s /home/moon/pubdotfiles/steal_analysis.py /home/moon/steal/
 
 5) install programs needed
 sudo apt-get install screen

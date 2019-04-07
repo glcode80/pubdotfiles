@@ -27,7 +27,7 @@ date_limit_alert = (datetime.now() - timedelta(hours=HOURS_BACK_ALERT))
 #  print(date_limit_hourly)
 #  print(date_limit_alert)
 
-df = pd.read_csv("steal_tracking.txt", sep=",",
+df = pd.read_csv("steal.csv", sep=",",
                  names=["datetime", "steal"],
                  #  names=["date", "hour", "minute", "steal"],
                  parse_dates=[0])
