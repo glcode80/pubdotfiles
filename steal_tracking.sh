@@ -5,7 +5,7 @@
 # then save to text file
 
 # set up cron job to save to file every minute
-# * * * * * /home/moon/steal_tracking.sh >> /home/moon/steal_tracking.txt 2>&1
+# * * * * * /home/moon/pubdotfiles/steal_tracking.sh >> /home/moon/steal_tracking.txt 2>&1
 
 # Define input variables -> put to 60 seconds for per minute stats
 interval=60
