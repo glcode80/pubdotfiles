@@ -21,7 +21,7 @@ result_msg = ""
 
 date_limit_alert = (datetime.now() - timedelta(hours=HOURS_BACK_ALERT))
 
-df = pd.read_csv("steal.csv", sep=",",
+df = pd.read_csv("/home/moon/steal/steal.csv", sep=",",
                  names=["datetime", "steal"],
                  parse_dates=[0])
 
