@@ -29,7 +29,8 @@ Defaults env_keep += "EDITOR"
 
 vim .bashrc
 export EDITOR=/usr/bin/vim
-
+# change default editor for cronjobs
+select-editor
 
 3) ssh keys -> login with user
 ssh-keygen -b 4096
@@ -61,7 +62,7 @@ mkdir /home/moon/steal
 sudo pip3 install pandas
 ln -s /home/moon/pubdotfiles/steal_analysis.py /home/moon/steal/
 cp /home/moon/pubdotfiles/steal_alert.py /home/moon/steal/
---> add toolsalert to steal folder
+cp /home/moon/pubdotfiles/toolsalert.py /home/moon/steal/
 vim /home/moon/steal/steal_alert.py
 crontab -e
 26 * * * * /home/moon/steal/steal_alert.py >> /home/moon/logs/stealalert.txt 2>&1
