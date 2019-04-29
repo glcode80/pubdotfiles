@@ -24,13 +24,21 @@ if [ $# -eq 0 ]
         echo "No arguments supplied"
         echo "Please provide folder names within $datadir to export, options:"
         eval "ls $datadir"
+        echo "Alternative: provide full folder path starting with /"
 
 else
     echo "Backup into individual files"
     for foldername in "$@"
     do
-        fullfoldername=$datadir$foldername/
-        filename="$backupdir$today-$foldername.tar.gz"
+        # if full folder path is provided (starting with /) use this 
+        if [ "${foldername::1}" = "/" ]; then
+            fullfoldername=$foldername/
+            # echo "${foldername////-}"
+            filename="$backupdir$today${foldername////-}.tar.gz"
+        else
+            fullfoldername=$datadir$foldername/
+            filename="$backupdir$today-$foldername.tar.gz"
+        fi
 
         echo
         echo "* Processing folder: $fullfoldername"
@@ -54,5 +62,5 @@ else
     fi
 
 echo
-echo "$(date '+%Y-%m-%d %H:%M:%S') - End - Date folders backup"
+echo "$(date '+%Y-%m-%d %H:%M:%S') - End - Data folders backup"
 echo
