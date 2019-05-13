@@ -198,7 +198,18 @@ only in current directory
 grep -s "pattern" * .*
 
 sed [search and replace accross files]
+- find full instances / all file names only to replace
+grep -rn -e "OLDTEXT"
+grep -rl -e "OLDTEXT" . | xargs
+[option: --exclude-dir=.abc ]
 
+- replace term in one file
+sed -i 's/OLDTEXT/NEWTEXT/g' FILENAME.txt
+
+- replace term in all files checked for before
+grep -rl -e "OLDTEXT" . | xargs sed -i 's/OLDTEXT/NEWTEXT/g'
+
+Alternative:
 find . -type f -exec sed -i.bak "s/foo/bar/g" {} \;
 
 
