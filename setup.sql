@@ -67,6 +67,22 @@ vim /home/moon/steal/steal_alert.py
 crontab -e
 26 * * * * /home/moon/steal/steal_alert.py >> /home/moon/logs/stealalert.txt 2>&1
 
+rotate logs monthly automatically (keep 6 files, rotate monthly)
+sudo vim /etc/logrotate.d/steal
+/home/moon/steal/steal.csv {
+  rotate 6
+  monthly
+  compress
+  missingok
+  notifempty
+}
+
+test:
+sudo logrotate /etc/logrotate.conf --debug
+
+force logrotate:
+sudo logrotate /etc/logrotate.conf --verbose --force
+
 5) install programs needed
 sudo apt-get install screen
 sudo apt-get install mc
