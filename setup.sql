@@ -908,6 +908,18 @@ if ($http_cookie !~ "redirect=set") {
 	rewrite ^ $scheme://$redirect_goal break;
 	}
 
+** Block access to certain resources based on country code **
+-> important: need "else" block in there, to process like normal
+
+ # return 403 by geoip on certain paths (from root path)
+ # location ~* /checkout {
+ location ~* ^/(checkout|de/kasse) {
+	if ($geoip_country_code ~ (JP) ) {
+		return 403;
+	}       
+	try_files $uri $uri/ /index.php$is_args$args;
+}
+
 	
 
 ** tune php workers **
