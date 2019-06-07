@@ -682,17 +682,38 @@ sudo fail2ban-regex /var/log/nginx/error.log /etc/fail2ban/filter.d/nginx-botsea
 * option [to ignore an ip on a filter]
 ignoreip = xxx.xxx
 
+* regex basis = python regex
+https://docs.python.org/2/library/re.html
+=> test with https://regex101.com/ -> select Python
+
 * add own nginx-wordpress filter
+a) check for php login/xmlrpc exploits
 sudo vim /etc/fail2ban/filter.d/nginx-wordpress.conf
 [Definition]
 failregex = <HOST>.*POST.*(wp-login\.php|xmlrpc\.php).* (403|499|200)
 
+b) check for running code in search -> more than x searches to be blocked
+[first s=? then a charachter (to exclude search bots with nothing), then status code (to exlcude including the ones where it is only a referrer]
+
+sudo vim /etc/fail2ban/filter.d/nginx-wordpress-search.conf
+[Definition]
+failregex = <HOST>.*GET.*(\?s\=)[0-9a-zA-Z].* (200|404|301|302)
 
 enable a new filters:
+** attention: also add filter description! **
 sudo vim /etc/fail2ban/jail.local
 
 * uncomment -> to make sure monit still works for mysql
 ignoreip = 127.0.0.1/8 ::1
+
+[nginx-wordpress-search]
+enabled = true
+port = http,https
+filter = nginx-wordpress-search
+logpath = /var/log/nginx/*access.log
+maxretry = 20
+findtime = 300
+bantime = 86400
 
 
 [nginx-wordpress]
@@ -723,6 +744,8 @@ logpath = /var/log/nginx/*error.log
 
 sudo fail2ban-client -t
 sudo fail2ban-client reload
+sudo fail2ban-client reload [jailname]
+
 
 * check log files / status */
 sudo vim /var/log/fail2ban.log
