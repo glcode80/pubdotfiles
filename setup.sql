@@ -699,13 +699,28 @@ sudo vim /etc/fail2ban/filter.d/nginx-wordpress-search.conf
 [Definition]
 failregex = <HOST>.*GET.*(\?s\=)[0-9a-zA-Z].* (200|404|301|302)
 
-enable a new filters:
+c) check for trying to access database -> block [better than checking for search]
+sudo vim /etc/fail2ban/filter.d/nginx-select.conf
+[Definition]
+failregex = <HOST>.*GET.*(SELECT%%20|select%%20|UPDATE%%20|update%%20).* (200|404|301|302)
+
+
+enable a new filter:
 ** attention: also add filter description! **
 sudo vim /etc/fail2ban/jail.local
 
 * uncomment -> to make sure monit still works for mysql
 ignoreip = 127.0.0.1/8 ::1
 
+
+[nginx-select]
+enabled = true
+port = http,https
+filter = nginx-select
+logpath = /var/log/nginx/*access.log
+maxretry = 6
+
+# better to use nginx-select than search -> disable for now!
 [nginx-wordpress-search]
 enabled = true
 port = http,https
