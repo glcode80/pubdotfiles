@@ -465,8 +465,10 @@ sudo monit restart
 9) fail2ban: nginx-wordpress, nginx-default, ...
 sudo fail2ban-client unban --all
 
-
 10) php/wordpress: caching (memcached/nginx cache/opcache/settings)
+
+11) steal-alert
+clear / add monitoring
 
 
 ****************************************
