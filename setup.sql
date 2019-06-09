@@ -463,6 +463,8 @@ sudo monit restart
 8) nginx: default profile, certificate, certbot, settings
 
 9) fail2ban: nginx-wordpress, nginx-default, ...
+sudo fail2ban-client unban --all
+
 
 10) php/wordpress: caching (memcached/nginx cache/opcache/settings)
 
@@ -659,6 +661,12 @@ sudo ufw insert 1 deny from xx.xx.xx.xx to any
 - unban an IP with ufw
 sudo ufw status numbered
 sudo ufw delete XXX
+
+- unban an IP with fail2ban
+sudo fail2ban-client set <JAIL> unbanip <IP>
+sudo fail2ban-client unban <IP> ... <IP>
+sudo fail2ban-client unban --all
+
 
 - add other jails to fail2ban -> add enabled=true + make sure to have proper log file
 sudo vim /etc/fail2ban/jail.local
