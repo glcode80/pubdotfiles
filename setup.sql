@@ -969,6 +969,58 @@ if ($http_cookie !~ "redirect=set") {
 }
 
 	
+** Rewrite glcid / fbclid -> cached page instead of loading it every time
+
+## fix fbclid added to uri - inside each server block - START ###
+# remove GET parameters:
+if ($args ~* (.*)fbclid|gclid=[^&]*(.*)) {
+set $args $1$2;
+set $removearg "removearg";
+}
+# cleanup any repeated & introduced:
+if ($args ~ (.*)&&+(.*)) {
+set $args $1&$2;
+}
+# cleanup leading &
+if ($args ~ ^&(.*)) {
+set $args $1;
+}
+# cleanup ending &
+if ($args ~ (.*)&$) {
+set $args $1;
+}
+if ( $removearg = "removearg" ) {
+rewrite ^(.*)$ $uri permanent;
+}
+## fix fbclid added to uri - inside each server block - END ###
+
+
+
+
+***********************************
+*** Adjust PHP / Memcached      ***
+***********************************
+
+* adjust php settings [ALSO adjust nginx.conf for client_max_body_size=128m; !!!]
+sudo vim /etc/php/7.2/fpm/php.ini
+
+memory_limit = 512M
+max_execution_time = 60
+max_input_time=60
+upload_max_filesize = 64M
+post_max_size = 64M
+-- opcode cache seems not to be very helpful, page cache much more important
+opcache.enable=1
+opcache.memory_consumption=128
+opcache.max_accelerated_files=4000
+opcache_revalidate_freq = 240
+
+sudo phpenmod opcache
+sudo service php7.2-fpm restart
+  sudo service php7.0-fpm restart
+sudo service nginx restart
+
+
 
 ** tune php workers **
 
@@ -1010,51 +1062,7 @@ emergency_restart_interval=1m
 process_control_timeout=5s
 
 
-
-
-***********************************
-*** Adjust PHP / Memcached      ***
-***********************************
-
-* adjust php settings [ALSO adjust nginx.conf for client_max_body_size=128m; !!!]
-sudo vim /etc/php/7.2/fpm/php.ini
-
-memory_limit = 512M
-max_execution_time = 60
-max_input_time=60
-upload_max_filesize = 64M
-post_max_size = 64M
--- opcode cache seems not to be very helpful, page cache much more important
-opcache.enable=1
-opcache.memory_consumption=128
-opcache.max_accelerated_files=4000
-opcache_revalidate_freq = 240
-
-sudo phpenmod opcache
-sudo service php7.2-fpm restart
-  sudo service php7.0-fpm restart
-sudo service nginx restart
-
-* tune php-fpm - max children etc! => adjust if more RAM is available!
-sudo vim /etc/php/7.2/fpm/pool.d/www.conf
-  sudo vim /etc/php/7.0/fpm/pool.d/www.conf
-
--> on 2GB droplet, maybre around 1.5GB free -> use 700MB
-pm.max_children = 12
-pm.start_servers = 4 [ca 1/3]
-pm.min_spare_servers = 4 [ca/3]
-pm.max_spare_servers = 7 [ca 60%]
-pm.max_requests = 500 [leave]
-
--> for 4GB Linode -> free 3.5GB -> use 2GB -> 
-pm.max_children = 24
-pm.start_servers = 8 [ca 1/3]
-pm.min_spare_servers = 8 [ca/3]
-pm.max_spare_servers = 16 [ca 60%]
-pm.max_requests = 500 [leave]
-
-
-* memcached *
+** memcached => Do NOT do it for now*
 sudo apt-get install memcached 
 sudo apt-get install php-memcached
 sudo vim /etc/memcached.conf
@@ -1067,8 +1075,6 @@ disable udp
 sudo service memcached restart
 sudo service php7.2-fpm restart
 sudo service nginx restart
-
-Wordpress -> use W3TC -> memcached
 
 
 ***********************************
