@@ -161,8 +161,9 @@ php needs to be installed to work (see below)
 #PHPCS
 sudo curl -LsS https://squizlabs.github.io/PHP_CodeSniffer/phpcs.phar -o /usr/local/bin/phpcs
 sudo chmod a+x /usr/local/bin/phpcs
-#PHPMD
-sudo curl -LsS http://static.phpmd.org/php/latest/phpmd.phar -o /usr/local/bin/phpmd
+#PHPMD -> use version saved on own github, as other one is not available anymore
+sudo curl -LsS https://raw.githubusercontent.com/glcode80/pubdotfiles/master/install/phpmd.phar -o /usr/local/bin/phpmd
+  --  sudo curl -LsS http://static.phpmd.org/php/latest/phpmd.phar -o /usr/local/bin/phpmd
 sudo chmod a+x /usr/local/bin/phpmd
 #PHPCBF
 sudo curl -LsS https://squizlabs.github.io/PHP_CodeSniffer/phpcbf.phar -o /usr/local/bin/phpcbf
