@@ -634,6 +634,10 @@ wget https://raw.githubusercontent.com/major/MySQLTuner-perl/master/vulnerabilit
 perl /home/moon/mysqltuner/mysqltuner.pl
 
 
+* Mysql Tuning script tuning-primer.sh
+cd ~
+git clone https://github.com/BMDan/tuning-primer.sh/
+
 ***********************************
 *** Others Cheat Sheet          ***
 *********************************** 
