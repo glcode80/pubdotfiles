@@ -538,6 +538,10 @@ sysbench --test=fileio --file-test-mode=rndwr run
 
 - download test file
 wget -O /dev/null https://speed.hetzner.de/100MB.bin
+wget -O /dev/null http://speedtest.frankfurt.linode.com/100MB-frankfurt.bin
+wget -O /dev/null http://fra-de-ping.vultr.com/vultr.com.100MB.bin
+
+wget -O /dev/null http://speedtest.newark.linode.com/100MB-newark.bin
 wget -O /dev/null https://speed.hetzner.de/1GB.bin
 
 
