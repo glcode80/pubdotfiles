@@ -536,6 +536,10 @@ sysbench --test=fileio --file-test-mode=seqwr run
 sysbench --test=fileio --file-test-mode=rndwr run
  -> test mode {seqwr, seqrewr, seqrd, rndrd, rndwr, rndrw}
 
+- download test file
+wget -O /dev/null https://speed.hetzner.de/100MB.bin
+wget -O /dev/null https://speed.hetzner.de/1GB.bin
+
 
 ***********************************
 *** Mysql Cheat Sheet           ***
