@@ -116,6 +116,20 @@ sudo apt-get install libdbd-mysql-perl
 * avoid ctrl-s hanging terminal (could stop with ctrl-q)
 echo "stty -ixon" >> .bashrc
 
+* proper bash auto-complete with tab/shift-tab
+vim .bashrc
+
+# tab to auto-complete
+bind TAB:menu-complete
+# shift-tab to go back
+bind '"\e[Z": menu-complete-backward'
+# display list of matching files
+bind "set show-all-if-ambiguous on"
+# only start cycling on second tab press
+bind "set menu-complete-display-prefix on"
+
+
+
 * Ctags / YouCompleteMe *
 sudo apt install exuberant-ctags
 sudo apt-get install build-essential cmake
