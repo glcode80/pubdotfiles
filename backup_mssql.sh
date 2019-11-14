@@ -47,7 +47,7 @@ else
         mssqlfilenamefull="$mssqldirectory$mssqlfilename"
         filename="$backupdir$today-$dbname.bak"
 
-        executestring="sqlcmd -S localhost -U $mssqlusername -P $mssqlpassword -Q \"
+        executestring="/opt/mssql-tools/bin/sqlcmd -S localhost -U $mssqlusername -P $mssqlpassword -Q \"
             BACKUP DATABASE $dbname  TO DISK = '$mssqlfilename' $dumparguments
             \"
             "
