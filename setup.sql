@@ -425,7 +425,7 @@ exit;
 
 - b) drop default schema
 DROP SCHEMA Playground;
-DROP USER 'analyst'@'localhost';
+DROP USER 'Analyst'@'localhost';
 FLUSH PRIVILEGES;
 exit;
 
