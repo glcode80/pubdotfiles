@@ -742,14 +742,19 @@ sudo vim /etc/fail2ban/filter.d/nginx-select.conf
 [Definition]
 failregex = <HOST>.*GET.*(SELECT%%20|select%%20|UPDATE%%20|update%%20).* (200|404|301|302)
 
+d) check for trying to add to wishlist -> do NOT do it, dangerous to black real traffic
+sudo vim /etc/fail2ban/filter.d/nginx-add-to-wishlist.conf
+[Definition]
+failregex = <HOST>.*GET.*(add_to_wishlist|add_to_cart|add-to-cart).* (200|404|301|302)
+
 
 enable a new filter:
 ** attention: also add filter description! **
 sudo vim /etc/fail2ban/jail.local
+(default findtime = 10min, default bantime fixed to 1 year, maxretry = 5)
 
 * uncomment -> to make sure monit still works for mysql
 ignoreip = 127.0.0.1/8 ::1
-
 
 [nginx-select]
 enabled = true
@@ -757,6 +762,18 @@ port = http,https
 filter = nginx-select
 logpath = /var/log/nginx/*access.log
 maxretry = 6
+
+# wait to see if this is needed and what proper maxretry is -> too dangerous for now
+[nginx-add-to-wishlist]
+enabled = true
+port = http,https
+filter = nginx-add-to-wishlist
+logpath = /var/log/nginx/*access.log
+maxretry = 6
+findtime = 60m
+maxretry = 10
+bantime = 86400
+
 
 # better to use nginx-select than search -> disable for now!
 [nginx-wordpress-search]
