@@ -83,6 +83,18 @@ sudo logrotate /etc/logrotate.conf --debug
 force logrotate:
 sudo logrotate /etc/logrotate.conf --verbose --force
 
+4c) set up logrotate for logs directory (logs and subdirectory, keep 6 files, rotate monhtly)
+mkdir /home/moon/logs
+sudo vim /etc/logrotate.d/ownlogs
+/home/moon/logs/*.txt /home/moon/logs/*/*.txt {
+  rotate 6
+  monthly
+  compress
+  missingok
+  notifempty
+}
+
+
 5) install programs needed
 sudo apt-get install screen
 sudo apt-get install mc
