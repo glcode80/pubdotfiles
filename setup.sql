@@ -52,6 +52,16 @@ ln -s /home/moon/pubdotfiles/cmd_vim.sql /home/moon/
 ln -s /home/moon/pubdotfiles/sqltest.sql /home/moon/
 ln -s /home/moon/pubdotfiles/setup.sql /home/moon/
 others: copy
+cp /home/moon/pubdotfiles/.dbextprofiles.vim /home/moon/
+cp /home/moon/pubdotfiles/.flake8 /home/moon/
+cp /home/moon/pubdotfiles/.phpcsruleset.xml /home/moon/
+cp /home/moon/pubdotfiles/.phpmdruleset.xml /home/moon/
+cp /home/moon/pubdotfiles/.pylintrc /home/moon/
+cp /home/moon/pubdotfiles/.screenrc /home/moon/
+cp /home/moon/pubdotfiles/.vimrc /home/moon/
+cp /home/moon/pubdotfiles/backup_data.sh /home/moon/
+cp /home/moon/pubdotfiles/backup_sql.sh /home/moon/
+
 
 4b) set up steal tracking
 sudo apt install sysstat
