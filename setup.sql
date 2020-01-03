@@ -486,7 +486,29 @@ set mailserver smtp.mailgun.org port 587
   username postmaster@mg.**MONITDOMAIN**.com password "**MAILGUN_SMTP_PASSWORD**"
   using TLSV1 with timeout 30 seconds
 set alert **RECEIVING_EMAIL** #email address which will receive monit alerts
+sudo monit -t
 sudo monit restart
+
+* enable system/cpu checks (within "Services")
+sudo vim /etc/monit/monitrc
+
+# 1 cycle = 2 mins, loadavg and cpu according to number of cores
+check system $HOST
+	# ** examples for 1 core **
+    if loadavg (1min) > 2 then alert
+    if loadavg (5min) > 1 then alert
+    if loadavg (15min) > 0.9 then alert
+    if memory usage > 90% for 5 cycles then alert
+    if cpu usage > 90% for 5 cycles then alert
+	# ** examples for 2 cores **
+    # if loadavg (1min) > 4 then alert
+    # if loadavg (5min) > 2 then alert
+    # if loadavg (15min) > 1.8 then alert
+    # if memory usage > 90% for 5 cycles then alert
+    # if cpu usage > 180% for 5 cycles then alert
+
+sudo monit -t
+sudo monit reload
 
 8) nginx: default profile, certificate, certbot, settings
 
