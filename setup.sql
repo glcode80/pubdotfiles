@@ -273,7 +273,7 @@ sudo systemctl start nginx
 sudo systemctl enable nginx
 
 * replace default conf file with old file with proper settings
-sudo rm /etc/nginx/nginx.conf
+sudo mv /etc/nginx/nginx.conf /etc/nginx/nginx.conf.replaced
 sudo cp /home/moon/pubdotfiles/nginx.conf.1.14.0_use   /etc/nginx/nginx.conf
 sudo systemctl restart nginx
 sudo systemctl status nginx
@@ -956,6 +956,10 @@ fastcgi_cache_use_stale error timeout invalid_header http_500;
 fastcgi_ignore_headers Cache-Control Expires Set-Cookie;
 # ** NGINX PAGE CACHE END - nginx.conf http**
 
++ NEW !!: add $geoip_country_code to log file as test!
+-- -> '"$http_user_agent" "$http_x_forwarded_for" "$geoip_country_code"';
+
+
 + add two blocks to nginx conf file -> see examples
 
 -- www with php with fastcgi pache cache
@@ -1057,6 +1061,10 @@ sudo apt-get install nginx-module-geoip
 sudo vim /etc/nginx/nginx.conf
 -> beginning
 load_module "modules/ngx_http_geoip_module.so";
+
++ NEW !!: add $geoip_country_code to log file as test!
+-- -> '"$http_user_agent" "$http_x_forwarded_for" "$geoip_country_code"';
+
 
 2) run new geoipupdate.sh script
 !! attention: not possible to update anymore! check!!
