@@ -982,7 +982,70 @@ benchmark testing: loader.io
 *** Nginx blocking of bad bot traffic ***
 https://github.com/mitchellkrogza/nginx-ultimate-bad-bot-blocker
 
+sudo wget https://raw.githubusercontent.com/mitchellkrogza/nginx-ultimate-bad-bot-blocker/master/install-ngxblocker -O /usr/local/sbin/install-ngxblocker
+sudo chmod +x /usr/local/sbin/install-ngxblocker
 
+cd /usr/local/sbin
+-- dry run
+sudo ./install-ngxblocker
+-- execute
+sudo ./install-ngxblocker -x
+sudo chmod +x /usr/local/sbin/setup-ngxblocker
+sudo chmod +x /usr/local/sbin/update-ngxblocker
+cd /usr/local/sbin/
+-- dry run => don't do it in prod -> add it manually + add own IP manually
+sudo ./setup-ngxblocker -v /etc/nginx/conf.d -e .conf
+
+-- ** manual addition to server block 443 at the end (do not add to 80 only to 443) - DO IT MANUALLY!
+    ##
+    # Nginx Bad Bot Blocker Includes
+    # REPO: https://github.com/mitchellkrogza/nginx-ultimate-bad-bot-blocker
+    ##
+	include /etc/nginx/bots.d/ddos.conf; 
+ 	include /etc/nginx/bots.d/blockbots.conf;
+-- ** manual addition to server block 443
+
+sudo vim /etc/nginx/bots.d/whitelist-ips.conf
+--> add own ip
+OWNIP	0;
+
+sudo nginx -t
+sudo service nginx reload
+
+-- to remove everything again:
+remove bots.d directory
+remove in conf.d -> both files (botblocker-nginx-settings.conf / globalblacklist.conf)
+comment out addition to each conf file
+
+
+-- daily update -> logs file / mailgun email notification
+sudo crontab -e
+00 22 * * * sudo /usr/local/sbin/update-ngxblocker >> /home/moon/logs/sudologs.txt 2>&1
+-- option with mailgun
+00 22 * * * sudo /usr/local/sbin/update-ngxblocker -g yourname@yourdomain.com -d yourdomain.com -a mailgun api key -f from@yourdomain.com
+
+-- check if it works
+curl -A "Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5X Build/MMB29P) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.96 Mobile Safari/537.36 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)" -I http://yourdomain.com
+curl -A "Mozilla/5.0 (compatible; bingbot/2.0; +http://www.bing.com/bingbot.htm)" -I http://yourdomain.com
+--> 200
+
+curl -A "Xenu Link Sleuth/1.3.8" -I http://yourdomain.com
+curl -A "Mozilla/5.0 (compatible; AhrefsBot/5.2; +http://ahrefs.com/robot/)" -I http://yourdomain.com
+--> 52/56/92
+
+curl -I http://yourdomain.com -e http://100dollars-seo.com
+curl -I http://yourdomain.com -e http://zx6.ru
+--> 52/56/92
+
+-- check top referres & top user agents
+sudo tail -10000 /var/log/nginx/access.log | awk '$11 !~ /google|bing|yahoo|yandex|MYWEBSITE.com/' | awk '{print $11}' | tr -d '"' | sort | uniq -c | sort -rn | head -50
+sudo tail -50000 /var/log/nginx/access.log | awk '{print $12}' | tr -d '"' | sort | uniq -c | sort -rn | head -50
+
+-- NEXT STEP: add fail2ban for 444 errors
+https://github.com/mitchellkrogza/nginx-ultimate-bad-bot-blocker/tree/master/_fail2ban_addon/filter.d
+
+-- check 444 error codes by IP => candidates to block
+sudo cat /var/log/nginx/access.log | awk '{if ($9 == "444") print $1}' | sort -n | uniq -c | sort -nr | head -20
 
 
 *** Ngxinx redirect based on country code from IP ***
