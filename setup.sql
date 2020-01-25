@@ -1066,6 +1066,9 @@ load_module "modules/ngx_http_geoip_module.so";
 + NEW !!: add $geoip_country_code to log file as test!
 -- -> '"$http_user_agent" "$http_x_forwarded_for" "$geoip_country_code"';
 
+-- --> analyze logs to be sure:
+sudo cat /var/log/nginx/access.log | awk '{print $NF}' | sort -n | uniq -c | sort -nr | head -20
+
 
 2) run new geoipupdate.sh script
 !! attention: not possible to update anymore! check!!
