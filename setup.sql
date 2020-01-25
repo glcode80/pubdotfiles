@@ -975,6 +975,7 @@ sudo service nginx restart
 
 to clear manually -> empty everythin in directory:
 sudo rm -rf /var/run/nginxcacheGLOBAL/*
+sudo rm -rf /etc/nginx/nginxcacheGLOBAL/*
 
 */Wordrepss Plugin to purge -> Nginx Cache Tim Krüss
   /var/run/nginxcacheGLOBAL
