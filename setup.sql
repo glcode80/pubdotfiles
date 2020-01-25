@@ -786,11 +786,6 @@ sudo vim /etc/fail2ban/filter.d/nginx-select.conf
 [Definition]
 failregex = <HOST>.*GET.*(SELECT%%20|select%%20|UPDATE%%20|update%%20).* (200|404|301|302)
 
-d) check for trying to add to wishlist -> do NOT do it, dangerous to black real traffic
-sudo vim /etc/fail2ban/filter.d/nginx-add-to-wishlist.conf
-[Definition]
-failregex = <HOST>.*GET.*(add_to_wishlist|add_to_cart|add-to-cart).* (200|404|301|302)
-
 
 enable a new filter:
 ** attention: also add filter description! **
@@ -806,17 +801,6 @@ port = http,https
 filter = nginx-select
 logpath = /var/log/nginx/*access.log
 maxretry = 6
-
-# wait to see if this is needed and what proper maxretry is -> too dangerous for now
-[nginx-add-to-wishlist]
-enabled = true
-port = http,https
-filter = nginx-add-to-wishlist
-logpath = /var/log/nginx/*access.log
-maxretry = 6
-findtime = 60m
-maxretry = 10
-bantime = 86400
 
 
 # better to use nginx-select than search -> disable for now!
@@ -932,8 +916,21 @@ sudo chmod +x /usr/bin/certbotupdate.sh
 sudo certbotupdate.sh
 sudo crontab -e
 0 3,15 * * * /usr/bin/certbotupdate.sh >> /home/moon/logs/sudologs.txt 2>&1
-	
-	
+
+*** robots.txt wordpress exclustions ***
+User-agent: *
+Disallow: /wp-admin/
+Disallow: /*add-to-cart=*
+Disallow: /*add_to_wishlist=*
+Disallow: /cart/
+Disallow: /de/warenkorb/
+Disallow: /*checkout/
+Disallow: /de/kasse/
+Disallow: /my-account/
+Disallow: /de/mein-konto/
+
+
+*/
 *** Nginx FastCGI Page Cache -> caches pages in memory (like varnish) ***
 -> test by checking response headers: HIT/MISS/BYPASS
 
@@ -980,6 +977,12 @@ sudo rm -rf /var/run/nginxcacheGLOBAL/*
   (or custom cache path)
 
 benchmark testing: loader.io
+
+
+*** Nginx blocking of bad bot traffic ***
+https://github.com/mitchellkrogza/nginx-ultimate-bad-bot-blocker
+
+
 
 
 *** Ngxinx redirect based on country code from IP ***
