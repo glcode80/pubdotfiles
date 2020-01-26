@@ -6,9 +6,9 @@ from datetime import datetime, timedelta
 DAYS_BACK_DAILY = 10
 DAYS_BACK_HOURLY = 1
 
-print("\n******************************************")
-print("* Loadavg(1min) checker - all values in % *")
-print("******************************************\n")
+print("\n***********************************************************")
+print("* Loadavg(1min) checker - all values decimal (1.0 = 100%) *")
+print("***********************************************************\n")
 
 date_limit_daily = (datetime.now() - timedelta(days=DAYS_BACK_DAILY))
 date_limit_hourly = (datetime.now() - timedelta(days=DAYS_BACK_HOURLY))
