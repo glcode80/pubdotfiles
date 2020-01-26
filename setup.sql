@@ -63,14 +63,16 @@ cp /home/moon/pubdotfiles/backup_data.sh /home/moon/
 cp /home/moon/pubdotfiles/backup_sql.sh /home/moon/
 
 
-4b) set up steal tracking
+4b) set up steal tracking / loadavg tracking
 sudo apt install sysstat
 sudo apt install jq
 crontab -e
 mkdir /home/moon/steal
 * * * * * /home/moon/pubdotfiles/steal_tracking.sh >> /home/moon/steal/steal.csv 2>&1
+* * * * * /home/moon/pubdotfiles/loadavg_tracking.sh >> /home/moon/steal/loadavg.csv 2>&1
 sudo pip3 install pandas
 ln -s /home/moon/pubdotfiles/steal_analysis.py /home/moon/steal/
+ln -s /home/moon/pubdotfiles/loadavg_analysis.py /home/moon/steal/
 cp /home/moon/pubdotfiles/steal_alert.py /home/moon/steal/
 cp /home/moon/pubdotfiles/toolsalert.py /home/moon/steal/
 vim /home/moon/steal/steal_alert.py
@@ -79,7 +81,7 @@ crontab -e
 
 rotate logs monthly automatically (keep 6 files, rotate monthly)
 sudo vim /etc/logrotate.d/steal
-/home/moon/steal/steal.csv {
+/home/moon/steal/*.csv {
   rotate 6
   monthly
   compress
