@@ -63,6 +63,8 @@ let mapleader = " "
 set laststatus=2
 
 " Customize auto complete
+" ***=>  USE CTRL-SPACE TO TRIGGER COMPLETION <= ***
+" *** Auto triggered only with . -> etc
 " let g:ycm_filetype_blacklist = {'sql':1}
 map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
 let g:ycm_autoclose_preview_window_after_completion=1
