@@ -1,12 +1,17 @@
 #! /bin/sh
 cd /usr/share/GeoIP
-wget -N "https://geolite.maxmind.com/download/geoip/database/GeoLite2-Country.tar.gz" -P /usr/share/GeoIP/
-wget -N "http://geolite.maxmind.com/download/geoip/database/GeoLite2-City.tar.gz" -P /usr/share/GeoIP/
-wget -N "http://geolite.maxmind.com/download/geoip/database/GeoLite2-ASN.tar.gz" -P /usr/share/GeoIP/
 
-tar -zxvf /usr/share/GeoIP/GeoLite2-Country.tar.gz --strip=1
-tar -zxvf /usr/share/GeoIP/GeoLite2-City.tar.gz --strip=1
-tar -zxvf /usr/share/GeoIP/GeoLite2-ASN.tar.gz --strip=1
+# New download with Maxmind databases with login -> first install geoipupdate and add auth file
+/usr/bin/geoipupdate -f /home/moon/GeoIP.conf -d /usr/share/GeoIP -v
+
+# MaxMind databases require login starting Jan 2020 
+# wget -N "https://geolite.maxmind.com/download/geoip/database/GeoLite2-Country.tar.gz" -P /usr/share/GeoIP/
+# wget -N "http://geolite.maxmind.com/download/geoip/database/GeoLite2-City.tar.gz" -P /usr/share/GeoIP/
+# wget -N "http://geolite.maxmind.com/download/geoip/database/GeoLite2-ASN.tar.gz" -P /usr/share/GeoIP/
+
+# tar -zxvf /usr/share/GeoIP/GeoLite2-Country.tar.gz --strip=1
+# tar -zxvf /usr/share/GeoIP/GeoLite2-City.tar.gz --strip=1
+# tar -zxvf /usr/share/GeoIP/GeoLite2-ASN.tar.gz --strip=1
 
 # Legacy databases discontinued Jan 2019
 # wget -N "http://geolite.maxmind.com/download/geoip/database/GeoLiteCountry/GeoIP.dat.gz" -P /usr/share/GeoIP/

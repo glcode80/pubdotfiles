@@ -334,6 +334,24 @@ sudo systemctl restart php7.2-fpm
 sudo apt-get install geoip-bin
 -> directory: /usr/share/GeoIP/
 geoiplookup 8.8.8.8
+
+-- install new geoipupdate program and config
+sudo apt install geoipupdate
+sudo vim /home/moon/GeoIP.conf
+
+# GeoIP.conf file - used by geoipupdate program to update databases
+# from http://www.maxmind.com
+# save to: /home/moon/GeoIP.conf
+# run as: sudo /usr/bin/geoipupdate -f /home/moon/GeoIP.conf -d /usr/share/GeoIP -v
+UserId XXXXXXXXXXXXX
+# AccountID YOUR_ACCOUNT_ID_HERE # only for newer version of geoipupdate (>3.3.1)
+LicenseKey XXXXXXXXXXXXX
+ProductIds GeoLite2-ASN GeoLite2-City GeoLite2-Country
+# EditionIDs GeoLite2-ASN GeoLite2-City GeoLite2-Country  # only for newer version of geoipupdate (>3.3.1)
+
+test geoipupdate:
+sudo /usr/bin/geoipupdate -f /home/moon/GeoIP.conf -d /usr/share/GeoIP -v
+
 sudo rm /usr/bin/geoipupdate.sh
 sudo wget https://raw.githubusercontent.com/glcode80/pubdotfiles/master/geoipupdate.sh -P /usr/bin
 sudo chmod +x /usr/bin/geoipupdate.sh
