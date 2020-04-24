@@ -314,6 +314,7 @@ sudo rm /etc/nginx/conf.d/default.conf
 -- test: hello world
 sudo wget https://raw.githubusercontent.com/glcode80/pubdotfiles/master/nginx-default-helloworld.conf -P /etc/nginx/conf.d
 sudo -E vim /etc/nginx/conf.d/nginx-default-helloworld.conf
+-> for php 7.4: edit file!!
 
 sudo service nginx restart
 sudo ufw allow 80
@@ -394,6 +395,15 @@ sudo apt install update-motd update-notifier-common landscape-common
 17) monit
 sudo apt install monit
 
+* php7.4-fpm
+sudo -E vim /etc/monit/conf.d/php7.4-fpm
+# make sure to use 7.0 / 7.2 / 7.4 everywhere!!
+check process php7.4-fpm with pidfile /run/php/php7.4-fpm.pid
+	group www-data #change accordingly
+    start program = "/usr/sbin/service php7.4-fpm start" with timeout 60 seconds
+    stop program  = "/usr/sbin/service php7.4-fpm stop"
+    if failed unixsocket /var/run/php/php7.4-fpm.sock then restart
+
 * php7.2-fpm
 sudo -E vim /etc/monit/conf.d/php7.2-fpm
 # make sure to use 7.0 / 7.2 everywhere!!
@@ -409,6 +419,7 @@ sudo -E vim /etc/monit/conf.d/mysql
 find pid files: 
 	sudo find / -name "*.pid"
 replace pid for mariadb: /var/lib/mysql/localhost.pid
+-> new ubuntu 20.04 when using standard from distro: /run/mysqld/mysqld.pid
 -> attention: this is always the hostname!
 
 * nginx
