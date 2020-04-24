@@ -137,6 +137,10 @@ PluginInstall
 
 * for X11-forwarding working & dbext working *
 install X11 server -> https://sourceforge.net/projects/vcxsrv/
+-> if 'Cannot open Display': first install xauth!
+sudo apt install xauth
+sudo systemctl restart sshd
+
 sudo apt-get install vim-gtk
 sudo apt-get install libdbi-perl
 sudo apt-get install libdbd-mysql-perl
