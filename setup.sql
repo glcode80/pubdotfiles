@@ -365,9 +365,10 @@ sudo chmod -x /etc/update-motd.d/10-help-text
 sudo chmod -x /etc/update-motd.d/50-motd-news 
 sudo chmod -x /etc/update-motd.d/80-livepatch
 
-sudo apt-get install lsb-release figlet update-motd update-notifier-common
-sudo wget https://raw.githubusercontent.com/glcode80/pubdotfiles/master/10-sysinfo -P /etc/update-motd.d/
-sudo chmod +x /etc/update-motd.d/10-sysinfo
+sudo apt install update-motd update-notifier-common landscape-common
+-- OLD: sudo apt-get install lsb-release figlet update-motd update-notifier-common
+-- OLD: sudo wget https://raw.githubusercontent.com/glcode80/pubdotfiles/master/10-sysinfo -P /etc/update-motd.d/
+-- OLD: sudo chmod +x /etc/update-motd.d/10-sysinfo
 
 17) monit
 sudo apt-get install monit
