@@ -10,8 +10,8 @@ Summary setup file for server setup
 0) config: GRUB2 on some hosts better for php-fpm - check if running/restarting!
 
 1) overall server setup
-sudo apt-get update
-sudo apt-get upgrade
+sudo apt update
+sudo apt upgrade
 sudo dpkg-reconfigure tzdata
 adduser moon
 adduser moon sudo
@@ -112,8 +112,8 @@ sudo -E vim /etc/logrotate.d/ownlogs
 
 */
 5) install programs needed
-sudo apt-get install screen
-sudo apt-get install mc
+sudo apt install screen
+sudo apt install mc
 
 5b) fix utf8 line drawing issues
 vim .bashrc
@@ -122,7 +122,7 @@ test "$TERM" = "putty" && export LC_ALL=C || export LC_ALL=en_US.utf8
 export TERM=xterm-256color
 
 6) set up git
-sudo apt-get install git
+sudo apt install git
 mkdir git
 git config --global credential.helper "cache --timeout=72000"
 git config --global user.name "x"
@@ -131,7 +131,7 @@ git config --global credential.https://github.com.glcode80 glcode80
 
 
 7) set up vim
-sudo apt-get install vim
+sudo apt install vim
 git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 PluginInstall
 
@@ -141,9 +141,9 @@ install X11 server -> https://sourceforge.net/projects/vcxsrv/
 sudo apt install xauth
 sudo systemctl restart sshd
 
-sudo apt-get install vim-gtk
-sudo apt-get install libdbi-perl
-sudo apt-get install libdbd-mysql-perl
+sudo apt install vim-gtk
+sudo apt install libdbi-perl
+sudo apt install libdbd-mysql-perl
 
 * avoid ctrl-s hanging terminal (could stop with ctrl-q)
 echo "stty -ixon" >> .bashrc
@@ -164,16 +164,16 @@ bind "set menu-complete-display-prefix on"
 
 * Ctags / YouCompleteMe *
 sudo apt install exuberant-ctags
-sudo apt-get install build-essential cmake
-sudo apt-get install python-dev python3-dev
+sudo apt install build-essential cmake
+sudo apt install python-dev python3-dev
 cd ~/.vim/bundle/YouCompleteMe
 ./install.py
 (on Raspi run it on one core only: YCM_CORES=1 ./install.py --gocode-completer)
 
 
 8) install python plugins
-sudo apt-get install python3
-sudo apt-get install python3-pip
+sudo apt install python3
+sudo apt install python3-pip
 sudo pip3 install --upgrade setuptools
 sudo pip3 install pymysql
 sudo pip3 install requests
@@ -188,7 +188,7 @@ sudo pip3 install numpy
 update all packages with pip3:
 sudo pip3 freeze — local | grep -v ‘^\-e’ | cut -d = -f 1 | xargs -n1 sudo pip3 install -U
 
-sudo apt-get install -y python3-venv
+sudo apt install -y python3-venv
 mkdir venv
 cd ~/venv
 python3 -m venv testvenv 
@@ -200,11 +200,11 @@ deactivate
 9) install php plugins (for Vim)
 php needs to be installed to work (see below)
  php -v
- sudo apt-get install php7.4-cli
- sudo apt-get install php7.4-xml
- -- sudo apt-get install php7.2-cli
- -- sudo apt-get install php7.2-xml
-   sudo apt-get install php
+ sudo apt install php7.4-cli
+ sudo apt install php7.4-xml
+ -- sudo apt install php7.2-cli
+ -- sudo apt install php7.2-xml
+   sudo apt install php
  -> more plugins php-tools-install.sql
 #PHPCS
 sudo curl -LsS https://squizlabs.github.io/PHP_CodeSniffer/phpcs.phar -o /usr/local/bin/phpcs
@@ -228,7 +228,7 @@ sudo ufw default allow outgoing
 sudo ufw default deny incoming
 sudo ufw allow ssh
 sudo ufw logging on
-sudo apt-get install fail2ban
+sudo apt install fail2ban
 sudo cp /etc/fail2ban/fail2ban.conf /etc/fail2ban/fail2ban.local
 sudo cp /etc/fail2ban/jail.conf /etc/fail2ban/jail.local
 sudo -E vim /etc/fail2ban/jail.local
@@ -239,7 +239,7 @@ sudo fail2ban-client start
 12) MariaDB 10.3
 (starting 10.2 supports subqueries in views, default is 10.1 in 18.04)
 
-sudo apt-get install software-properties-common
+sudo apt install software-properties-common
 sudo apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xF1656F24C74CD1D8
 sudo -E vim /etc/apt/sources.list.d/mariadb.list
 # MariaDB 10.3 Repository
@@ -332,16 +332,16 @@ sudo -E vim /etc/nginx/nginx.conf
 sudo apt install php7.2-fpm
 sudo sed -i 's/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/g' /etc/php/7.2/fpm/php.ini
 sudo apt install php7.2-mysql
-sudo apt-get install php-curl php-gd php-mbstring php-xml php-xmlrpc php-json
-sudo apt-get install php7.2-zip
-sudo apt-get install php7.2-tidy
+sudo apt install php-curl php-gd php-mbstring php-xml php-xmlrpc php-json
+sudo apt install php7.2-zip
+sudo apt install php7.2-tidy
 
 sudo systemctl enable php7.2-fpm
 sudo systemctl restart php7.2-fpm
 
 
 15) geoip database & update script
-sudo apt-get install geoip-bin
+sudo apt install geoip-bin
 -> directory: /usr/share/GeoIP/
 geoiplookup 8.8.8.8
 
@@ -376,12 +376,12 @@ sudo chmod -x /etc/update-motd.d/50-motd-news
 sudo chmod -x /etc/update-motd.d/80-livepatch
 
 sudo apt install update-motd update-notifier-common landscape-common
--- OLD: sudo apt-get install lsb-release figlet update-motd update-notifier-common
+-- OLD: sudo apt install lsb-release figlet update-motd update-notifier-common
 -- OLD: sudo wget https://raw.githubusercontent.com/glcode80/pubdotfiles/master/10-sysinfo -P /etc/update-motd.d/
 -- OLD: sudo chmod +x /etc/update-motd.d/10-sysinfo
 
 17) monit
-sudo apt-get install monit
+sudo apt install monit
 
 * php7.2-fpm
 sudo -E vim /etc/monit/conf.d/php7.2-fpm
@@ -612,7 +612,7 @@ Read speed:
 sync; echo 3 | sudo tee /proc/sys/vm/drop_caches
 sync; time dd if=~/test.tmp of=/dev/null bs=500K count=1024
 rm ~/test.tmp
-sudo apt-get iozone3
+sudo apt iozone3
 iozone -e -I -a -s 100M -r 4k -i 0 -i 1 -i 2 
 [-f /path/to/file]
 - cpu: sysbench -> check events per second / total number of events
@@ -1089,7 +1089,7 @@ https://dzone.com/articles/nginx-with-geoip-maxmind-database-to-fetch-user-ge
 https://www.howtoforge.com/tutorial/how-to-use-geoip-with-nginx-on-ubuntu-16.04/
 
 1) install / load geoip module
-sudo apt-get install nginx-module-geoip
+sudo apt install nginx-module-geoip
 sudo -E vim /etc/nginx/nginx.conf
 -> beginning
 load_module "modules/ngx_http_geoip_module.so";
@@ -1261,8 +1261,8 @@ process_control_timeout=5s
 
 
 ** memcached => Do NOT do it for now*
-sudo apt-get install memcached 
-sudo apt-get install php-memcached
+sudo apt install memcached 
+sudo apt install php-memcached
 sudo -E vim /etc/memcached.conf
 -m 128
 
