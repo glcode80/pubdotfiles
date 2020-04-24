@@ -329,6 +329,17 @@ sudo -E vim /etc/nginx/nginx.conf
 	
 14) PHP
 
+sudo apt install php7.4-fpm
+sudo apt install php7.4-mysql
+sudo apt install php-curl php-gd php-mbstring php-xml php-xmlrpc php-json
+sudo apt install php7.4-zip
+sudo apt install php7.4-tidy
+
+sudo systemctl enable php7.4-fpm
+sudo systemctl restart php7.4-fpm
+
+
+** old for 7.2 **
 sudo apt install php7.2-fpm
 sudo sed -i 's/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/g' /etc/php/7.2/fpm/php.ini
 sudo apt install php7.2-mysql
