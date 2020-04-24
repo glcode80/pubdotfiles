@@ -192,8 +192,10 @@ deactivate
 9) install php plugins (for Vim)
 php needs to be installed to work (see below)
  php -v
- sudo apt-get install php7.2-cli
- sudo apt-get install php7.2-xml
+ sudo apt-get install php7.4-cli
+ sudo apt-get install php7.4-xml
+ -- sudo apt-get install php7.2-cli
+ -- sudo apt-get install php7.2-xml
    sudo apt-get install php
  -> more plugins php-tools-install.sql
 #PHPCS
@@ -222,7 +224,7 @@ sudo apt-get install fail2ban
 sudo cp /etc/fail2ban/fail2ban.conf /etc/fail2ban/fail2ban.local
 sudo cp /etc/fail2ban/jail.conf /etc/fail2ban/jail.local
 sudo vim /etc/fail2ban/jail.local
-- bantime = default: 600 =10 minutes => change to 31536000 = 1 year
+- bantime = default: 10m => change to 50000 (=1 month)
 sudo fail2ban-client start
 
 
