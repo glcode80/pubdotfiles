@@ -26,11 +26,13 @@ moon ALL=(ALL)  NOPASSWD: ALL
 
 # if sudo crontab -e raises issues, add to visudo settings
 Defaults env_keep += "EDITOR"
+Defaults env_keep += "VISUAL"
+Defaults env_keep += "HOME"
 
 vim .bashrc
 export EDITOR=/usr/bin/vim
 
-=> workaround (keeps enviroment variables):
+=> workaround (keeps enviroment variables) -> same as 'Defaults env_keep += "HOME"':
 sudo -E vim
 
 # change default editor for cronjobs
@@ -42,7 +44,7 @@ mkdir ~/.ssh
 touch ~/.ssh/authorized_keys
 chmod 700 ~/.ssh && chmod 600 ~/.ssh/authorized_keys
 *! add public key !*
-sudo -E vim /etc/ssh/sshd_config
+sudo vim /etc/ssh/sshd_config
 PermitRootLogin no
 PasswordAuthentication no
 ChallengeResponseAuthentication no
@@ -84,7 +86,7 @@ crontab -e
 26 * * * * /home/moon/steal/steal_alert.py >> /home/moon/logs/stealalert.txt 2>&1
 
 rotate logs monthly automatically (keep 6 files, rotate monthly)
-sudo -E vim /etc/logrotate.d/steal
+sudo vim /etc/logrotate.d/steal
 /home/moon/steal/*.csv {
   rotate 6
   monthly
@@ -101,7 +103,7 @@ sudo logrotate /etc/logrotate.conf --verbose --force
 
 4c) set up logrotate for logs directory (logs and subdirectory, keep 6 files, rotate monhtly)
 mkdir /home/moon/logs
-sudo -E vim /etc/logrotate.d/ownlogs
+sudo vim /etc/logrotate.d/ownlogs
 /home/moon/logs/*.txt /home/moon/logs/*.log /home/moon/logs/*/*.txt /home/moon/logs/*/*.log {
   rotate 6
   monthly
@@ -231,7 +233,7 @@ sudo ufw logging on
 sudo apt install fail2ban
 sudo cp /etc/fail2ban/fail2ban.conf /etc/fail2ban/fail2ban.local
 sudo cp /etc/fail2ban/jail.conf /etc/fail2ban/jail.local
-sudo -E vim /etc/fail2ban/jail.local
+sudo vim /etc/fail2ban/jail.local
 - bantime = default: 10m => change to 50000 (=1 month)
 sudo fail2ban-client start
 
@@ -241,7 +243,7 @@ sudo fail2ban-client start
 
 sudo apt install software-properties-common
 sudo apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xF1656F24C74CD1D8
-sudo -E vim /etc/apt/sources.list.d/mariadb.list
+sudo vim /etc/apt/sources.list.d/mariadb.list
 # MariaDB 10.3 Repository
 deb [arch=amd64,arm64,ppc64el] http://sfo1.mirrors.digitalocean.com/mariadb/repo/10.3/ubuntu bionic main
 deb-src http://sfo1.mirrors.digitalocean.com/mariadb/repo/10.3/ubuntu bionic main
@@ -257,12 +259,12 @@ sudo mysql -u root -p
 SET GLOBAL event_scheduler = ON;
 
 -- And add to mysqld file to enable it on restart
-sudo -E vim /etc/mysql/conf.d/mysql.cnf
+sudo vim /etc/mysql/conf.d/mysql.cnf
 [mysqld]
 event_scheduler = ON 
 
 * Fix error log for mysql to log file location
-sudo -E vim /etc/mysql/conf.d/mysql.cnf
+sudo vim /etc/mysql/conf.d/mysql.cnf
 [mysqld]
 log_error = /var/log/mysql/error.log
 
@@ -272,7 +274,7 @@ log_error = /var/log/mysql/error.log
 wget http://nginx.org/keys/nginx_signing.key
 sudo apt-key add nginx_signing.key
 
-sudo -E vim /etc/apt/sources.list.d/nginx.list
+sudo vim /etc/apt/sources.list.d/nginx.list
 
 # Nginx repository
 deb [arch=amd64,arm64] http://nginx.org/packages/ubuntu/ bionic nginx
@@ -292,7 +294,7 @@ sudo systemctl status nginx
 
 * fix bug with "can't open pid" on status
 sudo mkdir /etc/systemd/system/nginx.service.d
-sudo -E vim /etc/systemd/system/nginx.service.d/override.conf
+sudo vim /etc/systemd/system/nginx.service.d/override.conf
 [Service]
 ExecStartPost=/bin/sleep 0.1
 
@@ -301,7 +303,7 @@ sudo systemctl restart nginx
 sudo systemctl status nginx
 
 
-sudo -E vim /etc/nginx/nginx.conf
+sudo vim /etc/nginx/nginx.conf
 => www-data
 [from nginx] - if not, you get a 502 gateway error!!
 worker_processes 1
@@ -313,14 +315,14 @@ sudo rm /etc/nginx/conf.d/default.conf
 
 -- test: hello world
 sudo wget https://raw.githubusercontent.com/glcode80/pubdotfiles/master/nginx-default-helloworld.conf -P /etc/nginx/conf.d
-sudo -E vim /etc/nginx/conf.d/nginx-default-helloworld.conf
+sudo vim /etc/nginx/conf.d/nginx-default-helloworld.conf
 -> for php 7.4: edit file!!
 
 sudo service nginx restart
 sudo ufw allow 80
 
 -- enable gzip compression AND enable max file size upload php!! [for wordpress download manager -> upload files! also adjust php.ini!]
-sudo -E vim /etc/nginx/nginx.conf
+sudo vim /etc/nginx/nginx.conf
 	gzip on;
 	gzip_disable "mise6";
 	gzip_vary on;
@@ -359,7 +361,7 @@ geoiplookup 8.8.8.8
 
 -- install new geoipupdate program and config
 sudo apt install geoipupdate
-sudo -E vim /home/moon/GeoIP.conf
+sudo vim /home/moon/GeoIP.conf
 
 # GeoIP.conf file - used by geoipupdate program to update databases
 # from http://www.maxmind.com
@@ -396,7 +398,7 @@ sudo apt install update-motd update-notifier-common landscape-common
 sudo apt install monit
 
 * php7.4-fpm
-sudo -E vim /etc/monit/conf.d/php7.4-fpm
+sudo vim /etc/monit/conf.d/php7.4-fpm
 # make sure to use 7.0 / 7.2 / 7.4 everywhere!!
 check process php7.4-fpm with pidfile /run/php/php7.4-fpm.pid
 	group www-data #change accordingly
@@ -405,7 +407,7 @@ check process php7.4-fpm with pidfile /run/php/php7.4-fpm.pid
     if failed unixsocket /var/run/php/php7.4-fpm.sock then restart
 
 * php7.2-fpm
-sudo -E vim /etc/monit/conf.d/php7.2-fpm
+sudo vim /etc/monit/conf.d/php7.2-fpm
 # make sure to use 7.0 / 7.2 everywhere!!
 check process php7.2-fpm with pidfile /run/php/php7.2-fpm.pid
 	group www-data #change accordingly
@@ -415,7 +417,7 @@ check process php7.2-fpm with pidfile /run/php/php7.2-fpm.pid
 
 * mariadb	
 sudo cp /etc/monit/conf-available/mysql /etc/monit/conf.d/
-sudo -E vim /etc/monit/conf.d/mysql
+sudo vim /etc/monit/conf.d/mysql
 find pid files: 
 	sudo find / -name "*.pid"
 replace pid for mariadb: /var/lib/mysql/localhost.pid
@@ -427,7 +429,7 @@ sudo ln -s /etc/monit/conf-available/nginx /etc/monit/conf-enabled/
 
 * openssh
 sudo cp /etc/monit/conf-available/openssh-server /etc/monit/conf.d/
-sudo -E vim /etc/monit/conf.d/openssh-server
+sudo vim /etc/monit/conf.d/openssh-server
 -> comment out line 12 / 26-28 (dsa_key sections)
 
 * cron
@@ -436,7 +438,7 @@ sudo ln -s /etc/monit/conf-available/cron /etc/monit/conf-enabled/
 * memcached (tbd)
 
 * enable httpd service on localhost:
-sudo -E vim /etc/monit/monitrc
+sudo vim /etc/monit/monitrc
 set httpd port 2812 and
     use address localhost  # only accept connection from localhost
     allow localhost        # allow localhost to connect to the server and
@@ -450,7 +452,7 @@ sudo monit status nginx
 sudo monit status
 
 logfile:
-sudo -E vim /var/log/monit.log
+sudo vim /var/log/monit.log
 
 
 ***********************************
@@ -469,7 +471,7 @@ sudo monit summary
 sudo apt update
 sudo apt upgrade
 sudo hostnamectl set-hostname [HOSTNAME]
-sudo -E vim /etc/hosts
+sudo vim /etc/hosts
 -> if issues with hostname error message: add hostname after localhost
 -> 127.0.0.1       localhost xxx
 sudo dpkg-reconfigure tzdata 
@@ -523,10 +525,10 @@ cd /etc/monit/conf-enabled
 cd /etc/monit/conf.d
 rm files
 sudo monit summary
-sudo -E vim /etc/monit/monitrc
+sudo vim /etc/monit/monitrc
 
 * attention need to adjust mysql pid in hostname
-sudo -E vim /etc/monit/conf.d/mysql
+sudo vim /etc/monit/conf.d/mysql
 find pid files: 
     sudo find / -name "*.pid"
 replace pid for mariadb: /var/lib/mysql/localhost.pid
@@ -534,7 +536,7 @@ replace pid for mariadb: /var/lib/mysql/localhost.pid
 
 
 * enable email alerts from monit
-sudo -E vim /etc/monit/monitrc
+sudo vim /etc/monit/monitrc
 #Mail settings via Mailgun SMTP
 set mail-format {
   from: monit@**MONITDOMAIN**.com
@@ -553,7 +555,7 @@ sudo monit -t
 sudo monit restart
 
 * enable system/cpu checks (within "Services")
-sudo -E vim /etc/monit/monitrc
+sudo vim /etc/monit/monitrc
 
 # 1 cycle = 2 mins, loadavg and cpu according to number of cores
 check system $HOST
@@ -610,14 +612,14 @@ vim /home/moon/backup_rclone.sh
 2) fix local ip instead of dhcp on 18.04
 ifconfig
 sudo cp /etc/netplan/50-cloud-init.yaml /etc/netplan/01-netcfg.yaml
-sudo -E vim /etc/netplan/01-netcfg.yaml
+sudo vim /etc/netplan/01-netcfg.yaml
 addresses: [192.168.2.xxx/24]
 sudo netplan apply
 
 2b) fix dhcp ip release on 18.04 -> use max as identifier
 ifconfig
 sudo cp /etc/netplan/50-cloud-init.yaml /etc/netplan/01-netcfg.yaml
-sudo -E vim /etc/netplan/01-netcfg.yaml
+sudo vim /etc/netplan/01-netcfg.yaml
 add:
 	dhcp-identifier: mac
 sudo netplan apply
@@ -688,8 +690,8 @@ mysqlcheck -u mydbuser -p mydbname
 
 * enable remote access:
 sudo ufw allow 3306
-sudo -E vim /etc/mysql/mysql.conf.d/mysqld.cnf
-sudo -E vim /etc/mysql/my.cnf.dpkg-new
+sudo vim /etc/mysql/mysql.conf.d/mysqld.cnf
+sudo vim /etc/mysql/my.cnf.dpkg-new
 -> #bind 127.0.0.1 => comment it out
 sudo systemctl restart mysql
 
@@ -796,7 +798,7 @@ sudo fail2ban-client unban --all
 
 
 - add other jails to fail2ban -> add enabled=true + make sure to have proper log file
-sudo -E vim /etc/fail2ban/jail.local
+sudo vim /etc/fail2ban/jail.local
 sudo fail2ban-client -t
 sudo fail2ban-client reload
 sudo service fail2ban restart
@@ -823,26 +825,26 @@ https://docs.python.org/2/library/re.html
 
 * add own nginx-wordpress filter
 a) check for php login/xmlrpc exploits
-sudo -E vim /etc/fail2ban/filter.d/nginx-wordpress.conf
+sudo vim /etc/fail2ban/filter.d/nginx-wordpress.conf
 [Definition]
 failregex = <HOST>.*POST.*(wp-login\.php|xmlrpc\.php).* (403|499|200)
 
 b) check for running code in search -> more than x searches to be blocked
 [first s=? then a charachter (to exclude search bots with nothing), then status code (to exlcude including the ones where it is only a referrer]
 
-sudo -E vim /etc/fail2ban/filter.d/nginx-wordpress-search.conf
+sudo vim /etc/fail2ban/filter.d/nginx-wordpress-search.conf
 [Definition]
 failregex = <HOST>.*GET.*(\?s\=)[0-9a-zA-Z].* (200|404|301|302)
 
 c) check for trying to access database -> block [better than checking for search]
-sudo -E vim /etc/fail2ban/filter.d/nginx-select.conf
+sudo vim /etc/fail2ban/filter.d/nginx-select.conf
 [Definition]
 failregex = <HOST>.*GET.*(SELECT%%20|select%%20|UPDATE%%20|update%%20).* (200|404|301|302)
 
 
 enable a new filter:
 ** attention: also add filter description! **
-sudo -E vim /etc/fail2ban/jail.local
+sudo vim /etc/fail2ban/jail.local
 (default findtime = 10min, default bantime fixed to 1 year, maxretry = 5)
 
 * uncomment -> to make sure monit still works for mysql
@@ -899,7 +901,7 @@ sudo fail2ban-client reload [jailname]
 
 
 * check log files / status */
-sudo -E vim /var/log/fail2ban.log
+sudo vim /var/log/fail2ban.log
 sudo fail2ban-client -t
 sudo fail2ban-client status
 sudo fail2ban-client status sshd
@@ -935,23 +937,23 @@ ls
 -> first remove: nginx-default-helloworld.conf
 sudo wget https://raw.githubusercontent.com/glcode80/pubdotfiles/master/nginx-default-empty.conf -P /etc/nginx/conf.d
 -> put in server IP!
-sudo -E vim /etc/nginx/conf.d/nginx-default-empty.conf
+sudo vim /etc/nginx/conf.d/nginx-default-empty.conf
 
 -- redirect
 sudo wget https://raw.githubusercontent.com/glcode80/pubdotfiles/master/nginx-redirect.conf -P /etc/nginx/conf.d
-sudo -E vim /etc/nginx/conf.d/nginx-redirect.conf
+sudo vim /etc/nginx/conf.d/nginx-redirect.conf
 
 -- www
 sudo wget https://raw.githubusercontent.com/glcode80/pubdotfiles/master/nginx-www.conf -P /etc/nginx/conf.d
-sudo -E vim /etc/nginx/conf.d/nginx-www.conf
+sudo vim /etc/nginx/conf.d/nginx-www.conf
 
 -- www with php
 sudo wget https://raw.githubusercontent.com/glcode80/pubdotfiles/master/nginx-www-php.conf -P /etc/nginx/conf.d
-sudo -E vim /etc/nginx/conf.d/nginx-www-php.conf
+sudo vim /etc/nginx/conf.d/nginx-www-php.conf
 
 -- php with wordpress
 sudo wget https://raw.githubusercontent.com/glcode80/pubdotfiles/master/nginx-wordpress.conf -P /etc/nginx/conf.d
-sudo -E vim /etc/nginx/conf.d/nginx-wordpress.conf
+sudo vim /etc/nginx/conf.d/nginx-wordpress.conf
 
 * certbot -> make sure to open port first!!
 sudo ufw allow 443
@@ -990,7 +992,7 @@ Disallow: /de/mein-konto/
 /var/run = ram disk! -> can also put to normal disk. be careful with size of cache
 /etc/nginx = normal disk -> instead of 50ms around 60-70ms (no big difference)
 
-sudo -E vim /etc/nginx/nginx.conf
+sudo vim /etc/nginx/nginx.conf
 
 # ** NGINX PAGE CACHE START - nginx.conf http - options: 60m, 5h, 5d - adjust in conf too! **
 
@@ -1017,11 +1019,11 @@ fastcgi_ignore_headers Cache-Control Expires Set-Cookie;
 
 -- www with php with fastcgi pache cache
 sudo wget https://raw.githubusercontent.com/glcode80/pubdotfiles/master/nginx-www-php-fastcgi-cache.conf -P /etc/nginx/conf.d
-sudo -E vim /etc/nginx/conf.d/nginx-www-php-fastcgi-cache.conf
+sudo vim /etc/nginx/conf.d/nginx-www-php-fastcgi-cache.conf
 
 -- php with wordpress with fastcgi pache cache
 sudo wget https://raw.githubusercontent.com/glcode80/pubdotfiles/master/nginx-wordpress-fastcgi-cache.conf -P /etc/nginx/conf.d
-sudo -E vim /etc/nginx/conf.d/nginx-wordpress-fastcgi-cache.conf
+sudo vim /etc/nginx/conf.d/nginx-wordpress-fastcgi-cache.conf
 
 sudo nginx -t
 sudo service nginx restart
@@ -1063,7 +1065,7 @@ sudo ./setup-ngxblocker -v /etc/nginx/conf.d -e .conf
  	include /etc/nginx/bots.d/blockbots.conf;
 -- ** manual addition to server block 443
 
-sudo -E vim /etc/nginx/bots.d/whitelist-ips.conf
+sudo vim /etc/nginx/bots.d/whitelist-ips.conf
 --> add own ip
 OWNIP	0;
 
@@ -1112,7 +1114,7 @@ https://www.howtoforge.com/tutorial/how-to-use-geoip-with-nginx-on-ubuntu-16.04/
 
 1) install / load geoip module
 sudo apt install nginx-module-geoip
-sudo -E vim /etc/nginx/nginx.conf
+sudo vim /etc/nginx/nginx.conf
 -> beginning
 load_module "modules/ngx_http_geoip_module.so";
 
@@ -1129,14 +1131,14 @@ sudo cat /var/log/nginx/access.log | awk '{print $NF}' | sort -n | uniq -c | sor
  => /usr/share/GeoIP/maxmind.dat
 
 3) adjust http section of nginx.conf
-sudo -E vim /etc/nginx/nginx.conf
+sudo vim /etc/nginx/nginx.conf
 
     # load db -> make field available to config scripts
     # -> can use $geoip_country_code
 	# use manually downloaded db that is still updated for country 4/6
 	geoip_country /usr/share/GeoIP/maxmind.dat;
 
-sudo -E vim /etc/nginx/conf.d/CONFFILE.conf
+sudo vim /etc/nginx/conf.d/CONFFILE.conf
 
     # do temporary redirect (307) based on country code -> add to server block
     if ($geoip_country_code ~ (US|DE) ) {
@@ -1222,7 +1224,7 @@ rewrite ^(.*)$ $uri permanent;
 ***********************************
 
 * adjust php settings [ALSO adjust nginx.conf for client_max_body_size=128m; !!!]
-sudo -E vim /etc/php/7.2/fpm/php.ini
+sudo vim /etc/php/7.2/fpm/php.ini
 
 memory_limit = 512M
 max_execution_time = 60
@@ -1247,7 +1249,7 @@ sudo service nginx restart
 * Attention: if cpu 100% is the problem, then better to have not too many workers *
 * -> better to have 2 workers, if 2 cpus are available, otherwise just too much overhead *
 
-sudo -E vim /etc/php/7.2/fpm/pool.d/www.conf
+sudo vim /etc/php/7.2/fpm/pool.d/www.conf
 -> user/group = www-data
 
 i) tune php-fpm - max children etc! => adjust if more RAM is available!
@@ -1275,7 +1277,7 @@ pm.max_requests = 500 [leave]
 
 ii) php-fpm emergency restart settings [not implemented yet, using monit]
 https://serverfault.com/questions/575457/constantly-have-to-reload-php-fpm
-sudo -E vim /etc/php/7.2/fpm/php-fpm.conf
+sudo vim /etc/php/7.2/fpm/php-fpm.conf
 
 emergency_restart_threshold=3
 emergency_restart_interval=1m
@@ -1285,7 +1287,7 @@ process_control_timeout=5s
 ** memcached => Do NOT do it for now*
 sudo apt install memcached 
 sudo apt install php-memcached
-sudo -E vim /etc/memcached.conf
+sudo vim /etc/memcached.conf
 -m 128
 
 disable udp
