@@ -1225,8 +1225,9 @@ rewrite ^(.*)$ $uri permanent;
 ***********************************
 
 * adjust php settings [ALSO adjust nginx.conf for client_max_body_size=128m; !!!]
-sudo vim /etc/php/7.2/fpm/php.ini
-
+sudo vim /etc/php/7.4/fpm/php.ini
+  sudo vim /etc/php/7.2/fpm/php.ini
+  
 memory_limit = 512M
 max_execution_time = 60
 max_input_time=60
@@ -1250,7 +1251,8 @@ sudo service nginx restart
 * Attention: if cpu 100% is the problem, then better to have not too many workers *
 * -> better to have 2 workers, if 2 cpus are available, otherwise just too much overhead *
 
-sudo vim /etc/php/7.2/fpm/pool.d/www.conf
+sudo vim /etc/php/7.4/fpm/pool.d/www.conf
+  sudo vim /etc/php/7.2/fpm/pool.d/www.conf
 -> user/group = www-data
 
 i) tune php-fpm - max children etc! => adjust if more RAM is available!
@@ -1296,7 +1298,8 @@ disable udp
 -U 0
 
 sudo service memcached restart
-sudo service php7.2-fpm restart
+sudo service php7.4-fpm restart
+  sudo service php7.2-fpm restart
 sudo service nginx restart
 
 
