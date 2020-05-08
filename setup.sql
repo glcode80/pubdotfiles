@@ -958,12 +958,22 @@ sudo vim /etc/nginx/conf.d/nginx-wordpress.conf
 
 * certbot -> make sure to open port first!!
 sudo ufw allow 443
-sudo apt install software-properties-common
-  sudo apt install software-properties-common python-software-properties
-sudo add-apt-repository ppa:certbot/certbot
-sudo apt update
-sudo apt upgrade
-sudo apt install python-certbot-nginx
+
+
+  -- 18.04
+  sudo apt install software-properties-common
+    sudo apt install software-properties-common python-software-properties
+  sudo add-apt-repository ppa:certbot/certbot
+
+  sudo apt update
+  sudo apt upgrade
+
+  sudo apt install python-certbot-nginx
+
+-- 20.04
+sudo apt install certbot python3-certbot-nginx
+
+
 sudo certbot --nginx -d example.com -d www.example.com
 
 update script:
@@ -1114,10 +1124,27 @@ https://dzone.com/articles/nginx-with-geoip-maxmind-database-to-fetch-user-ge
 https://www.howtoforge.com/tutorial/how-to-use-geoip-with-nginx-on-ubuntu-16.04/
 
 1) install / load geoip module
+
+-- 20.04
+sudo vim /etc/apt/sources.list
+deb https://nginx.org/packages/ubuntu/ focal nginx
+
+sudo wget https://nginx.org/keys/nginx_signing.key
+sudo apt-key add nginx_signing.key
+
+sudo apt update
 sudo apt install nginx-module-geoip
+
+-- 18.04
+	sudo apt install nginx-module-geoip
+
 sudo vim /etc/nginx/nginx.conf
 -> beginning
 load_module "modules/ngx_http_geoip_module.so";
+
+
+
+
 
 + NEW !!: add $geoip_country_code to log file as test!
 -- -> '"$http_user_agent" "$http_x_forwarded_for" "$geoip_country_code"';
