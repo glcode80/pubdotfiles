@@ -977,8 +977,7 @@ sudo ufw allow 443
   sudo apt install python-certbot-nginx
 
 -- 20.04
-sudo apt install certbot python3-certbot-nginx
-
+sudo apt install python3-certbot-nginx
 
 sudo certbot --nginx -d example.com -d www.example.com
 
