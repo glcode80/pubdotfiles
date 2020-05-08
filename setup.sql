@@ -276,9 +276,15 @@ sudo apt-key add nginx_signing.key
 
 sudo vim /etc/apt/sources.list.d/nginx.list
 
+-- 18.04
 # Nginx repository
 deb [arch=amd64,arm64] http://nginx.org/packages/ubuntu/ bionic nginx
 deb-src http://nginx.org/packages/ubuntu/ bionic nginx
+
+-- 20.04
+# Nginx repository
+deb [arch=amd64,arm64] http://nginx.org/packages/ubuntu/ focal nginx
+deb-src http://nginx.org/packages/ubuntu/ focal nginx
 
 sudo apt update
 sudo apt remove nginx
@@ -1126,8 +1132,11 @@ https://www.howtoforge.com/tutorial/how-to-use-geoip-with-nginx-on-ubuntu-16.04/
 1) install / load geoip module
 
 -- 20.04
-sudo vim /etc/apt/sources.list
-deb https://nginx.org/packages/ubuntu/ focal nginx
+sudo vim /etc/apt/sources.list.d/nginx.list
+
+# Nginx repository
+deb [arch=amd64,arm64] http://nginx.org/packages/ubuntu/ focal nginx
+deb-src http://nginx.org/packages/ubuntu/ focal nginx
 
 sudo wget https://nginx.org/keys/nginx_signing.key
 sudo apt-key add nginx_signing.key
