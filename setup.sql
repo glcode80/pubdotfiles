@@ -549,7 +549,8 @@ set mail-format {
 				}
 set mailserver smtp.mailgun.org port 587
   username postmaster@mg.**MONITDOMAIN**.com password "**MAILGUN_SMTP_PASSWORD**"
-  using TLSV1 with timeout 30 seconds
+  # using TLSV1 with timeout 30 seconds # attention: need 1.1 on Ubuntu 20.04
+  using TLSV1.1 with timeout 30 seconds
 set alert **RECEIVING_EMAIL** #email address which will receive monit alerts
 sudo monit -t
 sudo monit restart
