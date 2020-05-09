@@ -343,6 +343,9 @@ sudo apt install php7.4-mysql
 sudo apt install php-curl php-gd php-mbstring php-xml php-xmlrpc php-json
 sudo apt install php7.4-zip
 sudo apt install php7.4-tidy
+-- suggested for wordpress
+sudo apt install php7.4-imagick
+sudo apt install php7.4-soap
 
 sudo systemctl enable php7.4-fpm
 sudo systemctl restart php7.4-fpm
@@ -355,6 +358,9 @@ sudo apt install php7.2-mysql
 sudo apt install php-curl php-gd php-mbstring php-xml php-xmlrpc php-json
 sudo apt install php7.2-zip
 sudo apt install php7.2-tidy
+-- suggested for wordpress
+sudo apt install php7.2-imagick
+sudo apt install php7.2-soap
 
 sudo systemctl enable php7.2-fpm
 sudo systemctl restart php7.2-fpm
