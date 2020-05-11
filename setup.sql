@@ -1274,7 +1274,7 @@ max_execution_time = 60
 max_input_time=60
 upload_max_filesize = 64M
 post_max_size = 64M
--- opcode cache -> enable it! makes php much faster!
+-- opcode cache -> NO NEED TO DO IT (is enabled by default!)
 opcache.enable=1
 opcache.memory_consumption=128
 opcache.max_accelerated_files=4000
