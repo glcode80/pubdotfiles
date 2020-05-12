@@ -234,7 +234,7 @@ sudo apt install fail2ban
 sudo cp /etc/fail2ban/fail2ban.conf /etc/fail2ban/fail2ban.local
 sudo cp /etc/fail2ban/jail.conf /etc/fail2ban/jail.local
 sudo vim /etc/fail2ban/jail.local
-- bantime = default: 10m => change to 50000 (=1 month)
+- bantime = default: 10m => change to 10000m (= 1 week)
 sudo fail2ban-client start
 
 
