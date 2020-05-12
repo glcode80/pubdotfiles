@@ -235,7 +235,11 @@ sudo cp /etc/fail2ban/fail2ban.conf /etc/fail2ban/fail2ban.local
 sudo cp /etc/fail2ban/jail.conf /etc/fail2ban/jail.local
 sudo vim /etc/fail2ban/jail.local
 - bantime = default: 10m => change to 10000m (= 1 week)
+bantime  = 10000m
+
+sudo fail2ban-client -t
 sudo fail2ban-client start
+sudo fail2ban-client status
 
 
 12) MariaDB 10.3
