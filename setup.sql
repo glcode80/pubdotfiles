@@ -1106,9 +1106,9 @@ comment out addition to each conf file
 
 -- daily update -> logs file / mailgun email notification
 sudo crontab -e
-00 22 * * * sudo /usr/local/sbin/update-ngxblocker >> /home/moon/logs/sudologs.txt 2>&1
+00 22 * * * /usr/local/sbin/update-ngxblocker >> /home/moon/logs/sudologs.txt 2>&1
 -- option with mailgun
-00 22 * * * sudo /usr/local/sbin/update-ngxblocker -g yourname@yourdomain.com -d yourdomain.com -a mailgun api key -f from@yourdomain.com
+00 22 * * * /usr/local/sbin/update-ngxblocker -g yourname@yourdomain.com -d yourdomain.com -a mailgun api key -f from@yourdomain.com
 
 -- check if it works
 curl -A "Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5X Build/MMB29P) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.96 Mobile Safari/537.36 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)" -I http://yourdomain.com
