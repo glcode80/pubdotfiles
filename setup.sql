@@ -991,6 +991,10 @@ sudo apt install python3-certbot-nginx
 
 sudo certbot --nginx -d example.com -d www.example.com
 
+** dry run:
+sudo certbot renew --dry-run
+
+
 update script:
 sudo wget https://raw.githubusercontent.com/glcode80/pubdotfiles/master/certbotupdate.sh -P /usr/bin
 sudo chmod +x /usr/bin/certbotupdate.sh
@@ -1094,6 +1098,11 @@ sudo ./setup-ngxblocker -v /etc/nginx/conf.d -e .conf
 sudo vim /etc/nginx/bots.d/whitelist-ips.conf
 --> add own ip
 OWNIP	0;
+
+sudo vim /etc/nginx/conf.d/botblocker-nginx-settings.conf
+--> erste zeile auskommentieren, sonst funktioniert certbot update nicht!! [TBD]
+# server_names_hash_bucket_size 256;
+
 
 sudo nginx -t
 sudo service nginx reload
