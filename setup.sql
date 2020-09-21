@@ -355,6 +355,50 @@ sudo systemctl enable php7.4-fpm
 sudo systemctl restart php7.4-fpm
 
 
+* all suggested for wordpress - https://make.wordpress.org/hosting/handbook/handbook/server-environment/ *
+curl
+dom
+exif
+fileinfo
+hash
+json
+mbstring
+mysqli
+libsodium
+openssl
+pcre
+imagick
+xml
+zip
+
+
+* upgrade from php 7.2 to php 7.4 *
+https://php.watch/articles/Ubuntu-PHP-7.4
+
+sudo add-apt-repository ppa:ondrej/php # Press enter when prompted.
+sudo apt-get update
+
+-- list current packages installed => to know which ones to re-install / remove
+dpkg -l | grep php | tee php-packages.txt
+
+sudo apt install php7.4
+sudo apt install php7.4-common
+sudo apt install php7.4-cli
+
+[always name: php7.4-xxxx]
+
+=> test:
+php -v
+php m
+
+=> Adjust nginx config
+sudo nginx -t
+sudo service nginx reload
+
+=> remove old packages
+sudo apt purge php7.2 php7.2-common, ....
+
+
 ** old for 7.2 **
 sudo apt install php7.2-fpm
 sudo sed -i 's/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/g' /etc/php/7.2/fpm/php.ini
