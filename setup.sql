@@ -379,39 +379,61 @@ sudo add-apt-repository ppa:ondrej/php # Press enter when prompted.
 sudo apt-get update
 
 -- list current packages installed => to know which ones to re-install / remove
-dpkg -l | grep php | tee php-packages.txt
+dpkg -l | grep php
+dpkg -l | grep php > php-packages.txt
 
 sudo apt install php7.4
 sudo apt install php7.4-common
 sudo apt install php7.4-cli
+sudo apt install php7.4-fpm
+sudo apt install php7.4-mysql
+sudo apt install php7.4-curl php7.4-gd php7.4-mbstring php7.4-xml php7.4-xmlrpc php7.4-json
+sudo apt install php7.4-zip
+sudo apt install php7.4-tidy
+-- suggested for wordpress
+sudo apt install php7.4-imagick
+sudo apt install php7.4-soap
 
-[always name: php7.4-xxxx]
+sudo systemctl enable php7.4-fpm
+sudo systemctl restart php7.4-fpm
+sudo systemctl status php7.4-fpm
+
+
+=> go to wordpress dashboard and check if all modules are present
 
 => test:
 php -v
-php m
 
-=> Adjust nginx config
-sudo nginx -t
-sudo service nginx reload
-
+=> check all packages, macke sure to have latest versions everywhere, check default ones, remove old ones
 => remove old packages
 sudo apt purge php7.2 php7.2-common, ....
 
 
-** old for 7.2 **
-sudo apt install php7.2-fpm
-sudo sed -i 's/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/g' /etc/php/7.2/fpm/php.ini
-sudo apt install php7.2-mysql
-sudo apt install php-curl php-gd php-mbstring php-xml php-xmlrpc php-json
-sudo apt install php7.2-zip
-sudo apt install php7.2-tidy
--- suggested for wordpress
-sudo apt install php7.2-imagick
-sudo apt install php7.2-soap
+=> Adjust php.ini file!! [check above, do same as on default install!!]
+sudo vim /etc/php/7.4/fpm/php.ini
+  sudo vim /etc/php/7.2/fpm/php.ini
+  
+memory_limit = 512M
+max_execution_time = 60
+max_input_time=60
+upload_max_filesize = 64M
+post_max_size = 64M
 
-sudo systemctl enable php7.2-fpm
-sudo systemctl restart php7.2-fpm
+sudo service php7.4-fpm restart
+sudo service nginx restart
+
+=> Adjust monit file!!
+sudo cp /etc/monit/conf.d/php7.2-fpm /etc/monit/conf.d/php7.4-fpm
+sudo vim /etc/monit/conf.d/php7.4-fpm
+sudo rm /etc/monit/conf.d/php7.2-fpm
+sudo monit reload
+sudo monit summary
+
+
+=> Adjust nginx config -> point to 7.4 instead of 7.2
+sudo nginx -t
+sudo service nginx reload
+
 
 
 15) geoip database & update script
