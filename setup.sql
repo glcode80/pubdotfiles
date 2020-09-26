@@ -380,6 +380,7 @@ sudo apt-get update
 
 -- list current packages installed => to know which ones to re-install / remove
 dpkg -l | grep php
+dpkg -l | grep php | awk '{print $2}'
 dpkg -l | grep php > php-packages.txt
 
 sudo apt install php7.4
@@ -406,6 +407,16 @@ php -v
 
 => check all packages, macke sure to have latest versions everywhere, check default ones, remove old ones
 => remove old packages
+sudo systemctl disable php7.2-fpm
+
+-- find packages existing to purge with grep/awk
+dpkg -l | grep php
+dpkg -l | grep php | awk '{print $2}'
+dpkg -l | grep "php7.2-" | awk '{print "sudo apt purge " $2}'
+-- double check the ones with no version number (need to exist with proper version number!)
+dpkg -l | grep "php-" | awk '{print "sudo apt purge " $2}'
+=> no need to remove any of them, all good!
+
 sudo apt purge php7.2 php7.2-common, ....
 
 
@@ -429,11 +440,12 @@ sudo rm /etc/monit/conf.d/php7.2-fpm
 sudo monit reload
 sudo monit summary
 
-
 => Adjust nginx config -> point to 7.4 instead of 7.2
+grep -rn -e 'php7.2-fpm.sock'
+grep -rl -e 'php7.2-fpm.sock' . | xargs sed -i 's/php7.2-fpm.sock/php7.4-fpm.sock/g'
+
 sudo nginx -t
 sudo service nginx reload
-
 
 
 15) geoip database & update script
