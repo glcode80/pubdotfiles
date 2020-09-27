@@ -1162,16 +1162,16 @@ sudo crontab -e
 00 22 * * * /usr/local/sbin/update-ngxblocker -g yourname@yourdomain.com -d yourdomain.com -a mailgun api key -f from@yourdomain.com
 
 -- check if it works
-curl -A "Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5X Build/MMB29P) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.96 Mobile Safari/537.36 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)" -I http://yourdomain.com
-curl -A "Mozilla/5.0 (compatible; bingbot/2.0; +http://www.bing.com/bingbot.htm)" -I http://yourdomain.com
+curl -A "Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5X Build/MMB29P) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.96 Mobile Safari/537.36 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)" -I https://yourdomain.com
+curl -A "Mozilla/5.0 (compatible; bingbot/2.0; +http://www.bing.com/bingbot.htm)" -I https://yourdomain.com
 --> 200
 
-curl -A "Xenu Link Sleuth/1.3.8" -I http://yourdomain.com
-curl -A "Mozilla/5.0 (compatible; AhrefsBot/5.2; +http://ahrefs.com/robot/)" -I http://yourdomain.com
+curl -A "Xenu Link Sleuth/1.3.8" -I https://yourdomain.com
+curl -A "Mozilla/5.0 (compatible; AhrefsBot/5.2; +http://ahrefs.com/robot/)" -I https://yourdomain.com
 --> 52/56/92
 
-curl -I http://yourdomain.com -e http://100dollars-seo.com
-curl -I http://yourdomain.com -e http://zx6.ru
+curl -I https://yourdomain.com -e http://100dollars-seo.com
+curl -I https://yourdomain.com -e http://zx6.ru
 --> 52/56/92
 
 -- check top referres & top user agents
