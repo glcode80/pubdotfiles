@@ -206,7 +206,7 @@ php needs to be installed to work (see below)
  sudo apt install php7.4-xml
  -- sudo apt install php7.2-cli
  -- sudo apt install php7.2-xml
-   sudo apt install php
+
  -> more plugins php-tools-install.sql
 #PHPCS
 sudo curl -LsS https://squizlabs.github.io/PHP_CodeSniffer/phpcs.phar -o /usr/local/bin/phpcs
@@ -339,37 +339,10 @@ sudo vim /etc/nginx/nginx.conf
 	gzip_types text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript;
 	client_max_body_size 128M;
 
-	
-14) PHP
 
-sudo apt install php7.4-fpm
-sudo apt install php7.4-mysql
-sudo apt install php-curl php-gd php-mbstring php-xml php-xmlrpc php-json
-sudo apt install php7.4-zip
-sudo apt install php7.4-tidy
--- suggested for wordpress
-sudo apt install php7.4-imagick
-sudo apt install php7.4-soap
+14) PHP (all suggested for wordpress with fpm)
 
-sudo systemctl enable php7.4-fpm
-sudo systemctl restart php7.4-fpm
-
-
-* all suggested for wordpress - https://make.wordpress.org/hosting/handbook/handbook/server-environment/ *
-curl
-dom
-exif
-fileinfo
-hash
-json
-mbstring
-mysqli
-libsodium
-openssl
-pcre
-imagick
-xml
-zip
+sudo apt install php7.4-cli php7.4-fpm php7.4-common php7.4-mysql php7.4-curl php7.4-gd php7.4-mbstring php7.4-xml php7.4-xmlrpc php7.4-json php7.4-zip php7.4-tidy php7.4-imagick php7.4-soap php7.4-bcmath
 
 
 * upgrade from php 7.2 to php 7.4 *
@@ -382,23 +355,13 @@ sudo apt-get update
 dpkg -l | grep php
 dpkg -l | grep php | awk '{print $2}'
 dpkg -l | grep php > php-packages.txt
+(achtung libabapache not needed for fpm, 7.4-fpm installs all needed for fpm, just php7.4 installs apache modules!)
 
-sudo apt install php7.4
-sudo apt install php7.4-common
-sudo apt install php7.4-cli
-sudo apt install php7.4-fpm
-sudo apt install php7.4-mysql
-sudo apt install php7.4-curl php7.4-gd php7.4-mbstring php7.4-xml php7.4-xmlrpc php7.4-json
-sudo apt install php7.4-zip
-sudo apt install php7.4-tidy
--- suggested for wordpress
-sudo apt install php7.4-imagick
-sudo apt install php7.4-soap
+sudo apt install php7.4-cli php7.4-fpm php7.4-common php7.4-mysql php7.4-curl php7.4-gd php7.4-mbstring php7.4-xml php7.4-xmlrpc php7.4-json php7.4-zip php7.4-tidy php7.4-imagick php7.4-soap php7.4-bcmath
 
 sudo systemctl enable php7.4-fpm
 sudo systemctl restart php7.4-fpm
 sudo systemctl status php7.4-fpm
-
 
 => go to wordpress dashboard and check if all modules are present
 
@@ -413,6 +376,7 @@ sudo systemctl disable php7.2-fpm
 dpkg -l | grep php
 dpkg -l | grep php | awk '{print $2}'
 dpkg -l | grep "php7.2-" | awk '{print "sudo apt purge " $2}'
+dpkg -l | grep "php7.2-" | awk '{print $2}' | tr '\n' ' ' | awk '{print "sudo apt purge " $0}'
 -- double check the ones with no version number (need to exist with proper version number!)
 dpkg -l | grep "php-" | awk '{print "sudo apt purge " $2}'
 => no need to remove any of them, all good!
