@@ -212,6 +212,13 @@ grep -rl -e "OLDTEXT" . | xargs sed -i 's/OLDTEXT/NEWTEXT/g'
 Alternative:
 find . -type f -exec sed -i.bak "s/foo/bar/g" {} \;
 
+*** awk tipps **
+- get second item for each line
+awk '{print $2}'
+- add custom text to it
+awk '{print "vim " $2}'
+- combine lines and output with text
+tr '\n' ' ' | awk '{print "vim " $0}'
 
 
 *** nano tipps
