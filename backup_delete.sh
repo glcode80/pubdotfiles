@@ -12,7 +12,7 @@ executestring="source /home/moon/backup_data.sh XXXX"
 # executestring = "source /home/moon/backup_sql.sh XXXX"
 
 
-availSpace=$(df "$HOME" | awk 'NR==2 { print $4 }')
+availSpace=$(df "$backupdir" | awk 'NR==2 { print $4 }')
 
 if ! cd $backupdir
 then
