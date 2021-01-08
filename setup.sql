@@ -246,7 +246,8 @@ sudo fail2ban-client status
 
 
 12) MariaDB 10.3
-(starting 10.2 supports subqueries in views, default is 10.1 in 18.04)
+(starting 10.2 supports subqueries in views, default is 10.1 in 18.04
+default in 20.04 is 10.3 -> simply install it)
 
 sudo apt install software-properties-common
 sudo apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xF1656F24C74CD1D8
