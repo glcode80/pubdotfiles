@@ -168,6 +168,9 @@ bind "set menu-complete-display-prefix on"
 sudo apt install exuberant-ctags
 sudo apt install build-essential cmake
 sudo apt install python-dev python3-dev
+-> bei Problem: selbst herunterladen:
+cd ~/.vim/bundle/
+git clone https://github.com/ycm-core/YouCompleteMe
 cd ~/.vim/bundle/YouCompleteMe
 ./install.py
 (on Raspi run it on one core only: YCM_CORES=1 ./install.py --gocode-completer)
@@ -1412,4 +1415,11 @@ sudo mv wordpress/* ../public_html/
 sudo chown -R www-data:www-data /var/www/example.com/
 
 
+*/* optimize wordpress **
+-- limit post revisions
+vim wp-config.php
+define('WP_POST_REVISIONS', 10);
+
+-- alle alten post revisions löschen
+DELETE FROM wp_posts WHERE post_type = "revision";
 
