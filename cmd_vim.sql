@@ -23,6 +23,7 @@ ctrl-w_ / ctrl-w| = maximize size
 :tabedit % = open copy maximized in a new tab
 splitv filename => new file in new split
 ctlr-d = auto-complete
+ctrl-space = auto-complete ycm (auto-trigger = .)
 G= ende
 set number
 gg = Anfang
@@ -150,6 +151,7 @@ Folding"
 -----------
 zo = open under cursor
 zc = closes under cursor
+za = toggle fold
 zR = open all folds
 zM = close all folds
 
@@ -168,6 +170,14 @@ Format text nicely / for specifi format
 ------------------------
 gg=G
 :%!python -m json.tool
+-> saved to :JSON
+
+enable syntax highlighting / folding (to get structure)
+:set filetype=json
+:syntax on
+:set foldmethod=syntax
+-> saved to :Jsonfold
+
 
 Get input from running shell command
 ------------------------
