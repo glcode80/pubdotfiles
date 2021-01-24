@@ -229,6 +229,7 @@ sudo apt install shellcheck
 
 11) ufw / fail2ban
 --a) disable ipv6 rules to be added automatically
+-> Achtung, dann geht wahrscheinlich outgoing ipv6 nicht mehr
 sudo vim /etc/default/ufw
 IPV6=no
 sudo ufw reload
