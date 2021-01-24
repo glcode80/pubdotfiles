@@ -407,6 +407,7 @@ sudo service php7.4-fpm restart
 sudo service nginx restart
 
 => Adjust monit file!!
+=> examples: https://mmonit.com/wiki/Monit/ConfigurationExamples
 sudo cp /etc/monit/conf.d/php7.2-fpm /etc/monit/conf.d/php7.4-fpm
 sudo vim /etc/monit/conf.d/php7.4-fpm
 sudo rm /etc/monit/conf.d/php7.2-fpm
