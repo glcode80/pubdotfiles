@@ -228,6 +228,11 @@ sudo apt install shellcheck
 
 
 11) ufw / fail2ban
+--a) disable ipv6 rules to be added automatically
+sudo vim /etc/default/ufw
+IPV6=no
+sudo ufw reload
+--b) create rules
 sudo ufw enable
 sudo ufw default allow outgoing
 sudo ufw default deny incoming
