@@ -323,6 +323,7 @@ nnoremap <leader>sv :ValuesSql<CR>
 command! Inspython :normal i#!/usr/bin/env python3<CR><ESC>
 command! Inshtml :normal i<!doctype html><head><meta charset="utf-8"><title></title></head><body><CR></body></html><CR><ESC>
 command! JSON %!python -m json.tool
+command! Jsonfold set filetype=json | syntax on | set foldmethod=syntax
 
 function! CommentHeader()
     let a:hash_line = '# ' . repeat('=', 79)
