@@ -387,6 +387,9 @@ dpkg -l | grep "php-" | awk '{print "sudo apt purge " $2}'
 
 sudo apt purge php7.2 php7.2-common, ....
 
+-- force older version of php cli
+sudo update-alternatives --set php /usr/bin/php7.4
+php -v
 
 => Adjust php.ini file!! [check above, do same as on default install!!]
 sudo vim /etc/php/7.4/fpm/php.ini
