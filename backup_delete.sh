@@ -37,11 +37,11 @@ if (( availSpace < reqSpace )); then
             if rm -f "$FILE"
             then
                 echo "Deleted $FILE"
-                availSpace=$(df "$HOME" | awk 'NR==2 { print $4 }')
+                availSpace=$(df "$backupdir" | awk 'NR==2 { print $4 }')
 
                 if (( availSpace < reqSpace )); then
                     echo "Done deleting files"
-                    availSpace=$(df "$HOME" | awk 'NR==2 { print $4 }')
+                    availSpace=$(df "$backupdir" | awk 'NR==2 { print $4 }')
                     echo "Available space: $availSpace"
 
                     # we're below the limit, so stop deleting
@@ -54,7 +54,7 @@ else
   echo "enough space"
 fi
 
-availSpace=$(df "$HOME" | awk 'NR==2 { print $4 }')
+availSpace=$(df "$backupdir" | awk 'NR==2 { print $4 }')
 echo "Available space after deleting files if not enough space: $availSpace"
 
 if (( availSpace > reqSpace )); then
