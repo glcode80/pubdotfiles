@@ -13,6 +13,7 @@ Summary setup file for server setup
 sudo apt update
 sudo apt upgrade
 sudo dpkg-reconfigure tzdata
+sudo dpkg-reconfigure keyboard-configuration
 adduser moon
 adduser moon sudo
 
@@ -174,6 +175,11 @@ git clone https://github.com/ycm-core/YouCompleteMe
 cd ~/.vim/bundle/YouCompleteMe
 ./install.py
 (on Raspi run it on one core only: YCM_CORES=1 ./install.py --gocode-completer)
+-- remove the git directory to save 200mb in space!
+rm -rf .git
+-- remove install tools again to save space [203MB + 56MB]
+sudo apt remove build-essential cmake
+sudo apt remove python-dev python3-dev
 
 
 8) install python plugins
@@ -192,6 +198,7 @@ sudo pip3 install numpy
 
 update all packages with pip3:
 sudo pip3 freeze — local | grep -v ‘^\-e’ | cut -d = -f 1 | xargs -n1 sudo pip3 install -U
+--> besser: nur die packages oepn updaten
 
 sudo apt install -y python3-venv
 mkdir venv
