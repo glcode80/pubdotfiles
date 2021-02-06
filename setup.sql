@@ -210,26 +210,6 @@ source ~/venv/testvenv/bin/activate
 deactivate
 
 
-8b) set up backup rotation for backups directory
-https://github.com/xolox/python-rotate-backups
-mkdir /home/moon/backups
-sudo pip3 install rotate-backups
--- > Achtung: --dry-run muss am Anfang stehen!
--- zwei verschiedene machen für sql backups und tar backups?
--- -> keep 7 days, 4 weeks, 4 months, 2 years
--- => do two different ones for sql backups (daily) and data backups (weekly)?
-
--- nur sql
-rotate-backups --dry-run --daily=8 --weekly=4 --monthly=4 --yearly=2 --prefer-recent --include='*.sql.gz' /home/moon/backups 
--- nur tar
-rotate-backups --dry-run --daily=8 --weekly=4 --monthly=4 --yearly=2 --prefer-recent --include='*.tar.gz' /home/moon/backups 
-
--- -> anschliessend in crontab rein (täglich ein mal machen, natürlich ohne dry-run!)
-sudo crontab -e
-17 3 * * * /usr/local/bin/rotate-backups --daily=8 --weekly=4 --monthly=4 --yearly=2 --prefer-recent --include='*.sql.gz' /home/moon/backups >> /home/moon/logs/rotatebackups.txt 2>&1
-18 3 * * * /usr/local/bin/rotate-backups --daily=8 --weekly=4 --monthly=4 --yearly=2 --prefer-recent --include='*.tar.gz' /home/moon/backups >> /home/moon/logs/rotatebackups.txt 2>&1
-
-
 9) install php plugins (for Vim)
 php needs to be installed to work (see below)
  php -v
@@ -684,6 +664,25 @@ clear / add monitoring
 ****************************************
 *** Additional settings/adjustments  ***
 ****************************************
+
+0) set up backup rotation for backups directory
+https://github.com/xolox/python-rotate-backups
+mkdir /home/moon/backups
+sudo pip3 install rotate-backups
+-- > Achtung: --dry-run muss am Anfang stehen!
+-- zwei verschiedene machen für sql backups und tar backups?
+-- -> keep 7 days, 4 weeks, 4 months, 2 years
+-- => do two different ones for sql backups (daily) and data backups (weekly)?
+
+-- nur sql
+rotate-backups --dry-run --daily=8 --weekly=4 --monthly=4 --yearly=2 --prefer-recent --include='*.sql.gz' /home/moon/backups 
+-- nur tar
+rotate-backups --dry-run --daily=8 --weekly=4 --monthly=4 --yearly=2 --prefer-recent --include='*.tar.gz' /home/moon/backups 
+
+-- -> anschliessend in crontab rein (täglich ein mal machen, natürlich ohne dry-run!)
+sudo crontab -e
+17 3 * * * /usr/local/bin/rotate-backups --daily=8 --weekly=4 --monthly=4 --yearly=2 --prefer-recent --include='*.sql.gz' /home/moon/backups >> /home/moon/logs/rotatebackups.txt 2>&1
+18 3 * * * /usr/local/bin/rotate-backups --daily=8 --weekly=4 --monthly=4 --yearly=2 --prefer-recent --include='*.tar.gz' /home/moon/backups >> /home/moon/logs/rotatebackups.txt 2>&1
 
 
 1) Backup scripts
