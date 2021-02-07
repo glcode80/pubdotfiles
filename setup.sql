@@ -71,6 +71,7 @@ cp /home/moon/pubdotfiles/backup_sql.sh /home/moon/
 
 
 4b) set up steal tracking / loadavg tracking
+sudo apt install pv
 sudo apt install sysstat
 sudo apt install jq
 crontab -e
@@ -196,6 +197,7 @@ sudo pip3 install pylint
 sudo pip3 install tld
 sudo pip3 install matplotlib
 sudo pip3 install numpy
+sudo pip3 install rotate-backups
 
 update all packages with pip3:
 sudo pip3 freeze — local | grep -v ‘^\-e’ | cut -d = -f 1 | xargs -n1 sudo pip3 install -U
@@ -675,14 +677,14 @@ sudo pip3 install rotate-backups
 -- => do two different ones for sql backups (daily) and data backups (weekly)?
 
 -- nur sql
-rotate-backups --dry-run --daily=8 --weekly=4 --monthly=4 --yearly=2 --prefer-recent --include='xxxx.sql.gz' /home/moon/backups 
+rotate-backups --dry-run --daily=8 --weekly=4 --monthly=6 --yearly=2 --prefer-recent --include='*xxxx.sql.gz' /home/moon/backups 
 -- nur tar
-rotate-backups --dry-run --daily=8 --weekly=4 --monthly=4 --yearly=2 --prefer-recent --include='xxxx.tar.gz' /home/moon/backups 
+rotate-backups --dry-run --daily=8 --weekly=4 --monthly=6 --yearly=2 --prefer-recent --include='*xxxx.tar.gz' /home/moon/backups 
 
 -- -> anschliessend in crontab rein (täglich ein mal machen, natürlich ohne dry-run!) -> gleich wie backups (sudo oder nicht)
 crontab -e
-17 3 * * * /usr/local/bin/rotate-backups --daily=8 --weekly=4 --monthly=4 --yearly=2 --prefer-recent --include='xxxx.sql.gz' /home/moon/backups >> /home/moon/logs/rotatebackups.txt 2>&1
-18 3 * * * /usr/local/bin/rotate-backups --daily=8 --weekly=4 --monthly=4 --yearly=2 --prefer-recent --include='xxxx.tar.gz' /home/moon/backups >> /home/moon/logs/rotatebackups.txt 2>&1
+17 3 * * * /usr/local/bin/rotate-backups --daily=8 --weekly=4 --monthly=6 --yearly=2 --prefer-recent --include='*xxxx.sql.gz' /home/moon/backups >> /home/moon/logs/rotatebackups.txt 2>&1
+18 3 * * * /usr/local/bin/rotate-backups --daily=8 --weekly=4 --monthly=6 --yearly=2 --prefer-recent --include='*xxxx.tar.gz' /home/moon/backups >> /home/moon/logs/rotatebackups.txt 2>&1
 
 
 1) Backup scripts

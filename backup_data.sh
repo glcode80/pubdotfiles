@@ -47,9 +47,9 @@ else
         if [ -d "$fullfoldername" ]; then
             if [ $slowdown = "1" ]; then
                 # NEW with slowing down to use only around 30% of CPU -> limit to 5mb/s instead of 15
-                executestring="tar -zcf - $fullfoldername | pv -L 5m -q > $filename"
+                executestring="sudo tar -zcf - $fullfoldername | pv -L 5m -q > $filename"
             else
-                executestring="tar -zcf $filename $fullfoldername"
+                executestring="sudo tar -zcf $filename $fullfoldername"
             fi
             # echo "$executestring"
             eval "$executestring"

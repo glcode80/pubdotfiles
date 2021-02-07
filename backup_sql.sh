@@ -43,7 +43,7 @@ elif [ "$1" = "--all-databases" ]; then
 
     filename="$backupdir$today-alldbs.sql"
 
-    executestring="mysqldump -u $sqlusername -p$sqlpassword --all-databases $dumparguments > $filename"
+    executestring="sudo mysqldump -u $sqlusername -p$sqlpassword --all-databases $dumparguments > $filename"
     # echo "$executestring"
     eval "$executestring"
 
@@ -68,7 +68,7 @@ else
         echo "* Processing databases combined: $dbnamecombined"
         filename="$backupdir$today$filenamecombined.sql"
 
-        executestring="mysqldump -u $sqlusername -p$sqlpassword --databases $dbnamecombined $dumparguments > $filename"
+        executestring="sudo mysqldump -u $sqlusername -p$sqlpassword --databases $dbnamecombined $dumparguments > $filename"
         # echo "$executestring"
         eval "$executestring"
 
@@ -84,7 +84,7 @@ else
             echo "* Processing database: $dbname"
             filename="$backupdir$today-$dbname.sql"
 
-            executestring="mysqldump -u $sqlusername -p$sqlpassword --databases $dbname $dumparguments > $filename"
+            executestring="sudo mysqldump -u $sqlusername -p$sqlpassword --databases $dbname $dumparguments > $filename"
             # echo "$executestring"
             eval "$executestring"
 
