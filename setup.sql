@@ -670,19 +670,19 @@ https://github.com/xolox/python-rotate-backups
 mkdir /home/moon/backups
 sudo pip3 install rotate-backups
 -- > Achtung: --dry-run muss am Anfang stehen!
--- zwei verschiedene machen für sql backups und tar backups?
+-- zwei verschiedene machen für sql backups und tar backups -> immer für jeden namen und sql/tar separat!
 -- -> keep 7 days, 4 weeks, 4 months, 2 years
 -- => do two different ones for sql backups (daily) and data backups (weekly)?
 
 -- nur sql
-rotate-backups --dry-run --daily=8 --weekly=4 --monthly=4 --yearly=2 --prefer-recent --include='*.sql.gz' /home/moon/backups 
+rotate-backups --dry-run --daily=8 --weekly=4 --monthly=4 --yearly=2 --prefer-recent --include='xxxx.sql.gz' /home/moon/backups 
 -- nur tar
-rotate-backups --dry-run --daily=8 --weekly=4 --monthly=4 --yearly=2 --prefer-recent --include='*.tar.gz' /home/moon/backups 
+rotate-backups --dry-run --daily=8 --weekly=4 --monthly=4 --yearly=2 --prefer-recent --include='xxxx.tar.gz' /home/moon/backups 
 
--- -> anschliessend in crontab rein (täglich ein mal machen, natürlich ohne dry-run!)
-sudo crontab -e
-17 3 * * * /usr/local/bin/rotate-backups --daily=8 --weekly=4 --monthly=4 --yearly=2 --prefer-recent --include='*.sql.gz' /home/moon/backups >> /home/moon/logs/rotatebackups.txt 2>&1
-18 3 * * * /usr/local/bin/rotate-backups --daily=8 --weekly=4 --monthly=4 --yearly=2 --prefer-recent --include='*.tar.gz' /home/moon/backups >> /home/moon/logs/rotatebackups.txt 2>&1
+-- -> anschliessend in crontab rein (täglich ein mal machen, natürlich ohne dry-run!) -> gleich wie backups (sudo oder nicht)
+crontab -e
+17 3 * * * /usr/local/bin/rotate-backups --daily=8 --weekly=4 --monthly=4 --yearly=2 --prefer-recent --include='xxxx.sql.gz' /home/moon/backups >> /home/moon/logs/rotatebackups.txt 2>&1
+18 3 * * * /usr/local/bin/rotate-backups --daily=8 --weekly=4 --monthly=4 --yearly=2 --prefer-recent --include='xxxx.tar.gz' /home/moon/backups >> /home/moon/logs/rotatebackups.txt 2>&1
 
 
 1) Backup scripts
