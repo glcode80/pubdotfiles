@@ -1354,7 +1354,7 @@ rewrite ^(.*)$ $uri permanent;
 
 ** Whitelist certain resources based on IP - block everything else **
 
-## START: limit wp-login and wp-json by IP whitelist only!
+## START: limit wp-login and wp-json by IP whitelist only! [Achtung: fuer viele Sachen benutzt?]
 location ~* wp-login.php {
     # allow xxx.xxx.xxx.xxx;
     deny all;
