@@ -1110,11 +1110,11 @@ sudo vim /etc/nginx/nginx.conf
 # ** NGINX PAGE CACHE START - nginx.conf http - options: 60m, 5h, 5d - adjust in conf too! **
 
 # fastcgi_cache_path /var/run/nginxcacheGLOBAL levels=1:2 keys_zone=cacheGLOBAL:100m inactive=7d;
-fastcgi_cache_path /etc/nginx/nginxcacheGLOBAL levels=1:2 keys_zone=cacheGLOBAL:300m inactive=7d;
+fastcgi_cache_path /etc/nginx/nginxcacheGLOBAL levels=1:2 keys_zone=cacheGLOBAL:300m inactive=5m;
 
 # can have second cache for other page with different params, if no intention to share
-# fastcgi_cache_path /var/run/nginxcacheSITE1 levels=1:2 keys_zone=cacheSITE1:100m inactive=7d;
-# fastcgi_cache_path /var/run/nginxcacheSITE2 levels=1:2 keys_zone=cacheSITE2:100m inactive=7d;
+# fastcgi_cache_path /var/run/nginxcacheSITE1 levels=1:2 keys_zone=cacheSITE1:100m inactive=5m;
+# fastcgi_cache_path /var/run/nginxcacheSITE2 levels=1:2 keys_zone=cacheSITE2:100m inactive=5m;
 
 fastcgi_cache_key "$scheme$request_method$host$request_uri";
 # for geoip cache, add countrycode (needs working geoip module!)
