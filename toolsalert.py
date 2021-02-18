@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
 """Tools Alert = Tools used for sending alerts via email, Telegram, Slack, etc.
-Version 2018-07-31
-autopep8
+Version 2021-01-07
+added send_no_preview to send message without having a preview of the links
 """
 
 from urllib.request import Request, urlopen
 from urllib.parse import quote_plus, urlencode
 
+import time
 import json
 
 import smtplib
@@ -37,6 +38,8 @@ class AlertTelegram:
     """
 
     API_URL = "https://api.telegram.org/bot{}/sendMessage?chat_id={}&text={}&parse_mode=html"
+    API_URL_NO_PREVIEW = "https://api.telegram.org/bot{}/sendMessage?chat_id={}&text={}&parse_mode=html&disable_web_page_preview=True"
+    API_URL_PHOTO = "https://api.telegram.org/bot{}/sendPhoto?chat_id={}&photo={}"
 
     def __init__(self, api_token, chat_id):
         self.api_token = api_token
@@ -48,6 +51,41 @@ class AlertTelegram:
             self.send_result = False
             api_message = quote_plus(message)  # to URL encode the message
             url = self.API_URL.format(
+                self.api_token, self.chat_id, api_message)
+            q = Request(url)
+            # full contents in variable - added decode to get string instead of byte type
+            dataapi = urlopen(q).read().decode('UTF-8')
+            data = json.loads(dataapi)  # convert from json to data object
+            print("Telegram send result:", data["ok"])
+            self.send_result = data["ok"]
+        except:
+            self.send_result = False
+            print("could not send Telegram message")
+
+    def send_no_preview(self, message):
+        try:
+            self.send_result = False
+            api_message = quote_plus(message)  # to URL encode the message
+            url = self.API_URL_NO_PREVIEW.format(
+                self.api_token, self.chat_id, api_message)
+            q = Request(url)
+            # full contents in variable - added decode to get string instead of byte type
+            dataapi = urlopen(q).read().decode('UTF-8')
+            data = json.loads(dataapi)  # convert from json to data object
+            print("Telegram send result:", data["ok"])
+            self.send_result = data["ok"]
+        except:
+            self.send_result = False
+            print("could not send Telegram message")
+
+    def send_photo(self, photo_url):
+            # need to add timestamp to url to avoid cache
+        try:
+            url_timestamp = time.strftime('%Y-%m-%d-%H:%M:%S')
+            photo_url_time = photo_url + "?a=" + url_timestamp
+            self.send_result = False
+            api_message = quote_plus(photo_url_time)  # to URL encode the message
+            url = self.API_URL_PHOTO.format(
                 self.api_token, self.chat_id, api_message)
             q = Request(url)
             # full contents in variable - added decode to get string instead of byte type
