@@ -1100,7 +1100,7 @@ Disallow: /de/mein-konto/
 curl -I https://example.com/
 => Attention: expiry time is in nginx.conf for global cache, in domain.conf file for specific domain
 [specific domain setting seems to be the most important setting] -> to be sure, set both to same time
-==> new best practice: set both to 5m to avoid caching issues, and to protect for high traffic
+==> new best practice: set both to 20m to avoid caching issues, and to protect for high traffic
 
 /var/run = ram disk! -> can also put to normal disk. be careful with size of cache
 /etc/nginx = normal disk -> instead of 50ms around 60-70ms (no big difference)
@@ -1110,11 +1110,11 @@ sudo vim /etc/nginx/nginx.conf
 # ** NGINX PAGE CACHE START - nginx.conf http - options: 60m, 5h, 5d - adjust in conf too! **
 
 # fastcgi_cache_path /var/run/nginxcacheGLOBAL levels=1:2 keys_zone=cacheGLOBAL:100m inactive=7d;
-fastcgi_cache_path /etc/nginx/nginxcacheGLOBAL levels=1:2 keys_zone=cacheGLOBAL:300m inactive=5m;
+fastcgi_cache_path /etc/nginx/nginxcacheGLOBAL levels=1:2 keys_zone=cacheGLOBAL:300m inactive=20m;
 
 # can have second cache for other page with different params, if no intention to share
-# fastcgi_cache_path /var/run/nginxcacheSITE1 levels=1:2 keys_zone=cacheSITE1:100m inactive=5m;
-# fastcgi_cache_path /var/run/nginxcacheSITE2 levels=1:2 keys_zone=cacheSITE2:100m inactive=5m;
+# fastcgi_cache_path /var/run/nginxcacheSITE1 levels=1:2 keys_zone=cacheSITE1:100m inactive=20m;
+# fastcgi_cache_path /var/run/nginxcacheSITE2 levels=1:2 keys_zone=cacheSITE2:100m inactive=20m;
 
 fastcgi_cache_key "$scheme$request_method$host$request_uri";
 # for geoip cache, add countrycode (needs working geoip module!)
