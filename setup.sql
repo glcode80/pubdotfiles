@@ -1097,6 +1097,10 @@ Disallow: /de/mein-konto/
 */
 *** Nginx FastCGI Page Cache -> caches pages in memory (like varnish) ***
 -> test by checking response headers: HIT/MISS/BYPASS
+curl -I https://example.com/
+=> Attention: expiry time is in nginx.conf for global cache, in domain.conf file for specific domain
+[specific domain setting seems to be the most important setting] -> to be sure, set both to same time
+==> new best practice: set both to 5m to avoid caching issues, and to protect for high traffic
 
 /var/run = ram disk! -> can also put to normal disk. be careful with size of cache
 /etc/nginx = normal disk -> instead of 50ms around 60-70ms (no big difference)
