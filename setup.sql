@@ -1358,7 +1358,7 @@ rewrite ^(.*)$ $uri permanent;
 
 ** Whitelist certain resources based on IP - block everything else **
 
-## START: limit wp-login and wp-json by IP whitelist only! [Achtung: fuer viele Sachen benutzt?]
+## START: limit wp-login and wp-json/wc/ by IP whitelist only!
 location ~* wp-login.php {
     # allow xxx.xxx.xxx.xxx;
     deny all;
@@ -1368,7 +1368,7 @@ location ~* wp-login.php {
     fastcgi_param   SCRIPT_NAME        $fastcgi_script_name;
 }
 
-location ~* wp-json {
+location ~* wp-json/wc/ {
     # allow xxx.xxx.xxx.xxx;
     deny all;
     try_files $uri $uri/ /index.php$is_args$args;
@@ -1377,7 +1377,7 @@ location ~* wp-json {
     fastcgi_param   SCRIPT_FILENAME    $document_root$fastcgi_script_name;
     fastcgi_param   SCRIPT_NAME        $fastcgi_script_name;
 }
-## END: limit wp-login and wp-json by IP whitelist only!
+## END: limit wp-login and wp-json/wc/ by IP whitelist only!
 
 
 
