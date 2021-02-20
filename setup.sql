@@ -12,6 +12,7 @@ sudo apt upgrade
 sudo apt dist-upgrade  # z.b. auf Debian
 sudo apt autoremove
 
+-- Achtung: immer zuerst testen, nicht auf prod machen! (z.b. pymysql, youcompleteme, ...)
 sudo pip3 install XXXX --upgrade [siehe unten]
 
 vim -> PluginUpdate [Achtung ycm evtl zu neuer version, siehe unten]
@@ -228,6 +229,14 @@ sudo pip3 install rotate-backups --upgrade
 
 update only packages manually installed:
 --> mit --upgrade ausführen (kommandos oben)
+
+** achtung: pymysql version macht probleme mit toolsssql -> alte version installieren **
+sudo pip3 show pymysql
+ -> 1.0.2 = Probleme, 0.9.3 = ok
+
+sudo pip3 install 'pymysql==0.9.3' --force-reinstall
+sudo pip3 show pymysql
+
 
 update all packages with pip3 => NICHT MACHEN (besser so wie oben nur manuell installierte)
 -- sudo pip3 freeze — local | grep -v ‘^\-e’ | cut -d = -f 1 | xargs -n1 sudo pip3 install -U
