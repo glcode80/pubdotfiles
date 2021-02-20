@@ -4,6 +4,20 @@ Summary setup file for server setup
 *************************************
 
 ***********************************
+*** Updates machen              ***
+***********************************
+
+sudo apt update
+sudo apt upgrade
+sudo apt dist-upgrade  # z.b. auf Debian
+sudo apt autoremove
+
+sudo pip3 install XXXX --upgrade [siehe unten]
+
+vim -> PluginUpdate [Achtung ycm evtl zu neuer version, siehe unten]
+
+
+***********************************
 *** Setup basic LEMP image      ***
 ***********************************
 
@@ -140,6 +154,10 @@ sudo apt install vim
 git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 PluginInstall
 
+Update:
+PluginUpdate
+
+
 * for X11-forwarding working & dbext working *
 install X11 server -> https://sourceforge.net/projects/vcxsrv/
 -> if 'Cannot open Display': first install xauth!
@@ -171,12 +189,20 @@ bind "set menu-complete-display-prefix on"
 sudo apt install exuberant-ctags
 sudo apt install build-essential cmake
 sudo apt install python-dev python3-dev
+
 -> bei Problem: selbst herunterladen:
 cd ~/.vim/bundle/
 git clone https://github.com/ycm-core/YouCompleteMe
 cd ~/.vim/bundle/YouCompleteMe
 ./install.py
 (on Raspi run it on one core only: YCM_CORES=1 ./install.py --gocode-completer)
+
+-- on older version of ubuntu/debian -> check out last version
+	cd ~/.vim/bundle/YouCompleteMe
+	git checkout d98f896
+	git submodule update --init --recursive
+	./install.py
+
 -- remove the git directory to save 200mb in space!
 rm -rf .git
 -- remove install tools again to save space [203MB + 56MB]
@@ -187,22 +213,26 @@ sudo apt remove python-dev python3-dev
 8) install python plugins
 sudo apt install python3
 sudo apt install python3-pip
-sudo pip3 install --upgrade setuptools
-sudo pip3 install pymysql
-sudo pip3 install requests
-sudo pip3 install pytz
-sudo pip3 install flake8
-sudo pip3 install autopep8
-sudo pip3 install pylint
-sudo pip3 install tld
-sudo pip3 install matplotlib
-sudo pip3 install numpy
-sudo pip3 install rotate-backups
+sudo pip3 install setuptools --upgrade
+sudo pip3 install pymysql --upgrade
+sudo pip3 install requests --upgrade
+sudo pip3 install pytz --upgrade
+sudo pip3 install flake8 --upgrade
+sudo pip3 install autopep8 --upgrade
+sudo pip3 install pylint --upgrade
+sudo pip3 install tld --upgrade
+sudo pip3 install matplotlib --upgrade
+sudo pip3 install numpy --upgrade
+sudo pip3 install pandas --upgrade
+sudo pip3 install rotate-backups --upgrade
 
-update all packages with pip3:
-sudo pip3 freeze — local | grep -v ‘^\-e’ | cut -d = -f 1 | xargs -n1 sudo pip3 install -U
---> besser: nur die packages oepn updaten
+update only packages manually installed:
+--> mit --upgrade ausführen (kommandos oben)
 
+update all packages with pip3 => NICHT MACHEN (besser so wie oben nur manuell installierte)
+-- sudo pip3 freeze — local | grep -v ‘^\-e’ | cut -d = -f 1 | xargs -n1 sudo pip3 install -U
+
+-- venv installieren
 sudo apt install -y python3-venv
 mkdir venv
 cd ~/venv
