@@ -227,6 +227,12 @@ sudo pip3 install matplotlib --upgrade
 sudo pip3 install numpy --upgrade
 sudo pip3 install pandas --upgrade
 sudo pip3 install rotate-backups --upgrade
+sudo pip3 install beautifulsoup4 --upgrade
+sudo pip3 install lxml --upgrade
+-- wenn benötigt:
+sudo pip3 install woocommerce --upgrade
+sudo pip3 install pytesseract --upgrade
+
 
 update only packages manually installed:
 --> mit --upgrade ausführen (kommandos oben)
