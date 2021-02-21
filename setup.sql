@@ -215,8 +215,8 @@ sudo apt remove python-dev python3-dev
 sudo apt install python3
 sudo apt install python3-pip
 sudo pip3 install setuptools --upgrade
-sudo pip3 install 'pymysql==0.9.3'
-    [sudo pip3 install pymysql --upgrade]
+-- => Achtung pymysql upgrade > 0.9.3 -> need to update toolssql with latest version!
+sudo pip3 install pymysql --upgrade
 sudo pip3 install requests --upgrade
 sudo pip3 install pytz --upgrade
 sudo pip3 install flake8 --upgrade
