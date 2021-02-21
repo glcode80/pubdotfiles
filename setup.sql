@@ -237,11 +237,8 @@ sudo pip3 install pytesseract --upgrade
 update only packages manually installed:
 --> mit --upgrade ausführen (kommandos oben)
 
-** achtung: pymysql version macht probleme mit toolsssql -> alte version installieren **
-sudo pip3 show pymysql
- -> 1.0.2 = Probleme, 0.9.3 = ok
-
-sudo pip3 install 'pymysql==0.9.3' --force-reinstall
+-- um ein package mit bestimter version zu installieren:
+sudo pip3 install 'XXXXX==0.9.3' --force-reinstall
 sudo pip3 show pymysql
 
 
