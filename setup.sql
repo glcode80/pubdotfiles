@@ -513,6 +513,9 @@ sudo apt install update-motd update-notifier-common landscape-common
 -- OLD: sudo wget https://raw.githubusercontent.com/glcode80/pubdotfiles/master/10-sysinfo -P /etc/update-motd.d/
 -- OLD: sudo chmod +x /etc/update-motd.d/10-sysinfo
 
+-- custom reboot checker based on kernel available/kernel running
+sudo ln -s /home/moon/pubdotfiles/90-reboot-check /etc/update-motd.d/
+
 17) monit
 sudo apt install monit
 
