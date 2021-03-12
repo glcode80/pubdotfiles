@@ -326,12 +326,12 @@ command! JSON %!python -m json.tool
 command! Jsonfold set filetype=json | syntax on | set foldmethod=syntax
 
 function! CommentHeader()
-    let a:hash_line = '# ' . repeat('=', 79)
+    let hash_line = '# ' . repeat('=', 79)
     normal! 0i# 
     normal! k
-    :put =a:hash_line
+    :put =hash_line
     normal! j
-    :put =a:hash_line
+    :put =hash_line
     normal! k
 endfunction
 
