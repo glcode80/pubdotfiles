@@ -324,6 +324,10 @@ sudo vim /etc/mysql/conf.d/mysql.cnf
 [mysqld]
 event_scheduler = ON 
 
+* to disable division by zero error -> add this too
+sql_mode = 'IGNORE_SPACE,STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION'
+
+
 * Fix error log for mysql to log file location
 sudo vim /etc/mysql/conf.d/mysql.cnf
 [mysqld]
