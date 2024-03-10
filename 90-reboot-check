@@ -1,0 +1,15 @@
+#!/bin/sh
+
+kernelavailable=$(ls -tr /boot/initrd* | tail -1 | cut -d '-' -f 2-)
+# kernelavailable=$(ls /boot/initrd* | tail -1 | cut -d '-' -f 2-)
+kernelrunning=$(uname -r)
+
+if [ "$kernelrunning" = "$kernelavailable" ]; then
+    echo "\nNo reboot required, latest kernel is running ($kernelrunning)"
+else
+    echo "\n************************"
+    echo "*** REBOOT REQUIRED! ***"
+    echo "************************"
+    echo "Kernel available:  $kernelavailable"
+    echo "Kernal running:    $kernelrunning\n"
+fi
