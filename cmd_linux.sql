@@ -176,6 +176,10 @@ whois
 nslookup
 mtr [like tracert but better]
 
+-- run command in current shell -> source / . command
+-- -> can be used for example to change directory in bash/shell script
+. scriptname.sh
+
 df -H = free disk space
 mcedit (esc 0 = F10)
 ps
@@ -204,6 +208,9 @@ history -c
 rsync -av /home/moon/source/ /home/moon/newsource
 (a = archive: keep attributes and modification times)
 (trailing / -> copy contents of folder to new folder)
+-L = copy contents of symlinks
+-> attention: modification times only synced to full seconds (rclone: milliseconds)
+exclude: --exclude "@Recycle/**" -> multilevel subpaths below it
 
 * cp -> different with trailing / - -av flag exists too
 -> need . at end (all files, including hidden, including source)
@@ -229,14 +236,47 @@ sudo adduser moon sudo
 sudo adduser moon www-data
 sudo adduser moon mssql
 
+-- add user without password/login/home (e.g. for samba)
+sudo adduser --disabled-password --disabled-login --no-create-home USERNAME
+
 -- find all symbolic links below directory
 find /home/moon -type l -ls
 find /var/www -type l -ls
 -- find all symbolic links that point to a certain directory
 sudo find / -xdev -type l -ls | grep "moon/"
 
-** chmod -> see setup file
+** chmod
+-- group/others: alles weg -> 700 / 600
+sudo chmod -R g-rwx,o-rwx /home/moon
+-- others: alles weg -> 770 / 660
+sudo chmod -R o-rwx /home/moon
+-- others: alles weg, ausser exclusion path
+sudo find /home/moon/ -xdev -not -path "*/EXCLUDE*" -exec chmod o-rwx {} \;
 
+-- write exact chmod for directories/files recursively - FOR SPECIFIC FOLDER
+-- 770 = directories owner/group: read/write/execute
+-- 660 = files owner/group: read/write
+sudo find /home/moon/ -type d -exec chmod 770 {} \;
+sudo find /home/moon/ -type f -exec chmod 660 {} \;
+-- same with owner only: 700 / 600
+sudo find /home/moon/ -type d -exec chmod 700 {} \;
+sudo find /home/moon/ -type f -exec chmod 600 {} \;
+
+** chown
+sudo chown -R moon:moon /home/moon
+
+** mount
+-- make mount directory (chown doesn't matter, can remain root)
+sudo mkdir /mnt/mountpoint
+-- for ext4: ownership via chmod/chown
+sudo mount /dev/sdd1 /mnt/mountpoint
+sudo umount /mnt/mountpoint
+-- set proper ownership on disk
+sudo chown -R moon:moon /mnt/mountpoint/
+sudo chmod 700 /mnt/mountpoint/
+sudo chmod -R g-rwx,o-rwx /mnt/mountpoint/
+-- samba share busy: go out of directory + restart samba daemon if needed
+sudo systemctl restart smbd
 
 *** network commands
 - query nameserver
@@ -250,6 +290,9 @@ dig mx google.com @1.1.1.1
 -- same with nslookup
 nslookup google.com 1.1.1.1
 
+** trim disk
+sudo fstrim -va
+sudo /usr/sbin/fstrim --fstab --verbose
 
 * rename file in mc
 shift-f5 = copy to now new
@@ -383,6 +426,7 @@ shred
 
 -> complete hardisk
 lsblk
+sudo fdisk -l
 sudo shred -vf -n 1 /dev/sdXXX
 
 -> safely delete one file
