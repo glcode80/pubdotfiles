@@ -357,6 +357,10 @@ nnoremap <leader>sv :ValuesSql<CR>
 nnoremap <leader>mh :EscapeWord<CR>
 nnoremap <leader>mhj :EscapeWordJoin<CR>
 
+" URL decode all strings and add newlines to make it easy to read
+:command! UrlDecode :execute "%s/^http/\rhttp/ge" | %s/?/\r?\r/ge | %s/&/\r&\r/ge | %s/=/=\r  /ge | %s/%\(\x\x\)/\=iconv(nr2char('0x' ..  submatch(1)), 'utf-8', 'latin1')/ge | %s/,/,\r  /ge | execute "normal <ESC><ESC>"
+nnoremap <leader>mu :UrlDecode<CR><CR>gg
+
 command! Inspython :normal i#!/usr/bin/env python3<CR><ESC>
 command! Inshtml :normal i<!doctype html><head><meta charset="utf-8"><title></title></head><body><CR></body></html><CR><ESC>
 command! JSON %!python -m json.tool
