@@ -105,7 +105,9 @@ set hlsearch
 set linebreak
 set incsearch
 
-colorscheme desert
+" vim 9 default colorscheme
+" colorscheme desert
+colorscheme default
 
 " sane text files
 set fileformat=unix
