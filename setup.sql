@@ -3,6 +3,30 @@ Summary setup file for server setup
 -> open and run each command with f10 in vim
 *************************************
 
+***********************************
+*** Release upgrades            ***
+***********************************
+
+CHECK:
+- network (customization) before/after
+- sources before/after
+- unattended upgrades before/after
+- php/nginx/special packages before/after
+-> all automated updates still working?
+sudo unattended-upgrades --dry-run -v
+
+- postfix/email/monit: all still working?
+- ufw still working
+- fail2ban still working properly?
+
+
+***********************************
+*** Main changes Ubuntu 24.04   ***
+***********************************
+
+- pipx instead of sudo pix install, default: apt packages
+- fail2ban broken
+
 
 ***********************************
 *** Main changes Ubuntu 22.04   ***
@@ -345,6 +369,7 @@ sudo apt remove python-dev python3-dev
 
 
 8) install python plugins
+==> new: do it with python packages / pipx / local venv - TBD
 sudo apt install python3
 sudo apt install python3-pip
 sudo pip3 install setuptools --upgrade
@@ -499,6 +524,9 @@ tmp_memory_table_size=64M;
 
 
 13) Nginx
+
+==> ATTENTION: Need to add nginx to unattended-upgrades!
+
 -- get most recent version from source
 http://nginx.org/en/linux_packages.html#Ubuntu
 
@@ -697,6 +725,7 @@ sudo vim /etc/nginx/nginx.conf
 14) PHP (all suggested for wordpress with fpm)
 
 sudo apt install php8.1-{cli,fpm,common,mysql,curl,gd,mbstring,xml,xmlrpc,zip,tidy,imagick,soap,bcmath,intl}
+sudo apt install php8.3-{cli,fpm,common,mysql,curl,gd,mbstring,xml,xmlrpc,zip,tidy,imagick,soap,bcmath,intl}
 
 * upgrade from php 7.2 to php 7.4 *
 https://php.watch/articles/Ubuntu-PHP-7.4
@@ -704,14 +733,10 @@ https://php.watch/articles/Ubuntu-PHP-7.4
 sudo add-apt-repository ppa:ondrej/php # Press enter when prompted.
 sudo apt-get update
 
--- list current packages installed => to know which ones to re-install / remove
+-- list current packages installed => to know which ones to re-install / remove => remove with purge!
 dpkg -l | grep php
 dpkg -l | grep php | awk '{print $2}'
 dpkg -l | grep php > php-packages.txt
-(achtung libabapache not needed for fpm, 7.4-fpm installs all needed for fpm, just php7.4 installs apache modules!)
-
-sudo apt install php7.4-cli php7.4-fpm php7.4-common php7.4-mysql php7.4-curl php7.4-gd php7.4-mbstring php7.4-xml php7.4-xmlrpc php7.4-json php7.4-zip php7.4-tidy php7.4-imagick php7.4-soap php7.4-bcmath
---> 8.1: json not needed anymore
 
 
 sudo systemctl enable php8.1-fpm
@@ -722,6 +747,8 @@ Achtung: bei php7.4-fpm / php8.1-fpm
 => ini file neu schreiben / variablen anpassen (siehe oben)
 sudo vim /etc/php/7.4/fpm/php.ini
 sudo vim /etc/php/8.1/fpm/php.ini
+sudo vim /etc/php/8.2/fpm/php.ini
+sudo vim /etc/php/8.3/fpm/php.ini
 
 => go to wordpress dashboard and check if all modules are present
 
@@ -737,6 +764,10 @@ dpkg -l | grep php
 dpkg -l | grep php | awk '{print $2}'
 dpkg -l | grep "php7.4-" | awk '{print "sudo apt purge " $2}'
 dpkg -l | grep "php7.4-" | awk '{print $2}' | tr '\n' ' ' | awk '{print "sudo apt purge " $0}'
+dpkg -l | grep "php8.0-" | awk '{print $2}' | tr '\n' ' ' | awk '{print "sudo apt purge " $0}'
+dpkg -l | grep "php8.1-" | awk '{print $2}' | tr '\n' ' ' | awk '{print "sudo apt purge " $0}'
+dpkg -l | grep "php8.2-" | awk '{print $2}' | tr '\n' ' ' | awk '{print "sudo apt purge " $0}'
+dpkg -l | grep "php8.3-" | awk '{print $2}' | tr '\n' ' ' | awk '{print "sudo apt purge " $0}'
 -- double check the ones with no version number (need to exist with proper version number!)
 dpkg -l | grep "php-" | awk '{print "sudo apt purge " $2}'
 => no need to remove any of them, all good!
@@ -767,13 +798,53 @@ grep -rl -e 'php7.4-fpm.sock' . | xargs sed -i 's/php7.4-fpm.sock/php8.1-fpm.soc
 sudo nginx -t
 sudo service nginx reload
 
-** Achtung: php7.4 auf ubuntu 20.04 -> braucht ondrey/php nicht mehr
+** Achtung: php7.4 auf ubuntu 20.04 -> braucht ondrej/php nicht mehr
 --> Fehlermeldung im Wordpress "php intl" not present
 
 --> remove ppa and re-install:
 sudo add-apt-repository --remove ppa:ondrej/php
 sudo apt remove php7.4-common
 sudo apt install php7.4-common
+
+14b) Install PHP with Ondrey / Sury packages -> PHP And Nginx
+https://deb.sury.org/
+
+=> ** Attention **: Need to add it to unattended-upgrades!! see above!!
+--> for updates: needs to be based on proper version -> check/fix
+
+** PHP Ondrej: **
+https://deb.sury.org/
+
+* Ubuntu: ppa:ondrej/php
+https://launchpad.net/~ondrej/+archive/ubuntu/php/
+
+sudo add-apt-repository ppa:ondrej/php
+sudo apt update
+
+--> remove again
+sudo add-apt-repository --remove ppa:ondrej/php
+
+
+
+** Nginx Ondrej: **
+ppa:ondrej/nginx = stable
+ppa:ondrej/nginx-mainline = latest
+
+sudo add-apt-repository ppa:ondrej/nginx
+sudo apt update
+
+--> remove again
+sudo add-apt-repository --remove ppa:ondrej/nginx
+
+
+**** Debian: php/nginx/geoip plugin
+https https://packages.sury.org/php/README.txt -d
+https https://packages.sury.org/nginx/README.txt -d
+---> commands in here, check & run
+sudo apt -y install libnginx-mod-http-geoip2
+
+==> add to unattened-upgrades -> see above
+
 
 
 15) geoip database & update script
@@ -864,22 +935,60 @@ add:
 
 -- add other (non distro updates)
 -> check with: apt-cache policy
-(on Ubuntu: <origin-value>:<a-value> -> wenn nichts steht einfach :)
+(on Ubuntu: <o-value>:<a-value> -> wenn nichts steht einfach :)
 (on Debian/Kali: orign=xxx)
 add, eg.:
+
+-- -> write conf file /etc/apt/apt.conf.d/52ownallowedorigins
+
+-- Debian/Kali
+sudo vim /etc/apt/apt.conf.d/52ownallowedorigins
+
 Unattended-Upgrade::Allowed-Origins {
-        "origin=Proxmox";
-        "origin=Kali";
-        "matrix.org:";
-        "nginx:stable";
+		"origin=Proxmox";			// debian - LEGACY - check
+		"origin=Kali";				// kali - LEGACY - check
+		"deb.sury.org:bookworm";	// sury - php/nginx - debian bookworm
+        "deb.sury.org:trixie";      // sury - php/nginx - debian trixie
+};
+
+-- Ubuntu ("origin" term not allowed)
+sudo vim /etc/apt/apt.conf.d/52ownallowedorigins
+
+Unattended-Upgrade::Allowed-Origins {
+		"matrix.org:";				// ubuntu
+		"nginx:stable";				// ubuntu
+		"LP-PPA-ondrej-php:focal";	// ubuntu 20.04 / focal
+		"LP-PPA-ondrej-php:jammy";	// ubuntu 22.04 / jammy
+		"LP-PPA-ondrej-php:noble";	// ubuntu 24.04 / noble		
+		"LP-PPA-ondrej-nginx:focal";	// ubuntu 20.04 / focal
+		"LP-PPA-ondrej-nginx:jammy";	// ubuntu 22.04 / jammy
+		"LP-PPA-ondrej-nginx:noble";	// ubuntu 24.04 / noble
+		"LP-PPA-ondrej-nginx-mainline:focal";	// ubuntu 20.04 / focal
+		"LP-PPA-ondrej-nginx-mainline:jammy";	// ubuntu 22.04 / jammy
+		"LP-PPA-ondrej-nginx-mainline:noble";	// ubuntu 24.04 / noble				
+		"LP-PPA-maxmind:jammy";		// ubuntu 22.04 / jammy
+		"LP-PPA-maxmind:noble";		// ubuntu 24.04 / noble
+};
+
 
 -- reboot
 //Unattended-Upgrade::Automatic-Reboot "false";
 //Unattended-Upgrade::Automatic-Reboot-Time "02:00";
 
 
-c) run manually / dry-run
-sudo unattended-upgrades --dry-run
+-- allow conffile prompts confirmation -> by default keep, e.g. for cloud-init updates
+-- -> write conf file /etc/apt/apt.conf.d/51conffileprompt
+sudo vim /etc/apt/apt.conf.d/51conffileprompt
+
+// by default no prompt for change in conf files
+DPkg::Options {
+        "--force-confold";
+        "--force-confdef";
+};
+
+
+c) run manually / dry-run -> check origins all ok?
+sudo unattended-upgrades --dry-run -v
 sudo unattended-upgrades -v
 
 d) check logs
