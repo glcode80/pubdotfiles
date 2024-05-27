@@ -13,6 +13,8 @@ CHECK:
 - unattended upgrades before/after
 - php/nginx/special packages before/after
 -> all automated updates still working?
+
+apt-cache policy | grep o= | grep -v Ubuntu | grep -v Debian
 sudo unattended-upgrades --dry-run -v
 
 - postfix/email/monit: all still working?
@@ -934,7 +936,14 @@ add:
 //Unattended-Upgrade::Remove-Unused-Dependencies "false";
 
 -- add other (non distro updates)
--> check with: apt-cache policy
+-> check with:
+apt-cache policy
+
+==> check only the non standard ones -> compare to currently active
+apt-cache policy | grep o= | grep -v Ubuntu | grep -v Debian
+sudo unattended-upgrades --dry-run -v
+
+
 (on Ubuntu: <o-value>:<a-value> -> wenn nichts steht einfach :)
 (on Debian/Kali: orign=xxx)
 add, eg.:
