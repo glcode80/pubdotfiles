@@ -1,0 +1,104 @@
+#!/bin/bash
+
+# Script to show system information -> add to /etc/update-motd.d/ and chmod +x
+
+# set threshold for memory warning and disk warning
+memory_warning_threshold=70
+disk_warning_threshold=70
+load_warning_threshold=60
+
+# escape sequences for formatting text
+# bold=$(printf "\e[1m")
+boldblue=$(printf "\e[1;34m")
+boldred=$(printf "\e[1;31m")
+reset=$(printf "\e[0m")
+# bold_blue_text=$(printf "\e[1;34mThis is bold blue text.\e[0m")
+# bold_blue_text="${bold}This is bold blue text.${reset}"
+# bold_blue_text="${boldblue}This is bold blue text.${reset}"
+# printf "%s\n" "$bold_blue_text"
+
+# Load average
+load=$(cut -d " " -f 1-3 /proc/loadavg)
+load_percentage=$(echo "$load" | awk '{print int($1*100)}')
+
+# Apply formatting based on load percentage
+load_warning=""
+if [ "$load_percentage" -gt "$load_warning_threshold" ]; then
+  load_warning="${boldred}       High system load${reset}"
+fi
+
+# Uptime
+uptime=$(uptime -p | sed 's/up //')
+
+# Memory usage
+mem_info=$(free -m | awk '/Mem:/ {printf "  %.0fMi / %.1fGi", $3, $2/1024}')
+mem_used=$(free -m | awk '/Mem:/ {print $3}')
+mem_total=$(free -m | awk '/Mem:/ {print $2}')
+mem_percentage=$(awk "BEGIN {printf \"%.0f\", ($mem_used/$mem_total)*100}")
+mem_warning=""
+if [ "$mem_percentage" -gt $memory_warning_threshold ]; then
+  mem_warning="${boldred}  High memory usage${reset}"
+fi
+# Disk usage
+root_usage=$(df -h / | awk 'NR==2 {printf "%.0f%%   %s / %s", $3/$2*100, $3, $2}')
+disk_percentage=$(df -h / | awk 'NR==2 {printf "%.0f", $3/$2*100}')
+disk_warning=""
+if [ "$disk_percentage" -gt $disk_warning_threshold ]; then
+  disk_warning="${boldred}     High disk usage${reset}"
+fi
+# Users logged in
+users=$(who | wc -l)
+
+# Last login
+last_login=$(last -n 1 -a | head -n 1)
+
+# IP address
+ip_address=$(hostname -I | awk '{print $1}')
+
+# IPv6 address
+ipv6_address=$(ip -6 addr show scope global | grep inet6 | awk '{print $2}' | cut -d/ -f1)
+
+# Kernel version
+kernel_version=$(uname -rvm)
+# Distribution and release 
+
+distribution=$(lsb_release -d -s)
+
+# Check if a reboot is required
+if [ -f /var/run/reboot-required ]; then
+  reboot_required="${boldblue}Reboot required${reset}"
+else
+  # reboot_required="${boldblue}Reboot required${reset}"
+  reboot_required="No"
+fi
+
+# Check if packages need to be updated
+# if [[ $(apt-get --just-print upgrade | grep -c "^Inst") -gt 0 ]]; then
+upgradable_packages=$(apt list --upgradable 2>/dev/null | grep -c 'upgradable')
+if [ "$upgradable_packages" -gt 0 ]; then
+  packages_to_update="${boldblue}Packages to update${reset} -> apt list --upgradable"
+else
+  # packages_to_update="${boldblue}Packages to update${reset}"
+  packages_to_update="No"
+fi
+
+# Print the information with aligned values
+printf "\nWelcome to %s - %s\n\n" "$(hostname)" "$(date)"
+
+printf "  %-22s %s\n" "Distribution:" "$distribution"
+
+printf "  %-22s %s\n" "Kernel Version:" "$kernel_version"
+printf "  %-22s %s\n" "Uptime:" "$uptime"
+printf "  %-22s %s\n" "Users Logged In:" "$users"
+printf "  %-22s %s\n\n" "Last Login:" "$last_login"
+
+printf "  %-22s %s %s\n" "System Load:" "$load" "$load_warning"
+printf "  %-22s %s%% %s %s\n" "Memory Usage:" "$mem_percentage" "$mem_info" "$mem_warning"
+printf "  %-22s %s %s\n\n" "Disk Usage:" "$root_usage" "$disk_warning"
+
+printf "  %-22s %s\n" "IPv4 Address:" "$ip_address"
+printf "  %-22s %s\n\n" "IPv6 Address:" "$ipv6_address"
+
+printf "  %-22s %s\n" "Reboot Required:" "$reboot_required"
+printf "  %-22s %s\n" "Packages to Update:" "$packages_to_update"
+echo ""
