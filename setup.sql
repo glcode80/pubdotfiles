@@ -887,6 +887,9 @@ sudo chmod -x /etc/update-motd.d/50-motd-news
 sudo chmod -x /etc/update-motd.d/80-livepatch
 sudo chmod -x /etc/update-motd.d/88-esm-announce
 
+-- when adding own message: -> c) below
+sudo chmod -x /etc/update-motd.d/50-landscape-sysinfo
+
 -- adjust Debian
 -- a) remove warranty
 sudo rm /etc/motd
@@ -897,6 +900,7 @@ sudo chmod -x /etc/update-motd.d/10-uname
 -- c) add own system information message (like ubuntu)
 sudo cp /home/moon/pubdotfiles/45-sysinfo /etc/update-motd.d/
 sudo chmod 755 /etc/update-motd.d/45-sysinfo
+
 
 
 
