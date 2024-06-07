@@ -14,7 +14,7 @@ CHECK:
 - php/nginx/special packages before/after
 -> all automated updates still working?
 
-apt-cache policy | grep o= | grep -v Ubuntu | grep -v Debian
+apt policy | grep o= | grep -v Ubuntu | grep -v Debian
 sudo unattended-upgrades --dry-run -v
 
 - postfix/email/monit: all still working?
@@ -425,16 +425,16 @@ php needs to be installed to work (see below)
  sudo apt install php8.1-cli
  sudo apt install php8.1-xml
 
- -> more plugins php-tools-install.sql
-#PHPCS
-sudo curl -LsS https://squizlabs.github.io/PHP_CodeSniffer/phpcs.phar -o /usr/local/bin/phpcs
-sudo chmod a+x /usr/local/bin/phpcs
-#PHPMD
-sudo curl -LsS https://phpmd.org/static/latest/phpmd.phar -o /usr/local/bin/phpmd
-sudo chmod a+x /usr/local/bin/phpmd
-#PHPCBF
-sudo curl -LsS https://squizlabs.github.io/PHP_CodeSniffer/phpcbf.phar -o /usr/local/bin/phpcbf
-sudo chmod a+x /usr/local/bin/phpcbf
+Phpmd / PhpCS (Codesniffer)
+=> use distribution packages instead:
+sudo apt install phpmd php-codesniffer
+phpmd -v
+phpcs --version
+phpcbf --version
+-- show installed standards
+phpcs -i
+-- fix file formatting:
+phpcbf --standard=PSR2 path/to/php/src
 
 
 10) install lint for bash
@@ -865,7 +865,10 @@ sudo vim /home/moon/GeoIP.conf
 UserId XXXXXXXXXXXXX
 # AccountID YOUR_ACCOUNT_ID_HERE # only for newer version of geoipupdate (>3.3.1)
 LicenseKey XXXXXXXXXXXXX
-ProductIds GeoLite2-ASN GeoLite2-City GeoLite2-Country
+# update everything -> disabled
+# ProductIds GeoLite2-ASN GeoLite2-City GeoLite2-Country
+# update only country file
+ProductIds GeoLite2-Country
 # EditionIDs GeoLite2-ASN GeoLite2-City GeoLite2-Country  # only for newer version of geoipupdate (>3.3.1)
 
 test geoipupdate:
@@ -883,6 +886,19 @@ sudo chmod -x /etc/update-motd.d/10-help-text
 sudo chmod -x /etc/update-motd.d/50-motd-news 
 sudo chmod -x /etc/update-motd.d/80-livepatch
 sudo chmod -x /etc/update-motd.d/88-esm-announce
+
+-- adjust Debian
+-- a) remove warranty
+sudo rm /etc/motd
+
+-- b) remove kernel message line (add more detailed below)
+sudo chmod -x /etc/update-motd.d/10-uname
+
+-- c) add own system information message (like ubuntu)
+sudo cp /home/moon/pubdotfiles/45-sysinfo /etc/update-motd.d/
+sudo chmod 755 /etc/update-motd.d/45-sysinfo
+
+
 
 --  sudo apt install update-motd update-notifier-common landscape-common
 
@@ -937,12 +953,14 @@ add:
 
 -- add other (non distro updates)
 -> check with:
-apt-cache policy
+apt policy
 
 ==> check only the non standard ones -> compare to currently active
-apt-cache policy | grep o= | grep -v Ubuntu | grep -v Debian
+apt policy | grep o= | grep -v Ubuntu | grep -v Debian
 sudo unattended-upgrades --dry-run -v
 
+-- check next timer run
+sudo systemctl status apt-daily-upgrade.timer
 
 (on Ubuntu: <o-value>:<a-value> -> wenn nichts steht einfach :)
 (on Debian/Kali: orign=xxx)
