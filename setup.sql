@@ -23,6 +23,34 @@ sudo unattended-upgrades --dry-run -v
 
 
 ***********************************
+*** Main changes Debian 12      ***
+***********************************
+
+- journalctl instead of rsyslog -> systemd based logging
+ -> all in binary format instead of /var/log/auth.log and /var/log/syslog
+ -> can create issues with fail2ban (add backend = systemd to sshd section OR install rsyslog)
+ sudo apt install rsyslog
+
+- check logs with journalctl
+	-> add -f to get "follow" = "live tail"
+	-> add -n 10 -> enly last 10
+journalctl -f -u myservice
+journalctl -u nginx --no-pager --since "1 hour ago"
+journalctl -u nginx --no-pager -n 20
+journalctl -u nginx --no-pager -f -n 20
+journalctl -u ssh -n 50
+journalctl -u mariadb -n 50
+journalctl -u mariadb -f -n 10
+-- failed login attempts
+journalctl -p authpriv.warning
+journalctl --since "1 week ago"
+-- string Error
+journalctl -S Error
+-- grep for error on service
+journalctl -u mariadb | grep error
+ 
+
+***********************************
 *** Main changes Ubuntu 24.04   ***
 ***********************************
 
@@ -194,6 +222,12 @@ PermitRootLogin no
 PasswordAuthentication no
 ChallengeResponseAuthentication no
 sudo systemctl restart sshd
+
+--> Test Grep machen für alle wichtigsten settings
+sudo sshd -T | grep 'pubkeyauthentication\|usepam\|permitroot\|challengeresponse\|kbdinteractive\|passwordauthentication'
+sudo sshd -T | grep 'pubkeyauthentication\|usepam\|permitroot\|challengeresponse\|kbdinteractive\|passwordauthentication' | grep yes
+sudo sshd -T | grep 'pubkeyauthentication\|usepam\|permitroot\|challengeresponse\|kbdinteractive\|passwordauthentication' | grep no
+
 
 ** option to set UsePAM no **
 -> with "yes" password authentication is still possible via PAM (tbd)
