@@ -245,8 +245,30 @@ sudo [=> to execute root commands without root user!]
 su -> to become root
 sudo shutdown -r now
 sudo reboot
--- show all active listening devices
-sudo netstat -tulpn
+
+-- show all active listening devices (legacy: netstat -> now ss)
+-- -> 0.0.0.0 + [::] -> sind die offenen ip4/ip6!
+sudo ss -tulpn
+-- all connections
+ss -a
+sudo ss -a | grep "http"
+
+sudo ss -tulpn '( dport = :22 or sport = :22 )'
+sudo ss -tulpn '( dport = :ssh or sport = :ssh )'
+
+-- nur public listening devices!
+sudo ss -tulpn src 0.0.0.0
+sudo ss -tulpn src [::]
+
+-- combined only public / only local (6010 = x11 forwarding)
+sudo ss -tulpn '( src 0.0.0.0 or src [::] )'
+sudo ss -tulpn '( src 127.0.0.1 or src 127.0.0.53 or src [::1] )'
+
+-- see previous sessions
+sudo w
+-- kill session
+-- sudo pkill -KILL -t pts/0
+
 date
 ping
 whois
