@@ -31,7 +31,7 @@ fi
 uptime=$(uptime -p | sed 's/up //')
 
 # Memory usage
-mem_info=$(free -m | awk '/Mem:/ {printf "  %.0fMi / %.1fGi", $3, $2/1024}')
+mem_info=$(free -m | awk '/Mem:/ {printf "  %.1fG / %.1fG", $3/1000, $2/1000}')
 mem_used=$(free -m | awk '/Mem:/ {print $3}')
 mem_total=$(free -m | awk '/Mem:/ {print $2}')
 mem_percentage=$(awk "BEGIN {printf \"%.0f\", ($mem_used/$mem_total)*100}")
