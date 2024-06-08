@@ -56,7 +56,7 @@ last_login=$(last -n 1 -a | head -n 1)
 ip_address=$(hostname -I | awk '{print $1}')
 
 # IPv6 address
-ipv6_address=$(ip -6 addr show scope global | grep inet6 | awk '{print $2}' | cut -d/ -f1)
+ipv6_address=$(ip -6 addr show scope global | grep inet6 | awk '{print $2}' | cut -d/ -f1 | head -n 1)
 
 # Kernel version
 kernel_version=$(uname -rvm)
