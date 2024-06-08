@@ -1,4 +1,81 @@
+exit
+-- safety exit not to run full script by mistake
+
 *** LINUX COMMANDS ***
+
+**************
+*** apt / dpkg commands
+**************
+
+* apt commands -> search/list packages *
+apt list
+apt search
+apt show
+apt policy
+
+--> search for package name overall
+apt list nginx*
+apt list nginx-*
+
+--> search for geoip2 in description and then grep
+apt search geoip2 | grep nginx
+
+--> search for all php packages available
+apt list php8.*
+apt search php8. | grep php
+apt search php8.2 | grep php
+apt search php8.3 | grep php
+
+--> show detailed description of a package
+APT show nginx-core
+apt show nginx-extras
+apt show libnginx-mod-http-geoip2
+
+
+** dpkg to check installed status / config status **
+dpkg -l | grep "nginx"
+ii = installed, config installed correctly
+rc = removed, config still present -> need to purge
+
+remove rc ones / purge config
+apt purge packagename
+apt purge php8.*
+dpkg -l | grep "php8-" | awk '{print "sudo apt purge " $2}'
+
+* apt policy => check sources for package *
+-- show all sources available
+apt policy
+-- grep for special ones and compare to unattended upgrades
+apt policy | grep o= | grep -v Ubuntu | grep -v Debian
+sudo unattended-upgrades --dry-run -v
+
+-- show sources just for one package
+apt policy nginx-core
+
+**************
+*** systemd based systems that use logs in journal instead of /var/log (e.g. auth.log / error.log etc)
+**************
+- journalctl instead of rsyslog -> systemd based logging
+ -> all in binary format instead of /var/log/auth.log and /var/log/syslog
+
+- check logs with journalctl
+	-> add -f to get "follow" = "live tail"
+	-> add -n 10 -> enly last 10
+journalctl -f -u myservice
+journalctl -u nginx --no-pager --since "1 hour ago"
+journalctl -u nginx --no-pager -n 20
+journalctl -u nginx --no-pager -f -n 20
+journalctl -u ssh -n 50
+journalctl -u mariadb -n 50
+journalctl -u mariadb -f -n 10
+-- failed login attempts
+journalctl -p authpriv.warning
+journalctl --since "1 week ago"
+-- string Error
+journalctl -S Error
+-- grep for error on service
+journalctl -u mariadb | grep error
+
 
 **************
 *** httpie -> run http / https commands (much better than curl / wget)
