@@ -13,9 +13,9 @@ events {
 http {
 
     # use geoip2 (enabled by default when installed)
-    # geoip2 /var/lib/GeoIP/GeoLite2-Country.mmdb {
-    #    $geoip_country_code country iso_code;
-    # }
+    geoip2 /var/lib/GeoIP/GeoLite2-Country.mmdb {
+       $geoip_country_code country iso_code;
+    }
 
     # # ** NGINX PAGE CACHE START - nginx.conf http - options: 60m, 5h, 5d - adjust in conf too! **
     # fastcgi_cache_path /var/run/nginxcacheGLOBAL levels=1:2 keys_zone=cacheGLOBAL:300m inactive=20m;
@@ -61,13 +61,9 @@ http {
 
 	error_log /var/log/nginx/error.log;
 
-    # log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
-    #                   '$status $body_bytes_sent "$http_referer" '
-    #                   '"$http_user_agent" "$http_x_forwarded_for" "$geoip_country_code"';
-
     log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
                       '$status $body_bytes_sent "$http_referer" '
-                      '"$http_user_agent" "$http_x_forwarded_for"';
+                      '"$http_user_agent" "$http_x_forwarded_for" "$geoip_country_code"';
 
     access_log  /var/log/nginx/access.log  main;	
 
