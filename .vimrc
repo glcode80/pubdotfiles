@@ -267,9 +267,9 @@ let g:syntastic_loc_list_height=5
 let g:syntastic_python_checkers = ['flake8']
 let g:syntastic_python_flake8_args='--config=/home/moon/.flake8'
 
-" let g:syntastic_php_checkers = ['php']
+let g:syntastic_php_checkers = ['php']
 " let g:syntastic_php_checkers = ['php', 'phpcs']
-let g:syntastic_php_checkers = ['php', 'phpcs', 'phpmd']
+" let g:syntastic_php_checkers = ['php', 'phpcs', 'phpmd']
 " let g:syntastic_php_phpcs_args = '--standard=psr2'
 let g:syntastic_php_phpcs_args = '--standard=~/.phpcsruleset.xml'
 " How to run it on command line to auto-fix:
