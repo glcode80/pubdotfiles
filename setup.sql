@@ -1665,6 +1665,12 @@ sudo rm -rf /etc/nginx/nginxcacheGLOBAL/*
 benchmark testing: loader.io
 
 
+*** Nginx custom log files per host ***
+--> add to server 80 section (443 not needed, will take it over)
+    access_log /var/log/nginx/CUSTOM1_access.log main;
+    error_log /var/log/nginx/CUSTOM1_error.log;
+
+
 *** Nginx blocking of bad bot traffic ***
 https://github.com/mitchellkrogza/nginx-ultimate-bad-bot-blocker
 
