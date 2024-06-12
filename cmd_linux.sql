@@ -439,6 +439,8 @@ tar -zxvf archive.tar.gz [Decompress into current directory]
 find . -type f -iname "*searchterm*"
 find /home/moon/ -type f -iname "*searchterm*"
 find / -type f -iname "*searchterm*"
+-- only in current directory -> maxdepth option
+find . -maxdepth 1 -type f -iname "*searchterm*"
 -- exact filename
 sudo find / -type f -name error.log
 sudo find / -type f -name *.log
