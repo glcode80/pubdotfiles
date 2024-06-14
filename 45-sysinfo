@@ -17,10 +17,16 @@ reset=$(printf "\e[0m")
 # bold_blue_text="${boldblue}This is bold blue text.${reset}"
 # printf "%s\n" "$bold_blue_text"
 
+# Get the number of CPU cores
+cpu_cores=$(nproc)
+
 # Load average
 load=$(cut -d " " -f 1-3 /proc/loadavg)
-load_percentage=$(echo "$load" | awk '{print int($1*100)}')
-
+# Load percentage -> adjusted for number of cpu cores
+load_percentage=$(echo "$load" | awk -v cores="$cpu_cores" '{print int(($1 * 100) / cores)}')
+# load_percentage=$(echo "$load" | awk '{print int($1*100)}')
+# printf "Load percentage: %s\n" "${load_percentage}"
+#
 # Apply formatting based on load percentage
 load_warning=""
 if [ "$load_percentage" -gt "$load_warning_threshold" ]; then
