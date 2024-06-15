@@ -24,7 +24,7 @@ call vundle#begin()
 
 " let Vundle manage Vundle, required
 " Plugin 'gmarik/Vundle.vim'
-Plugin 'VundleVim/Vundle.vim'
+Plugin 'VundleVim/Vundle.vim' 
 " Plugin 'glcode80/Vundle.vim'
 
 " Add all your plugins here (note older versions of Vundle used Bundle instead of Plugin)
@@ -46,13 +46,58 @@ Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-repeat'
 Plugin 'kien/ctrlp.vim'
-
-Bundle 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
+" Bundle 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
+Plugin 'itchyny/lightline.vim'
 
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
+
+" Lightline - count number of chars / lines selected
+function! LightlineSelectedChars()
+    if mode() ==# 'v' || mode() ==# 'V' || mode() ==# "\<C-v>"
+        if line("v") == line(".")
+            let l:char_count = abs(line("v") - line(".")) * col("$") + abs(col("v") - col(".")) + 1
+            return printf('%d chars', l:char_count)
+        else
+            let l:line_count = abs(line("v") - line(".")) + 1
+            return printf('%d lines', l:line_count)
+        endif
+    else
+        return ''
+    endif
+endfunction
+
+" Lightline Function to get the name of the active virtual environment
+function! LightlineVirtualEnv()
+  let l:venv = $VIRTUAL_ENV
+  return l:venv != '' ? fnamemodify(l:venv, ':t') : ''
+endfunction
+
+" Lightline Config
+" attention: 'right': goes from right to left!
+" get settings with :h g:lightline.component
+let g:lightline = {
+      \ 'colorscheme': 'powerline',
+      \ 'separator': { 'left': '', 'right': '' },
+      \ 'subseparator': { 'left': '', 'right': '' },
+      \ 'component_function': {
+      \   'charcount': 'LightlineSelectedChars',
+      \   'virtualenv': 'LightlineVirtualEnv',
+      \ },
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \             [ 'readonly', 'filename', 'modified' ],
+      \             [ 'charcount' ],
+      \             ],
+      \   'right': [ [ 'lineinfo' ],
+      \              [ 'percent' ],
+      \              [ 'fileformat', 'fileencoding', 'filetype' ],
+      \              [ 'virtualenv' ],
+      \              ]
+      \ },
+      \ }
 
 
 " Flagging unnecesary whitespace
@@ -287,7 +332,7 @@ let g:syntastic_php_phpmd_post_args = '~/.phpmdruleset.xml'
 source ~/.dbextprofiles.vim
 
 " to make sure to always prompt limit:
-" map <leader>st <leader>sT 
+" map <leader>st <leader>sT
 
 " open splits always on the right/bottom
 set splitright
@@ -356,9 +401,9 @@ vmap y ygv<Esc>
 " MAP FUNCTION KEYS
 
 " map <F2> :vsp $MYVIMRC<CR> " edit vimrc
-map <F2> :vsp ~/.vimrc<CR> 
+map <F2> :vsp ~/.vimrc<CR>
 " reload vimrc with leader f2
-map <leader><F2> :so ~/.vimrc<CR> 
+map <leader><F2> :so ~/.vimrc<CR>
 map <F3> :sp ~/cmd_vim.sql<CR>
 map <F4> :sp ~/cmd_linux.sql<CR>
 " omni completion while in sql
@@ -366,7 +411,7 @@ imap <F6> <c-x><c-o>
 " map to move to new tab
 nmap <F7> <C-w>T
 nmap <F8> :NERDTreeTabsToggle<CR>
-nmap <leader><F8> :TagbarToggle<CR> 
+nmap <leader><F8> :TagbarToggle<CR>
 " map F9 to start Python script / leader-F9 to get output in window
 nnoremap <F9> :w<cr>:exec '!python3' shellescape(@%, 1)<cr>
 vnoremap <F9> :w<cr>:exec '!python3' shellescape(@%, 1)<cr>
@@ -428,14 +473,39 @@ nnoremap <leader>mhj :EscapeWordJoin<CR>
 :command! UrlDecode :execute "%s/^http/\rhttp/ge" | %s/?/\r?\r/ge | %s/&/\r&\r/ge | %s/=/=\r  /ge | %s/%\(\x\x\)/\=iconv(nr2char('0x' ..  submatch(1)), 'utf-8', 'latin1')/ge | %s/,/,\r  /ge | execute "normal <ESC><ESC>"
 nnoremap <leader>mu :UrlDecode<CR><CR>gg
 
-command! Inspython :normal i#!/usr/bin/env python3<CR><ESC>
+command! Insbash :normal i#!/bin/bash<CR><ESC>
+
+" command! Inspython :normal i#!/usr/bin/env python3<CR><ESC>
+" command! Inspython :execute "normal i#!/usr/bin/env python3\n# ".expand('%:p')."\n"<CR><ESC>
+" command! Inspython :execute "normal! i#!/usr/bin/env python3\r# ".expand('%:p')."\r\<Esc>"
+" command! Inspython :execute 'normal! i#!/'.expand('%:p:h').'/venv/bin/python3\r\<Esc>'
+
+function! InsertPythonShebang()
+  " Get the value of the VIRTUAL_ENV environment variable
+  let l:venv = $VIRTUAL_ENV
+  " Check if the virtual environment variable is empty
+  if empty(l:venv)
+    " If no virtual environment is active, use the default Python shebang
+    call execute('normal! i#!/usr/bin/env python3' . "\n")
+
+  else
+    " If a virtual environment is active, use its Python interpreter
+    let l:python_path = l:venv . '/bin/python3'
+    call execute('normal! i#!' . l:python_path . "\n")
+  endif
+endfunction
+
+" Create a Vim command that calls the InsertPythonShebang function
+command! Inspython call InsertPythonShebang()
+
+
 command! Inshtml :normal i<!doctype html><head><meta charset="utf-8"><title></title></head><body><CR></body></html><CR><ESC>
 command! JSON %!python -m json.tool
 command! Jsonfold set filetype=json | syntax on | set foldmethod=syntax
 
 function! CommentHeader()
     let hash_line = '# ' . repeat('=', 79)
-    normal! 0i# 
+    normal! 0i#
     normal! k
     :put =hash_line
     normal! j
