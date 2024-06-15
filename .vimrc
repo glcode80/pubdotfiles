@@ -75,6 +75,11 @@ function! LightlineVirtualEnv()
   return l:venv != '' ? fnamemodify(l:venv, ':t') : ''
 endfunction
 
+" Lightline - Add path, if not in same directory
+function! LightlineFilename()
+  return expand('%:F') !=# '' ? expand('%:F') : '[No Name]'
+endfunction
+
 " Lightline Config
 " attention: 'right': goes from right to left!
 " get settings with :h g:lightline.component
@@ -83,6 +88,7 @@ let g:lightline = {
       \ 'separator': { 'left': '', 'right': '' },
       \ 'subseparator': { 'left': '', 'right': '' },
       \ 'component_function': {
+      \   'filename': 'LightlineFilename',
       \   'charcount': 'LightlineSelectedChars',
       \   'virtualenv': 'LightlineVirtualEnv',
       \ },
