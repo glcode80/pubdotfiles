@@ -45,13 +45,27 @@ mem_warning=""
 if [ "$mem_percentage" -gt $memory_warning_threshold ]; then
   mem_warning="${boldred}  High memory usage${reset}"
 fi
+
 # Disk usage
-root_usage=$(df -h / | awk 'NR==2 {printf "%.0f%%   %s / %s", $3/$2*100, $3, $2}')
-disk_percentage=$(df -h / | awk 'NR==2 {printf "%.0f", $3/$2*100}')
+df_output=$(df -BG --output=source,avail,used,size / | tail -1)
+
+# Extract the values
+device=$(echo $df_output | awk '{print $1}')
+available=$(echo $df_output | awk '{print $2}' | sed 's/G//')
+used=$(echo $df_output | awk '{print $3}' | sed 's/G//')
+size=$(echo $df_output | awk '{print $4}' | sed 's/G//')
+
+# Calculate percentage usage
+disk_percentage=$(awk "BEGIN {printf \"%.0f\", (${used}/${size})*100}")
+
+# Format the usage string
+root_usage=$(printf "%d%%   %dG / %dG" "$disk_percentage" "$used" "$size")
+
 disk_warning=""
 if [ "$disk_percentage" -gt $disk_warning_threshold ]; then
   disk_warning="${boldred}     High disk usage${reset}"
 fi
+
 # Users logged in
 users=$(who | wc -l)
 
