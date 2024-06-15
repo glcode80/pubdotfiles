@@ -331,6 +331,11 @@ let g:syntastic_php_phpmd_post_args = '~/.phpmdruleset.xml'
 
 " let g:ctrlp_show_hidden =1
 
+" ignore venv directory / other custom directories
+let g:ctrlp_custom_ignore = {
+    \ 'dir': 'venv\|env',
+    \ }
+
 " Update time for vim-gitgutter
 " set updatetime=100
 
