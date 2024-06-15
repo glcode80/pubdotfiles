@@ -40,7 +40,7 @@ Plugin 'scrooloose/nerdcommenter'
 Plugin 'glcode80/dbext'
 " Tagbar install ctags: sudo apt install exuberant-ctags
 " Tagbar toggle: TagbarToggle
-Plugin 'majutsushi/tagbar'
+" Plugin 'majutsushi/tagbar'
 Plugin 'easymotion/vim-easymotion'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-surround'
@@ -413,11 +413,11 @@ map <leader><F2> :so ~/.vimrc<CR>
 map <F3> :sp ~/cmd_vim.sql<CR>
 map <F4> :sp ~/cmd_linux.sql<CR>
 " omni completion while in sql
-imap <F6> <c-x><c-o>
+" imap <F6> <c-x><c-o>
 " map to move to new tab
-nmap <F7> <C-w>T
+" nmap <F7> <C-w>T
 nmap <F8> :NERDTreeTabsToggle<CR>
-nmap <leader><F8> :TagbarToggle<CR>
+" nmap <leader><F8> :TagbarToggle<CR>
 " map F9 to start Python script / leader-F9 to get output in window
 nnoremap <F9> :w<cr>:exec '!python3' shellescape(@%, 1)<cr>
 vnoremap <F9> :w<cr>:exec '!python3' shellescape(@%, 1)<cr>
@@ -530,21 +530,21 @@ map <leader>5 :call UncommentHeader()<CR>
 nmap <leader>i :NERDTreeClose<cr>:set invnumber<cr>
 
 "** Fugitive mappings
-nnoremap <leader>gp :Gpull<cr>
+" nnoremap <leader>gp :Gpull<cr>
 "Gstatus -> - to add/remove, cc to commit, o for open
-nnoremap <leader>gs :Gstatus<cr>8gg
+" nnoremap <leader>gs :Gstatus<cr>8gg
 "Gwrite = add current file to list to be commited (no need to add in gstatus)
-nnoremap <leader>gw :Gwrite<cr>
+" nnoremap <leader>gw :Gwrite<cr>
 "Gcommit -> wq to execute
-nnoremap <leader>gc :Gcommit<cr>
-nnoremap <leader>gP :Gpush origin master<cr>
+" nnoremap <leader>gc :Gcommit<cr>
+" nnoremap <leader>gP :Gpush origin master<cr>
 "Gdiff -> :diffput / :diffget to adjust /:diffupdate
 nnoremap <leader>gd :Gdiff<cr>
 "Gread = back to last version in repo
 nnoremap <leader>gr :Gread<cr>
 " Gblame -> open with o
-nnoremap <leader>gb :Gblame<cr>
-nnoremap <leader>gB :Gbrowse<cr>
+" nnoremap <leader>gb :Gblame<cr>
+" nnoremap <leader>gB :Gbrowse<cr>
 " nnoremap <leader>gm :Gremove<cr>
 
 
