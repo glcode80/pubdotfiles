@@ -1,8 +1,9 @@
--- DB: Analyst
+-- DB: Playground
 
 show schemas;
 
-show tables from Playground;
+-- Playground defined in connection setting as selected schema
+show tables;
 
 CREATE TABLE Playground.testTable (
   id int(10) unsigned NOT NULL primary key AUTO_INCREMENT,
