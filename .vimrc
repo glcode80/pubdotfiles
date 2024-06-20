@@ -37,7 +37,8 @@ Plugin 'scrooloose/nerdtree'
 Plugin 'jistr/vim-nerdtree-tabs'
 Plugin 'scrooloose/nerdcommenter'
 " Plugin 'vim-scripts/dbext.vim'
-Plugin 'glcode80/dbext'
+" Plugin 'glcode80/dbext'
+Plugin 'tpope/vim-dadbod'
 " Tagbar install ctags: sudo apt install exuberant-ctags
 " Tagbar toggle: TagbarToggle
 " Plugin 'majutsushi/tagbar'
@@ -340,7 +341,7 @@ let g:ctrlp_custom_ignore = {
 " set updatetime=100
 
 " dbext connection profiles
-source ~/.dbextprofiles.vim
+" source ~/.dbextprofiles.vim
 
 " to make sure to always prompt limit:
 " map <leader>st <leader>sT
@@ -599,3 +600,247 @@ function! SaveAndExecutePythonBuffer()
     " setlocal readonly
     " setlocal nomodifiable
 endfunction
+
+" ===============================================================================
+" vim-dadbod functions -> execute query with ctrl-Q -> automatic limit applied
+" -> can be between ; or for visual selection
+" -> re-format to tsv / csv and copy (buffer unchanged) -> <leader>-csv / tsv
+" simply type 'DB' to open mysql shell
+" -> set connection/credentials in input file as per below
+" -> can set  '-- DB: xxx' in first 10 lines of buffers to set custom connection
+" ===============================================================================
+
+" import connection details
+source ~/.vim_dadbod_profiles.vim
+
+" Connection profiles for vim-dadbod
+augroup DadbodDB
+    autocmd!
+    autocmd BufReadPost,BufNewFile * call s:set_dadbod_db()
+augroup END
+
+function! s:set_dadbod_db()
+  " Set DB connection based on input buffer file and string in first 10
+  " lines of buffer like ''-- DB: xxx' 
+  let l:line = getline(1, 10)
+  let l:dbname = ''
+  for l:current in l:line
+    if l:current =~ '^-- DB:'
+      let l:match = matchlist(l:current, '\v-- DB:\s*(\S+)')
+      if len(l:match) > 1
+        let l:dbname = l:match[1]
+        break
+      endif
+    elseif l:current =~ '^// dbext:profile='
+      let l:match = matchlist(l:current, '\v// dbext:profile=(\S+)')
+      if len(l:match) > 1
+        let l:dbname = substitute(l:match[1], '^=', '', '')
+        break
+      endif
+    endif
+  endfor
+
+  if l:dbname != ''
+    if has_key(g:db_buffer, l:dbname)
+      let b:db = g:db_buffer[l:dbname]
+      " echo "Dadbod DB set to " . b:db
+    else
+      " echo "Database '" . l:dbname . "' not found in g:db - using default connection"
+      let b:db = g:db
+    endif
+  endif
+endfunction
+
+function! AddLimitToQuery(query)
+    " Add 'limit x' to a query string -> by default we always limit the output results
+
+    " Define the limit value
+    let l:limit_clause = "LIMIT 1000"
+
+    " Remove all initial whitespace and line break characters
+    let l:query = substitute(a:query, '^\s*\n*', '', '')
+
+    " Check if the string starts with SELECT or WITH
+    if match(l:query, '^\c\(SELECT\|WITH\)') != -1
+        " Check if any "LIMIT" is not present
+        if match(a:query, '\cLIMIT') == -1
+            " Check if there is a semicolon
+            let l:semicolon_pos = match(a:query, ';')
+            if l:semicolon_pos != -1
+                " Insert the limit clause before the semicolon
+                return strpart(a:query, 0, l:semicolon_pos) . "\n" . l:limit_clause . strpart(a:query, l:semicolon_pos)
+            else
+                " Append the limit clause to the query
+                return a:query . "\n" . l:limit_clause
+            endif
+        endif
+    endif
+    return a:query
+endfunction
+
+function! SelectSqlExecute()
+    " Select SQL between semicolons (or start/end of buffer)
+    " Add Limit clause via special function, if not present
+    " Execute via vim dadbod -> DB command
+
+    " Save current position of cursor
+    let l:initial_pos = getpos('.')
+    
+    " Go to beginning of line
+    normal! 0
+
+    " move back exactly one character (or end of previous line), only if on
+    " semicolon
+    if getline('.')[col('.') - 1] == ';'
+        if col('.') == 1
+            if line('.') > 1
+                normal! k$
+            endif
+        else
+            normal! h
+        endif
+    endif
+
+    " " Search for the previous semicolon from the current cursor position
+    if search(';', 'bcW') == 0
+        " no semicolon found, set to beginning of the buffer -> 1,1 (first and last = 0)
+        " Echo the saved position > 1= buffer, 2=line, 3=column, 4=virtual
+        let l:start_pos = [0, 1, 1, 0]
+    else
+        " Move one word forward to be after the found character
+        normal! w
+        let l:start_pos = getpos('.')
+    endif
+
+    " Search for the next semicolon
+    if search(';', 'W') == 0
+        " No semicolon found -> go to end of buffer and save this position
+        normal! G$
+        let l:end_pos = getpos('.')
+    else
+        " Save the position of the found semicolon
+        let l:end_pos = getpos('.')
+    endif
+
+    " Start visual mode and select text until the semicolon
+    call setpos('.', l:start_pos)
+    normal! v
+    call setpos('.', l:end_pos)
+
+    " Yank the selected text into a register (e.g., register 'a')
+    silent! normal! "ay
+    " Store the contents of the register 'a' in a variable 'query'
+    let l:query = getreg('a')
+
+    " Clear the register 'a' (optional)
+    call setreg('a', '')
+
+    " Process the query to add 'LIMIT xx' if necessary -> custom function
+    let l:query = AddLimitToQuery(l:query)
+
+    " Execute the SQL using Dadbod
+    execute 'DB ' . l:query
+
+    " Restore the cursor to the starting position to begin visual mode selection
+    call setpos('.', l:initial_pos)
+
+endfunction
+
+function! ExecuteSQLUnderSelection()
+    " Execute Visual selction via vim dadbod -> DB
+    " Add Limit clause via special function, if not present
+
+    " Save the current selection to a variable
+    let l:selection = @"
+    " Copy the selected text to the unnamed register without showing messages
+    silent execute "normal! gv\"zy"
+    " Get the content of the unnamed register
+    let l:query = @z
+    " Process the query to add 'LIMIT xx' if necessary -> custom function
+    let l:query = AddLimitToQuery(l:query)
+    " Execute the SQL using Dadbod
+    execute 'DB ' . l:query
+    " Restore the original selection
+    let @" = l:selection
+endfunction
+
+" Map Ctrl-Q to the custom function in visual mode
+nnoremap <silent> <C-q> :<C-U>call SelectSqlExecute()<CR>
+inoremap <silent> <C-q> <Esc>:<C-U>call SelectSqlExecute()<CR>
+vnoremap <silent> <C-q> :<C-U>call ExecuteSQLUnderSelection()<CR>
+
+
+function! CopyToTsv()
+    " Format SQL output to TSV (tabs seperated) and copy to default register
+
+    " Ensure the buffer is modifiable
+    setlocal modifiable
+
+    " Delete the lines with the +----+ border
+    silent! g/^+----/d
+
+    " Remove the leading and trailing spaces and | character
+    silent! %s/^\s*| \?//g
+    silent! %s/ \?|\s*$//g
+
+    " Replace the remaining | with tabs
+    silent! %s/ \?|\s\?/\t/g
+
+    " Remove any leading and trailing whitespace from each line
+    silent! %s/^\s\+//g
+    silent! %s/\s\+$//g
+
+    " Remove any whitespace before and after tabs
+    silent! %s/\s*\t\s*/\t/g
+
+    " Remove any blank lines
+    silent! g/^$/d
+
+    " Copy everything -> yank for easy copy/pasting
+    silent! %y+
+    " undo -> to get buffer to default state again -> remove if needed in here
+    silent! u
+    echo "Copied as TSV to default register"
+
+endfunction
+
+" Map to <leader>tsv
+nnoremap <leader>tsv :call CopyToTsv()<CR>
+
+
+function! CopyToCsv()
+    " Format SQL output to CSV and copy to default register
+
+    " Ensure the buffer is modifiable
+    setlocal modifiable
+
+    " Delete the lines with the +----+ border
+    silent! g/^+----/d
+
+    " Remove the leading and trailing spaces and | character
+    silent! %s/^\s*| \?//g
+    silent! %s/ \?|\s*$//g
+
+    " Replace the remaining | with commas
+    silent! %s/ \?|\s\?/,/g
+
+    " Remove any leading and trailing whitespace from each line
+    silent! %s/^\s\+//g
+    silent! %s/\s\+$//g
+
+    " Remove any whitespace before and after commas
+    silent! %s/\s*,\s*/,/g
+
+    " Remove any blank lines
+    silent! g/^$/d
+
+    " Copy everything -> yank for easy copy/pasting
+    silent! %y+
+    " undo -> to get buffer to default state again -> remove if needed in here
+    silent! u
+    echo "Copied as CSV to default register"
+
+endfunction
+
+" Map to <leader>csv
+nnoremap <leader>csv :call CopyToCsv()<CR>
