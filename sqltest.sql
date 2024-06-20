@@ -1,8 +1,8 @@
-// dbext:profile=Analyst
+-- DB: Analyst
 
 show schemas;
 
-show tables;
+show tables from Playground;
 
 CREATE TABLE Playground.testTable (
   id int(10) unsigned NOT NULL primary key AUTO_INCREMENT,
