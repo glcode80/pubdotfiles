@@ -792,7 +792,10 @@ function! CopyToTsv()
 
     " Remove any whitespace before and after tabs
     silent! %s/\s*\t\s*/\t/g
-
+    
+    " Replace 'NULL' with empty string
+    silent! %s/NULL//g
+   
     " Remove any blank lines
     silent! g/^$/d
 
@@ -831,6 +834,9 @@ function! CopyToCsv()
     " Remove any whitespace before and after commas
     silent! %s/\s*,\s*/,/g
 
+    " Replace 'NULL' with empty string
+    silent! %s/NULL//g
+    
     " Remove any blank lines
     silent! g/^$/d
 
