@@ -610,6 +610,12 @@ endfunction
 " -> can set  '-- DB: xxx' in first 10 lines of buffers to set custom connection
 " ===============================================================================
 
+augroup DadbodConfig
+  autocmd!
+  " Ensure the .dbout files open with a height of 30 lines, only if current height is less than 30
+  autocmd BufReadPost,BufNewFile *.dbout if winheight(0) < 30 | execute 'resize 30' | endif
+augroup END
+
 " import connection details
 source ~/.vim_dadbod_profiles.vim
 
