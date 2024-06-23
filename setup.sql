@@ -49,6 +49,15 @@ journalctl -S Error
 -- grep for error on service
 journalctl -u mariadb | grep error
  
+ - screen: add utf8 support
+ -> .screnrc
+ defutf8 on
+ 
+ -> .bashrc
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
+export LANGUAGE=en_US.UTF-8
+
 
 ***********************************
 *** Main changes Ubuntu 24.04   ***
