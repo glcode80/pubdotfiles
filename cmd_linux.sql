@@ -146,7 +146,14 @@ ctra-a ESC
 up/down/pup/pdwon
 enter-enter to exit
 
-
+*** Multitasking with TMUX -> more modern version of screen -> use this by default (supports true colors)
+-> in general: ctrl-b instead of ctrl-a
+tmux
+ctrl-b c = new conosle
+ctrl-b d = detach
+ctrl-b ls = list all
+ctrl-b 0-9 = select
+tmux attach = go back to session
 
 *** Prozesssteuerung -> https://wiki.ubuntuusers.de/Shell/Prozesssteuerung/
 ctrl-z = send job to background and stop it
