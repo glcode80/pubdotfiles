@@ -39,6 +39,7 @@ Plugin 'scrooloose/nerdcommenter'
 " Plugin 'vim-scripts/dbext.vim'
 " Plugin 'glcode80/dbext'
 Plugin 'tpope/vim-dadbod'
+Plugin 'kristijanhusak/vim-dadbod-completion'
 " Tagbar install ctags: sudo apt install exuberant-ctags
 " Tagbar toggle: TagbarToggle
 " Plugin 'majutsushi/tagbar'
@@ -47,6 +48,7 @@ Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-repeat'
 Plugin 'kien/ctrlp.vim'
+Plugin 'glcode80/vim-colors'
 " Bundle 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
 Plugin 'itchyny/lightline.vim'
 
@@ -129,6 +131,9 @@ let g:ycm_key_list_previous_completion = ['<S-TAB>']
 inoremap <Up> <C-R>=pumvisible() ? "\<lt>C-y>\<lt>Up>" : "\<lt>Up>"<CR>
 let g:ycm_key_list_stop_completion = ['<C-y>']
 let g:ycm_key_invoke_completion = '<C-Space>'
+
+" Set up omnifunc for SQL files to use vim-dadbod-completion
+autocmd FileType sql setlocal omnifunc=vim_dadbod_completion#omni
 
 " UltiSnips Trigger C-j / C-k -> toggle tab/s-tab like normal
 " let g:UltiSnipsExpandTrigger="<C-j>"
@@ -330,11 +335,11 @@ let g:syntastic_php_phpcs_args = '--standard=~/.phpcsruleset.xml'
 " let g:syntastic_php_phpmd_post_args = 'cleancode,codesize,controversial,design,unusedcode'
 let g:syntastic_php_phpmd_post_args = '~/.phpmdruleset.xml'
 
-" let g:ctrlp_show_hidden =1
+let g:ctrlp_show_hidden =1
 
 " ignore venv directory / other custom directories
 let g:ctrlp_custom_ignore = {
-    \ 'dir': 'venv\|env',
+    \ 'dir': 'venv\|env\|.cache\|.vim\|.wp-cli\|.local\|neovim',
     \ }
 
 " Update time for vim-gitgutter
@@ -389,6 +394,11 @@ nmap <C-t> :tabn<CR>
 " enable mouse for scrolling, but not for visual selection?
 " to copy/paste move to insert mode first! makes sense!
 set mouse=nv
+
+" set proper term in tmux for mouse moving lines
+if exists('$TMUX')
+  set ttymouse=xterm2
+endif
 
 " map ö to : and ä to ^ (beginning of line) / other things
 nmap ö :
