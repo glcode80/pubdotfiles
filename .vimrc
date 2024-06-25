@@ -292,7 +292,7 @@ let g:ctrlp_show_hidden =1
 
 " ignore venv directory / other custom directories
 let g:ctrlp_custom_ignore = {
-    \ 'dir': 'venv\|env\|.cache\|.vim\|.wp-cli\|.local\|neovim\|.git',
+    \ 'dir': 'venv\|env\|\.cache\|\.vim\|\.wp-cli\|\.local\|neovim\|\.git',
     \ }
 
 " dbext connection profiles
