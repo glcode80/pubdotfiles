@@ -629,6 +629,13 @@ augroup DadbodConfig
   autocmd BufReadPost,BufNewFile *.dbout if winheight(0) < 30 | execute 'resize 30' | endif
 augroup END
 
+" make modifiable and set cursorline when entering dadbod buffer
+augroup dbout_settings
+  autocmd!
+  autocmd BufEnter *dbout* setlocal modifiable cursorline
+augroup END
+
+
 " import connection details
 source ~/.vim_dadbod_profiles.vim
 
