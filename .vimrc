@@ -400,6 +400,9 @@ if exists('$TMUX')
   set ttymouse=xterm2
 endif
 
+" set proper mouse mode to work in windows terminal
+set ttymouse=sgr
+
 " map ö to : and ä to ^ (beginning of line) / other things
 nmap ö :
 nmap ä ^
