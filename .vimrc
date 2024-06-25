@@ -21,13 +21,9 @@ call vundle#begin()
 
 " alternatively, pass a path where Vundle should install plugins
 "call vundle#begin('~/some/path/here')
-
 " let Vundle manage Vundle, required
-" Plugin 'gmarik/Vundle.vim'
-Plugin 'VundleVim/Vundle.vim' 
+Plugin 'VundleVim/Vundle.vim'
 " Plugin 'glcode80/Vundle.vim'
-
-" Add all your plugins here (note older versions of Vundle used Bundle instead of Plugin)
 Plugin 'tmhedberg/SimpylFold'
 Plugin 'vim-scripts/indentpython.vim'
 " for youcompleteme -> follow detailed install instructions in install file
@@ -40,9 +36,6 @@ Plugin 'scrooloose/nerdcommenter'
 " Plugin 'glcode80/dbext'
 Plugin 'tpope/vim-dadbod'
 Plugin 'kristijanhusak/vim-dadbod-completion'
-" Tagbar install ctags: sudo apt install exuberant-ctags
-" Tagbar toggle: TagbarToggle
-" Plugin 'majutsushi/tagbar'
 Plugin 'easymotion/vim-easymotion'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-surround'
@@ -51,7 +44,6 @@ Plugin 'kien/ctrlp.vim'
 Plugin 'glcode80/vim-colors'
 " Bundle 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
 Plugin 'itchyny/lightline.vim'
-
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -88,8 +80,6 @@ endfunction
 " get settings with :h g:lightline.component
 let g:lightline = {
       \ 'colorscheme': 'powerline',
-      \ 'separator': { 'left': '', 'right': '' },
-      \ 'subseparator': { 'left': '', 'right': '' },
       \ 'component_function': {
       \   'filename': 'LightlineFilename',
       \   'charcount': 'LightlineSelectedChars',
@@ -135,15 +125,12 @@ let g:ycm_key_invoke_completion = '<C-Space>'
 " Set up omnifunc for SQL files to use vim-dadbod-completion
 autocmd FileType sql setlocal omnifunc=vim_dadbod_completion#omni
 
-" UltiSnips Trigger C-j / C-k -> toggle tab/s-tab like normal
-" let g:UltiSnipsExpandTrigger="<C-j>"
-"
 " customize easymotion
 " let g:EasyMotion_do_mapping = 0 " Disable default mappings
-hi link EasyMotionTarget Statement
-hi link EasyMotionTarget2First Statement
-hi link EasyMotionTarget2Second Statement
-hi link EasyMotionShade Comment
+" hi link EasyMotionTarget Statement
+" hi link EasyMotionTarget2First Statement
+" hi link EasyMotionTarget2Second Statement
+" hi link EasyMotionShade Comment
 let g:EasyMotion_keys='hkluzopnmqwertxcvbasdgjf'
 nmap <leader> <Plug>(easymotion-prefix)
 let g:EasyMotion_smartcase = 1
@@ -162,75 +149,6 @@ set hlsearch
 set linebreak
 set incsearch
 
-" vim 9 default colorscheme
-" colorscheme desert
-" colorscheme default
-
-" all desert colorscheme settings hardcoded directly here
-hi Normal	guifg=White guibg=grey20
-hi Cursor	guibg=indianred guifg=khaki
-hi VertSplit	guibg=#c2bfa5 guifg=grey50 gui=none
-hi Folded	guibg=grey30 guifg=gold
-hi FoldColumn	guibg=grey30 guifg=tan
-hi IncSearch	guifg=slategrey guibg=khaki
-hi ModeMsg	guifg=goldenrod
-hi MoreMsg	guifg=SeaGreen
-hi NonText	guifg=LightBlue guibg=grey30
-hi Question	guifg=springgreen
-hi Search	guibg=grey30 guifg=#dfffdf
-hi SpecialKey	guifg=yellowgreen
-hi StatusLine	guibg=#c2bfa5 guifg=black gui=none
-hi StatusLineNC	guibg=#c2bfa5 guifg=grey50 gui=none
-hi Title	guifg=indianred
-hi Visual	gui=none guifg=khaki guibg=olivedrab
-hi WarningMsg	guifg=salmon
-hi MatchParen guibg=grey30 guifg=#dfffdf
-hi Comment	guifg=SkyBlue
-hi Constant	guifg=#ffa0a0
-hi Identifier	guifg=palegreen
-hi Statement	guifg=khaki
-hi PreProc	guifg=indianred
-hi Type		guifg=darkkhaki
-hi Special	guifg=navajowhite
-hi Ignore	guifg=grey40
-hi Todo		guifg=orangered guibg=yellow2
-hi SpecialKey	ctermfg=darkgreen
-hi NonText	cterm=bold ctermfg=darkblue
-hi Directory	ctermfg=darkcyan
-hi ErrorMsg	cterm=bold ctermfg=7 ctermbg=1
-hi IncSearch	cterm=NONE ctermfg=yellow ctermbg=green
-hi Search	cterm=NONE ctermfg=grey ctermbg=blue
-hi MoreMsg	ctermfg=darkgreen
-hi ModeMsg	cterm=NONE ctermfg=brown
-hi LineNr	ctermfg=3
-hi Question	ctermfg=green
-hi StatusLine	cterm=bold,reverse
-hi StatusLineNC cterm=reverse
-hi VertSplit	cterm=reverse
-hi Title	ctermfg=5
-hi Visual	cterm=reverse
-hi VisualNOS	cterm=bold,underline
-hi WarningMsg	ctermfg=1
-hi WildMenu	ctermfg=0 ctermbg=3
-hi Folded	ctermfg=darkgrey ctermbg=NONE
-hi FoldColumn	ctermfg=darkgrey ctermbg=NONE
-hi DiffAdd	ctermbg=4
-hi DiffChange	ctermbg=5
-hi DiffDelete	cterm=bold ctermfg=4 ctermbg=6
-hi DiffText	cterm=bold ctermbg=1
-hi Comment	ctermfg=darkcyan
-hi Constant	ctermfg=brown
-hi Special	ctermfg=5
-hi Identifier	ctermfg=6
-hi Statement	ctermfg=3
-hi PreProc	ctermfg=5
-hi Todo		ctermfg=red ctermbg=NONE
-hi Type		ctermfg=2
-hi Underlined	cterm=underline ctermfg=5
-hi Ignore	cterm=bold ctermfg=7
-hi Ignore	ctermfg=darkgrey
-hi Error	cterm=bold ctermfg=7 ctermbg=1
-
 " sane text files
 set fileformat=unix
 set encoding=utf-8
@@ -246,58 +164,86 @@ set softtabstop=4
 " set all typed tabs with spaces "
 set expandtab
 
-"set background=dark
+" Enalbe termguicolors by default (if issues: disable)
+set termguicolors
+
+" *** Color profiles - general settings ***
+let g:one_allow_italics = 1
+let g:jellybeans_use_term_italics = 1
+let g:gruvbox_italic=1
+let g:gruvbox_contrast_dark="medium"
+let g:gruvbox_contrast_light="medium"
+" let g:gruvbox_contrast_dark="soft"
+" let g:gruvbox_contrast_light="soft"
+" let g:gruvbox_contrast_dark="hard"
+" let g:gruvbox_contrast_light="hard"
+"
+" *** Color profiles - live selection to fix profile as first ***
 set background=light
+" colorscheme mhputty
+colorscheme one
+" colorscheme solarized8
+" colorscheme gruvbox
 
+" set background=dark
+" colorscheme one
+" colorscheme jellybeans
+" colorscheme molokai
+" colorscheme gruvbox
+" colorscheme spacecamp
 
-" fix visual selection background color
-" see all options: so $VIMRUNTIME/syntax/hitest.vim
-" https://jonasjacek.github.io/colors/
-" ctermfg= ctermbg= cterm=bold
-hi Visual ctermbg=120 guibg=Blue
-hi Comment ctermfg=246 guifg=Grey58
-hi LineNr ctermfg=249 guifg=Grey70
-hi SpecialKey ctermfg=Blue guifg=Blue
-" things like for / in in Python
-hi Statement ctermfg=Blue cterm=bold guifg=Blue gui=bold
-" things in brackets in python
-hi Constant ctermfg=28  guifg=Green4 "28 /172
-hi Directory ctermbg=123 guibg=DarkSlateGray1
-" things like print etc in python
-hi Identifier ctermfg=4 guifg=Blue
-" things like Visual/identiier, count(*) in sql etc
-hi Type ctermfg=Blue guifg=Blue gui=none
-" things like system variables etc / where in sql
-hi Special ctermfg=4  guifg=Blue
-" others
-hi Question ctermfg=172 guifg = Orange3
-" import / from ... in Pyhton
-hi PreProc ctermfg=Blue guifg=Blue
-" others
-hi Search ctermfg=White ctermbg=63 guifg=White guibg=RoyalBlue1
-" hi StatusLine ctermbg=DarkGrey
-" hi StatusLineNC ctermbg=DarkGrey
-" hi VertSplit ctermbg=DarkGrey
+" *** Colorscheme rotation among vim-colors schemes -> F5 rotates between them ***
+" Define the colorschemes and corresponding background settings
+let g:colorschemes = [
+    \ {'background': 'light', 'colorscheme': 'one'},
+    \ {'background': 'dark', 'colorscheme': 'one'},
+    \ {'background': 'light', 'colorscheme': 'solarized8'},
+    \ {'background': 'light', 'colorscheme': 'gruvbox'},
+    \ {'background': 'dark', 'colorscheme': 'gruvbox'},
+    \ {'background': 'dark', 'colorscheme': 'jellybeans'},
+    \ {'background': 'dark', 'colorscheme': 'molokai'},
+    \ {'background': 'dark', 'colorscheme': 'spacecamp'},
+    \ ]
 
-hi DiffAdd    ctermfg=Black ctermbg=40 guifg=Black guibg=Green3
-hi DiffChange ctermfg=240 ctermbg=51 guifg=Grey35 guibg=Cyan1
-hi DiffDelete cterm=none ctermfg=240 ctermbg=51 guifg=Grey35 guibg=Cyan1
-hi DiffText   cterm=bold ctermfg=White ctermbg=Blue guifg=White guibg=Blue
+" Function to get the current colorscheme and background
+function! GetCurrentSettings()
+    let current_background = &background
+    let current_colorscheme = execute('colorscheme')
+    return {'background': current_background, 'colorscheme': substitute(current_colorscheme, '\n', '', 'g')}
+endfunction
 
-" hi DiffAdd ctermfg=White
-" hi DiffChange ctermfg=White
-" hi DiffDelete ctermbg=Grey
+" Function to rotate the colorscheme
+function! RotateColorscheme()
+    " Get the current settings
+    let current_settings = GetCurrentSettings()
 
-hi IncSearch  ctermfg=White guifg=White
+    " Determine the current index in the colorscheme list
+    let current_index = -1
+    for i in range(len(g:colorschemes))
+        if g:colorschemes[i].background == current_settings.background &&
+                    \ g:colorschemes[i].colorscheme == current_settings.colorscheme
+            let current_index = i
+            break
+        endif
+    endfor
 
-" Syntastic error colors
-" hi SpellBad cterm=bold ctermbg=172 ctermfg=Black
-" hi SpellCap ctermfg=Yellow ctermbg=Blue
+    " Calculate the index for the next colorscheme
+    let next_index = (current_index + 1) % len(g:colorschemes)
 
-" colors for gvim - optino for bold/normal: gui=normal/bold cterm=normal/bold
-hi Normal guifg=Black guibg=White
-hi Nontext guifg=Black guibg=White
-hi Cursor         guifg=White           guibg=Grey50
+    " Set the background and colorscheme
+    let next_colorscheme = g:colorschemes[next_index]
+    execute 'set background=' . next_colorscheme.background
+    execute 'colorscheme ' . next_colorscheme.colorscheme
+
+    " Echo the selected colorscheme
+    echom 'Colorscheme: ' . next_colorscheme.colorscheme . ' / ' . next_colorscheme.background
+    " Echo the selected colorscheme
+    redraw | echomsg 'Colorscheme: ' . next_colorscheme.colorscheme . ' / ' . next_colorscheme.background
+
+endfunction
+
+" Map the F5 key to the RotateColorscheme function
+nnoremap <silent> <F5> :call RotateColorscheme()<CR>
 
 " always have nerdtree open on all tabs by default
 " Command to Toogle :NERDTreeTabsToggle
@@ -308,11 +254,6 @@ let NERDSpaceDelims=1
 
 " NerdCommenter - change default character from /* * to #
 let g:NERDCustomDelimiters = { '': { 'left': '#'} }
-
-" LATER - neeed for syntastic plugin "
-" set statusline+=%#warningmsg#
-" set statusline+=%{SyntasticStatuslineFlag()}p<p<
-" set statusline+=%*
 
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
@@ -328,12 +269,12 @@ let g:syntastic_php_checkers = ['php']
 " let g:syntastic_php_checkers = ['php', 'phpcs']
 " let g:syntastic_php_checkers = ['php', 'phpcs', 'phpmd']
 " let g:syntastic_php_phpcs_args = '--standard=psr2'
-let g:syntastic_php_phpcs_args = '--standard=~/.phpcsruleset.xml'
+" let g:syntastic_php_phpcs_args = '--standard=~/.phpcsruleset.xml'
 " How to run it on command line to auto-fix:
 " phpcbs xxx.php -s --standard=~/.phpcsruleset.xml
 " phpcbf xxx.php -s --standard=~/.phpcsruleset.xml
 " let g:syntastic_php_phpmd_post_args = 'cleancode,codesize,controversial,design,unusedcode'
-let g:syntastic_php_phpmd_post_args = '~/.phpmdruleset.xml'
+" let g:syntastic_php_phpmd_post_args = '~/.phpmdruleset.xml'
 
 let g:ctrlp_show_hidden =1
 
@@ -341,9 +282,6 @@ let g:ctrlp_show_hidden =1
 let g:ctrlp_custom_ignore = {
     \ 'dir': 'venv\|env\|.cache\|.vim\|.wp-cli\|.local\|neovim\|.git',
     \ }
-
-" Update time for vim-gitgutter
-" set updatetime=100
 
 " dbext connection profiles
 " source ~/.dbextprofiles.vim
@@ -549,24 +487,12 @@ map <leader>5 :call UncommentHeader()<CR>
 nmap <leader>i :NERDTreeClose<cr>:set invnumber<cr>
 
 "** Fugitive mappings
-" nnoremap <leader>gp :Gpull<cr>
-"Gstatus -> - to add/remove, cc to commit, o for open
-" nnoremap <leader>gs :Gstatus<cr>8gg
-"Gwrite = add current file to list to be commited (no need to add in gstatus)
-" nnoremap <leader>gw :Gwrite<cr>
-"Gcommit -> wq to execute
-" nnoremap <leader>gc :Gcommit<cr>
-" nnoremap <leader>gP :Gpush origin master<cr>
 "Gdiff -> :diffput / :diffget to adjust /:diffupdate
 nnoremap <leader>gd :Gdiff<cr>
 "Gread = back to last version in repo
 nnoremap <leader>gr :Gread<cr>
 " Gblame -> open with o
 " nnoremap <leader>gb :Gblame<cr>
-" nnoremap <leader>gB :Gbrowse<cr>
-" nnoremap <leader>gm :Gremove<cr>
-
-
 
 function! SaveAndExecutePythonBuffer()
     " save and reload current file
@@ -602,16 +528,6 @@ function! SaveAndExecutePythonBuffer()
     %delete _
     " add the console output
     silent execute ".!python3 " . shellescape(s:current_buffer_file_path, 1)
-
-    " resize window to content length
-    " Note: This is annoying because if you print a lot of lines then your code buffer is forced to a height of one line every time you run this function.
-    "       However without this line the buffer starts off as a default size and if you resize the buffer then it keeps that custom size after repeated runs of this function.
-    "       But if you close the output buffer then it returns to using the default size when its recreated
-    "execute 'resize' . line('$')
-
-    " make the buffer non modifiable
-    " setlocal readonly
-    " setlocal nomodifiable
 endfunction
 
 " ===============================================================================
@@ -647,7 +563,7 @@ augroup END
 
 function! s:set_dadbod_db()
   " Set DB connection based on input buffer file and string in first 10
-  " lines of buffer like ''-- DB: xxx' 
+  " lines of buffer like ''-- DB: xxx'
   let l:line = getline(1, 10)
   let l:dbname = ''
   for l:current in l:line
@@ -711,7 +627,7 @@ function! SelectSqlExecute()
 
     " Save current position of cursor
     let l:initial_pos = getpos('.')
-    
+
     " Go to beginning of line
     normal! 0
 
@@ -818,10 +734,10 @@ function! CopyToTsv()
 
     " Remove any whitespace before and after tabs
     silent! %s/\s*\t\s*/\t/g
-    
+
     " Replace 'NULL' with empty string
     silent! %s/NULL//g
-   
+
     " Remove any blank lines
     silent! g/^$/d
 
@@ -862,7 +778,7 @@ function! CopyToCsv()
 
     " Replace 'NULL' with empty string
     silent! %s/NULL//g
-    
+
     " Remove any blank lines
     silent! g/^$/d
 
@@ -876,3 +792,14 @@ endfunction
 
 " Map to <leader>csv
 nnoremap <leader>csv :call CopyToCsv()<CR>
+
+" Markdown - Do not flag underscores as errors in markdown files
+hi link markdownError Normal
+syn match markdownIgnore "\$x_i\$"
+
+" Use a block cursor in normal mode and a vertical bar cursor in insert mode
+if &term =~ 'xterm\|rxvt\|alacritty\|iterm'
+    let &t_SI = "\<Esc>[5 q"
+    let &t_EI = "\<Esc>[1 q"
+    let &t_SR = "\<Esc>[3 q"
+endif
