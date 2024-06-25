@@ -200,14 +200,14 @@ let g:lightline = { 'colorscheme': 'one' }
 " *** Colorscheme rotation among vim-colors schemes -> F5 rotates between them ***
 " Define the colorschemes and corresponding background settings
 let g:colorschemes = [
-    \ {'background': 'light', 'colorscheme': 'one'},
-    \ {'background': 'dark', 'colorscheme': 'one'},
-    \ {'background': 'light', 'colorscheme': 'solarized8'},
-    \ {'background': 'light', 'colorscheme': 'gruvbox'},
-    \ {'background': 'dark', 'colorscheme': 'gruvbox'},
-    \ {'background': 'dark', 'colorscheme': 'jellybeans'},
-    \ {'background': 'dark', 'colorscheme': 'molokai'},
-    \ {'background': 'dark', 'colorscheme': 'spacecamp'},
+    \ {'background': 'light', 'colorscheme': 'one', 'colorscheme_lightline': 'one'},
+    \ {'background': 'dark', 'colorscheme': 'one', 'colorscheme_lightline': 'powerline'},
+    \ {'background': 'light', 'colorscheme': 'solarized8', 'colorscheme_lightline': 'solarized'},
+    \ {'background': 'light', 'colorscheme': 'gruvbox', 'colorscheme_lightline': 'powerline'},
+    \ {'background': 'dark', 'colorscheme': 'gruvbox', 'colorscheme_lightline': 'gruvbox'},
+    \ {'background': 'dark', 'colorscheme': 'jellybeans', 'colorscheme_lightline': 'jellybeans'},
+    \ {'background': 'dark', 'colorscheme': 'molokai', 'colorscheme_lightline': 'molokai'},
+    \ {'background': 'dark', 'colorscheme': 'spacecamp', 'colorscheme_lightline': 'powerline'},
     \ ]
 
 " Function to get the current colorscheme and background
@@ -239,7 +239,14 @@ function! RotateColorscheme()
     let next_colorscheme = g:colorschemes[next_index]
     execute 'set background=' . next_colorscheme.background
     execute 'colorscheme ' . next_colorscheme.colorscheme
-
+    
+    " Set the lightline colorscheme
+    let g:lightline = { 'colorscheme': next_colorscheme.colorscheme_lightline }
+   
+    " Trigger lightline update
+    call lightline#init()
+    call lightline#update()
+    
     " Echo the selected colorscheme
     echom 'Colorscheme: ' . next_colorscheme.colorscheme . ' / ' . next_colorscheme.background
     " Echo the selected colorscheme
