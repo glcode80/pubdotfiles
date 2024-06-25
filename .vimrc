@@ -79,7 +79,6 @@ endfunction
 " attention: 'right': goes from right to left!
 " get settings with :h g:lightline.component
 let g:lightline = {
-      \ 'colorscheme': 'powerline',
       \ 'component_function': {
       \   'filename': 'LightlineFilename',
       \   'charcount': 'LightlineSelectedChars',
@@ -97,7 +96,6 @@ let g:lightline = {
       \              ]
       \ },
       \ }
-
 
 " Flagging unnecesary whitespace
 " au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
@@ -191,6 +189,13 @@ colorscheme one
 " colorscheme molokai
 " colorscheme gruvbox
 " colorscheme spacecamp
+
+" *** Set Lightline to same color profile (default: powerline) ***
+let g:lightline = { 'colorscheme': 'one' }
+" let g:lightline = { 'colorscheme': 'jellybeans' }
+" let g:lightline = { 'colorscheme': 'molokai' }
+" let g:lightline = { 'colorscheme': 'solarized' }
+" let g:lightline = { 'colorscheme': 'powerline' }
 
 " *** Colorscheme rotation among vim-colors schemes -> F5 rotates between them ***
 " Define the colorschemes and corresponding background settings
