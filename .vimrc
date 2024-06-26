@@ -516,6 +516,25 @@ nnoremap <leader>gr :Gread<cr>
 
 function! ExecuteWithShebang()
     " Get the first line of the buffer -> use that to execute (can be venv or
+    " env and can be python/bash etc.
+    let l:first_line = getline(1)
+
+    " Check if the first line starts with a shebang (#!)
+    if l:first_line =~ '^#!'
+        " Extract the shebang (the interpreter path)
+        let l:shebang = matchstr(l:first_line, '^#!\zs.*')
+        
+        let l:interpreter = split(l:shebang)[-1]
+
+        " Execute the whole buffer without terminal (as usual)
+        execute '!' l:interpreter ' %'
+    else
+        echo "No shebang found on the first line."
+    endif
+endfunction
+
+function! ExecuteWithShebangTerminal()
+    " Get the first line of the buffer -> use that to execute (can be venv or
     " env and can be python/bash etc. => always with "term" executed
     let l:first_line = getline(1)
 
@@ -533,8 +552,10 @@ function! ExecuteWithShebang()
     endif
 endfunction
 
+
 " Map the function to a custom command
 command! ExecuteShebang call ExecuteWithShebang()
+command! ExecuteShebangTerminal call ExecuteWithShebangTerminal()
 
 function! SaveAndExecutePythonBuffer()
     " save and reload current file
