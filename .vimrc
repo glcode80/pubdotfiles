@@ -438,11 +438,18 @@ command! Wsudo :execute ':silent w !sudo tee % > /dev/null' | :edit!
 :command! ValuesSql :normal f r<CR><ESC>kywEi=VALUES(<ESC>pa)<ESC>j^
 nnoremap <leader>sv :ValuesSql<CR>
 
-" escape word with apostroph around word and comma (=mh) at end and join all lines (=mhj)
-:command! EscapeWord :execute "%normal yss'A" | %s/'$/',/ | execute "normal <ESC><ESC>"
-:command! EscapeWordJoin :execute "%normal yss'A" | %s/\n/,/ | execute "normal $x<ESC><ESC>"
-nnoremap <leader>mh :EscapeWord<CR>
-nnoremap <leader>mhj :EscapeWordJoin<CR>
+" escape word with apostroph around word and comma (=mh) -> can join at end with J
+function! EscapeWord(start, end)
+  for i in range(a:start, a:end)
+    execute i
+    normal! ^i'
+    normal! $A',
+  endfor
+endfunction
+" Create a command to process the visually selected range
+command! -range EscapeWordsRange call EscapeWord(<line1>, <line2>)
+" Map the function to Leader-mh in visual mode
+xnoremap <Leader>mh :'<,'>EscapeWordsRange<CR>
 
 " URL decode all strings and add newlines to make it easy to read
 :command! UrlDecode :execute "%s/^http/\rhttp/ge" | %s/?/\r?\r/ge | %s/&/\r&\r/ge | %s/=/=\r  /ge | %s/%\(\x\x\)/\=iconv(nr2char('0x' ..  submatch(1)), 'utf-8', 'latin1')/ge | %s/,/,\r  /ge | execute "normal <ESC><ESC>"
