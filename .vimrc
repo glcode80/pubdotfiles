@@ -522,13 +522,12 @@ function! ExecuteWithShebang()
     " Check if the first line starts with a shebang (#!)
     if l:first_line =~ '^#!'
         " Extract the shebang (the interpreter path)
-        let l:shebang = matchstr(l:first_line, '^#\zs!.*')
-
-        " Split the shebang by spaces and get the last term
+        let l:shebang = matchstr(l:first_line, '^#!\zs.*')
+        
         let l:interpreter = split(l:shebang)[-1]
 
         " Execute the whole buffer using the interpreter in a terminal
-        execute 'term' l:interpreter ' %'
+        execute 'term ' l:interpreter ' %'
     else
         echo "No shebang found on the first line."
     endif
