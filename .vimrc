@@ -120,8 +120,9 @@ inoremap <Up> <C-R>=pumvisible() ? "\<lt>C-y>\<lt>Up>" : "\<lt>Up>"<CR>
 let g:ycm_key_list_stop_completion = ['<C-y>']
 let g:ycm_key_invoke_completion = '<C-Space>'
 
-" Set up omnifunc for SQL files to use vim-dadbod-completion
+" Use vim-dadbod-completion for SQL files -> trigger with F6 / <C-x><C-o>
 autocmd FileType sql setlocal omnifunc=vim_dadbod_completion#omni
+inoremap <F6> <C-x><C-o>
 
 " customize easymotion
 " let g:EasyMotion_do_mapping = 0 " Disable default mappings
@@ -381,8 +382,8 @@ map <F2> :vsp ~/.vimrc<CR>
 map <leader><F2> :so ~/.vimrc<CR>
 map <F3> :sp ~/cmd_vim.sql<CR>
 map <F4> :sp ~/cmd_linux.sql<CR>
-" omni completion while in sql
-" imap <F6> <c-x><c-o>
+" F5 mapped to color theme rotation
+" F6 mapped to omni completion while in sql
 " map to move to new tab
 " nmap <F7> <C-w>T
 nmap <F8> :NERDTreeTabsToggle<CR>
