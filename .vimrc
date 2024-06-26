@@ -166,6 +166,9 @@ set expandtab
 " Enalbe termguicolors by default (if issues: disable)
 set termguicolors
 
+" Enable setting for fast connection / better redrawing
+set ttyfast
+
 " *** Color profiles - general settings ***
 let g:one_allow_italics = 1
 let g:jellybeans_use_term_italics = 1
