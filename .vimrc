@@ -196,10 +196,10 @@ colorscheme one
 
 " *** Set Lightline to same color profile (default: powerline) ***
 let g:lightline.colorscheme = 'one'
-let g:lightline.colorscheme = 'jellybeans'
-let g:lightline.colorscheme = 'molokai'
-let g:lightline.colorscheme = 'solarized'
-let g:lightline.colorscheme = 'powerline'
+" let g:lightline.colorscheme = 'jellybeans'
+" let g:lightline.colorscheme = 'molokai'
+" let g:lightline.colorscheme = 'solarized'
+" let g:lightline.colorscheme = 'powerline'
 
 " *** Colorscheme rotation among vim-colors schemes -> F5 rotates between them ***
 " Define the colorschemes and corresponding background settings
