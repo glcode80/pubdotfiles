@@ -164,9 +164,23 @@ set softtabstop=4
 set expandtab
 
 " Enable termguicolors by default (if issues: disable)
-set termguicolors
+" set termguicolors
 " go back to 256 colors
 " set notermguicolors 
+
+" Vim8 in Tmux does not seem to work -> only set termguicolor if we are not on vim 8
+if empty($TMUX) && empty($STY)
+  if has("termguicolors")
+    set termguicolors
+  endif
+elseif v:version >= 900 && (!empty($TMUX) || !empty($STY))
+  " Set termguicolors if Vim version is at least 9 and running inside tmux or screen
+  if has("termguicolors")
+    set termguicolors
+  endif
+else
+  set notermguicolors
+endif
 
 " Enable setting for fast connection / better redrawing
 set ttyfast
