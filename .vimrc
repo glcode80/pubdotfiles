@@ -163,11 +163,15 @@ set softtabstop=4
 " set all typed tabs with spaces "
 set expandtab
 
-" Enalbe termguicolors by default (if issues: disable)
+" Enable termguicolors by default (if issues: disable)
 set termguicolors
+" go back to 256 colors
+" set notermguicolors 
 
 " Enable setting for fast connection / better redrawing
 set ttyfast
+" Go back to slow connection optimization
+" set nottyfast
 
 " *** Color profiles - general settings ***
 let g:one_allow_italics = 1
