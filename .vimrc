@@ -538,6 +538,10 @@ nnoremap <leader>gr :Gread<cr>
 function! ExecuteWithShebang()
     " Get the first line of the buffer -> use that to execute (can be venv or
     " env and can be python/bash etc.
+
+    " save and reload current file
+    silent execute "update | edit"
+
     let l:first_line = getline(1)
 
     " Check if the first line starts with a shebang (#!)
@@ -557,6 +561,10 @@ endfunction
 function! ExecuteWithShebangTerminal()
     " Get the first line of the buffer -> use that to execute (can be venv or
     " env and can be python/bash etc. => always with "term" executed
+
+    " save and reload current file
+    silent execute "update | edit"
+
     let l:first_line = getline(1)
 
     " Check if the first line starts with a shebang (#!)
@@ -577,6 +585,14 @@ endfunction
 " Map the function to a custom command
 command! ExecuteShebang call ExecuteWithShebang()
 command! ExecuteShebangTerminal call ExecuteWithShebangTerminal()
+
+" In Terminal mode, lines are broken at end of screen into new lines
+" Fix -> set no numbers (lines match again the output)
+" -> at open, can select and join with gJ before copying (next: write script)
+augroup TerminalLines
+    autocmd!
+    autocmd TerminalWinOpen * :set nonumber norelativenumber
+augroup END
 
 function! SaveAndExecutePythonBuffer()
     " save and reload current file

@@ -37,6 +37,9 @@ p = paste
 
 gj / gk = move only one line in wraps
 
+J = join lines (with space)
+gJ = join lines without space
+
 gf = edit file under cursor name!
 
 dtx = deletes to charachter x (without x)
