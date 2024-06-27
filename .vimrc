@@ -535,9 +535,14 @@ nnoremap <leader>gr :Gread<cr>
 " Gblame -> open with o
 " nnoremap <leader>gb :Gblame<cr>
 
+
+" ===============================================================================
+" Functions to execute based on Shebang to: Shell, Vim Terminal, Buffer
+" ===============================================================================
+
 function! ExecuteWithShebang()
     " Get the first line of the buffer -> use that to execute (can be venv or
-    " env and can be python/bash etc.
+    " env and can be python/bash etc. => output to normal shell
 
     " save and reload current file
     silent execute "update | edit"
@@ -561,6 +566,7 @@ endfunction
 function! ExecuteWithShebangTerminal()
     " Get the first line of the buffer -> use that to execute (can be venv or
     " env and can be python/bash etc. => always with "term" executed
+    " -> disadvantage: long lines are broken and need to be rejoined for copying
 
     " save and reload current file
     silent execute "update | edit"
@@ -581,10 +587,69 @@ function! ExecuteWithShebangTerminal()
     endif
 endfunction
 
+function! ExecuteWithShebangBuffer()
+    " Get the first line of the buffer -> use that to execute (can be venv or
+    " env and can be python/bash etc. => always SAVED TO BUFFER
+    " -> advantage: long lines not broken down (as with 'Terminal')
+    " -> disadvantage: only populates Buffer, when script is finished
+    
+    " save and reload current file
+    silent execute "update | edit"
+
+    " Get the first line of the buffer
+    let l:first_line = getline(1)
+    
+    " Default to 'No interpreter found' message
+    let l:interpreter = 'echo "No shebang found on the first line."'
+
+    " Check if the first line starts with a shebang (#!)
+    if l:first_line =~ '^#!'
+        " Extract the shebang (the interpreter path)
+        let l:shebang = matchstr(l:first_line, '^#!\zs.*')
+        let l:interpreter = split(l:shebang)[-1]
+    endif
+
+    " get file path of current file
+    let s:current_buffer_file_path = expand("%")
+    let s:output_buffer_name = "Output"
+    let s:output_buffer_filetype = "output"
+    
+    " reuse existing buffer window if it exists otherwise create a new one
+    if !exists("s:buf_nr") || !bufexists(s:buf_nr)
+        silent execute 'botright new ' . s:output_buffer_name
+        let s:buf_nr = bufnr('%')
+    elseif bufwinnr(s:buf_nr) == -1
+        silent execute 'botright new'
+        silent execute s:buf_nr . 'buffer'
+    elseif bufwinnr(s:buf_nr) != bufwinnr('%')
+        silent execute bufwinnr(s:buf_nr) . 'wincmd w'
+    endif
+
+    silent execute "setlocal filetype=" . s:output_buffer_filetype
+    setlocal bufhidden=delete
+    setlocal buftype=nofile
+    setlocal noswapfile
+    setlocal nobuflisted
+    setlocal winfixheight
+    setlocal number
+    setlocal norelativenumber
+    setlocal showbreak=""
+    setlocal noreadonly
+    setlocal modifiable
+    %delete _
+    
+    " add the console output
+    if l:interpreter =~ '^echo'
+        silent execute l:interpreter
+    else
+        silent execute ".!" . l:interpreter . " " . shellescape(s:current_buffer_file_path, 1)
+    endif
+endfunction
 
 " Map the function to a custom command
 command! ExecuteShebang call ExecuteWithShebang()
 command! ExecuteShebangTerminal call ExecuteWithShebangTerminal()
+command! ExecuteShebangBuffer call ExecuteWithShebangBuffer()
 
 " In Terminal mode, lines are broken at end of screen into new lines
 " Fix -> set no numbers (lines match again the output)
@@ -594,6 +659,7 @@ augroup TerminalLines
     autocmd TerminalWinOpen * :set nonumber norelativenumber
 augroup END
 
+" Legacy Python function to buffer -> replaced with new ExecuteShebangBuffer function -> depreciate
 function! SaveAndExecutePythonBuffer()
     " save and reload current file
     silent execute "update | edit"
