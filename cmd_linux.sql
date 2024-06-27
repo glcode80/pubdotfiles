@@ -147,12 +147,12 @@ up/down/pup/pdwon
 enter-enter to exit
 
 *** Multitasking with TMUX -> more modern version of screen -> use this by default (supports true colors)
--> in general: ctrl-b instead of ctrl-a
+-> in general: ctrl-b instead of ctrl-a => remmapped via config to use ctr-a too
 tmux
-ctrl-b c = new conosle
-ctrl-b d = detach
-ctrl-b ls = list all
-ctrl-b 0-9 = select
+ctrl-a c = new conosle
+ctrl-a d = detach
+ctrl-a ls = list all
+ctrl-a 0-9 = select
 tmux a / attach = go back to session
 
 *** Prozesssteuerung -> https://wiki.ubuntuusers.de/Shell/Prozesssteuerung/
