@@ -409,11 +409,17 @@ map <F4> :sp ~/cmd_linux.sql<CR>
 " nmap <F7> <C-w>T
 nmap <F8> :NERDTreeTabsToggle<CR>
 " nmap <leader><F8> :TagbarToggle<CR>
-" map F9 to start Python script / leader-F9 to get output in window
-nnoremap <F9> :w<cr>:exec '!python3' shellescape(@%, 1)<cr>
-vnoremap <F9> :w<cr>:exec '!python3' shellescape(@%, 1)<cr>
-nnoremap <silent> <leader><F9> :call SaveAndExecutePythonBuffer()<CR>
-vnoremap <silent> <leader><F9> :<C-u>call SaveAndExecutePythonBuffer()<CR>
+
+" map F9 to start script based on shebang, <leader>-F9 to ouput in buffer
+nnoremap <F9> :call ExecuteWithShebang()<CR>
+vnoremap <F9> :<C-u>call ExecuteWithShebang()<CR>
+nnoremap <silent> <leader><F9> :call ExecuteWithShebangBuffer()<CR>
+vnoremap <silent> <leader><F9> :<C-u>call ExecuteWithShebangBuffer()<CR>
+" nnoremap <F9> :w<cr>:exec '!python3' shellescape(@%, 1)<cr>
+" vnoremap <F9> :w<cr>:exec '!python3' shellescape(@%, 1)<cr>
+" nnoremap <silent> <leader><F9> :call SaveAndExecutePythonBuffer()<CR>
+" vnoremap <silent> <leader><F9> :<C-u>call SaveAndExecutePythonBuffer()<CR>
+
 " map F10 to execute current line in shell!
 " leader-F10 -> run in terminal mode (return result to new buffer)
 " visual mode (can select multiple lines) - run in terminal mode
@@ -421,12 +427,14 @@ nnoremap <F10> :exec '!'.getline('.')
 nnoremap <leader><F10> :w<cr>v :terminal bash<cr>
 vnoremap <F10> <ESC>:w<cr>gv :terminal bash<cr>
 vnoremap <leader><F10> <ESC>:w<cr>gv :terminal bash<cr>
-" map F11 to run complete script in bash
-" leader-F11 -> run in termainl mode (return result to new buffer)
-nnoremap <F11> :w<cr>:exec '!bash' shellescape(@%, 1)<cr>
-nnoremap <leader><F11> :w<cr>ggVG :terminal bash<cr>
-vnoremap <F11> <ESC>:w<cr>:exec '!bash' shellescape(@%, 1)<cr>
-vnoremap <leader><F11> <ESC>:w<cr>ggVG :terminal bash<cr>
+
+" map F11 to run based on shebang in terminal mode
+nnoremap <F11> :call ExecuteWithShebangTerminal()<CR>
+vnoremap <F11> :<C-u>call ExecuteWithShebangTerminal()<CR>
+" nnoremap <F11> :w<cr>:exec '!bash' shellescape(@%, 1)<cr>
+" nnoremap <leader><F11> :w<cr>ggVG :terminal bash<cr>
+" vnoremap <F11> <ESC>:w<cr>:exec '!bash' shellescape(@%, 1)<cr>
+" vnoremap <leader><F11> <ESC>:w<cr>ggVG :terminal bash<cr>
 
 map <F12> :q<CR>
 map <leader><F12> :qa<CR>
@@ -582,6 +590,7 @@ function! ExecuteWithShebangTerminal()
 
         " Execute the whole buffer using the interpreter in a terminal
         execute 'term ' l:interpreter ' %'
+
     else
         echo "No shebang found on the first line."
     endif
@@ -659,42 +668,42 @@ augroup TerminalLines
     autocmd TerminalWinOpen * :set nonumber norelativenumber
 augroup END
 
-" Legacy Python function to buffer -> replaced with new ExecuteShebangBuffer function -> depreciate
-function! SaveAndExecutePythonBuffer()
-    " save and reload current file
-    silent execute "update | edit"
-    " get file path of current file
-    let s:current_buffer_file_path = expand("%")
-    let s:output_buffer_name = "Python"
-    let s:output_buffer_filetype = "output"
-    " reuse existing buffer window if it exists otherwise create a new one
-    if !exists("s:buf_nr") || !bufexists(s:buf_nr)
-        silent execute 'botright new ' . s:output_buffer_name
-        let s:buf_nr = bufnr('%')
-    elseif bufwinnr(s:buf_nr) == -1
-        silent execute 'botright new'
-        silent execute s:buf_nr . 'buffer'
-    elseif bufwinnr(s:buf_nr) != bufwinnr('%')
-        silent execute bufwinnr(s:buf_nr) . 'wincmd w'
-    endif
-    silent execute "setlocal filetype=" . s:output_buffer_filetype
-    setlocal bufhidden=delete
-    setlocal buftype=nofile
-    setlocal noswapfile
-    setlocal nobuflisted
-    setlocal winfixheight
-    " setlocal cursorline " make it easy to distinguish
-    " setlocal nonumber
-    setlocal number
-    setlocal norelativenumber
-    setlocal showbreak=""
-    " clear the buffer
-    setlocal noreadonly
-    setlocal modifiable
-    %delete _
-    " add the console output
-    silent execute ".!python3 " . shellescape(s:current_buffer_file_path, 1)
-endfunction
+" " Legacy Python function to buffer -> replaced with new ExecuteShebangBuffer function -> depreciate
+" function! SaveAndExecutePythonBuffer()
+"     " save and reload current file
+"     silent execute "update | edit"
+"     " get file path of current file
+"     let s:current_buffer_file_path = expand("%")
+"     let s:output_buffer_name = "Python"
+"     let s:output_buffer_filetype = "output"
+"     " reuse existing buffer window if it exists otherwise create a new one
+"     if !exists("s:buf_nr") || !bufexists(s:buf_nr)
+"         silent execute 'botright new ' . s:output_buffer_name
+"         let s:buf_nr = bufnr('%')
+"     elseif bufwinnr(s:buf_nr) == -1
+"         silent execute 'botright new'
+"         silent execute s:buf_nr . 'buffer'
+"     elseif bufwinnr(s:buf_nr) != bufwinnr('%')
+"         silent execute bufwinnr(s:buf_nr) . 'wincmd w'
+"     endif
+"     silent execute "setlocal filetype=" . s:output_buffer_filetype
+"     setlocal bufhidden=delete
+"     setlocal buftype=nofile
+"     setlocal noswapfile
+"     setlocal nobuflisted
+"     setlocal winfixheight
+"     " setlocal cursorline " make it easy to distinguish
+"     " setlocal nonumber
+"     setlocal number
+"     setlocal norelativenumber
+"     setlocal showbreak=""
+"     " clear the buffer
+"     setlocal noreadonly
+"     setlocal modifiable
+"     %delete _
+"     " add the console output
+"     silent execute ".!python3 " . shellescape(s:current_buffer_file_path, 1)
+" endfunction
 
 " ===============================================================================
 " vim-dadbod functions -> execute query with ctrl-Q -> automatic limit applied
