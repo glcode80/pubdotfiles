@@ -411,8 +411,8 @@ nmap <F8> :NERDTreeTabsToggle<CR>
 " nmap <leader><F8> :TagbarToggle<CR>
 
 " map F9 to start script based on shebang, <leader>-F9 to ouput in buffer
-nnoremap <F9> :call ExecuteWithShebang()<CR>
-vnoremap <F9> :<C-u>call ExecuteWithShebang()<CR>
+nnoremap <silent> <F9> :call ExecuteWithShebang()<CR>
+vnoremap <silent> <F9> :<C-u>call ExecuteWithShebang()<CR>
 nnoremap <silent> <leader><F9> :call ExecuteWithShebangBuffer()<CR>
 vnoremap <silent> <leader><F9> :<C-u>call ExecuteWithShebangBuffer()<CR>
 " nnoremap <F9> :w<cr>:exec '!python3' shellescape(@%, 1)<cr>
@@ -423,14 +423,14 @@ vnoremap <silent> <leader><F9> :<C-u>call ExecuteWithShebangBuffer()<CR>
 " map F10 to execute current line in shell!
 " leader-F10 -> run in terminal mode (return result to new buffer)
 " visual mode (can select multiple lines) - run in terminal mode
-nnoremap <F10> :exec '!'.getline('.')
-nnoremap <leader><F10> :w<cr>v :terminal bash<cr>
-vnoremap <F10> <ESC>:w<cr>gv :terminal bash<cr>
-vnoremap <leader><F10> <ESC>:w<cr>gv :terminal bash<cr>
+nnoremap <silent> <F10> :exec '!'.getline('.')<cr>
+nnoremap <silent> <leader><F10> :w<cr>v :terminal bash<cr>
+vnoremap <silent> <F10> <ESC>:w<cr>gv :terminal bash<cr>
+vnoremap <silent> <leader><F10> <ESC>:w<cr>gv :terminal bash<cr>
 
 " map F11 to run based on shebang in terminal mode
-nnoremap <F11> :call ExecuteWithShebangTerminal()<CR>
-vnoremap <F11> :<C-u>call ExecuteWithShebangTerminal()<CR>
+nnoremap <silent> <F11> :call ExecuteWithShebangTerminal()<CR>
+vnoremap <silent> <F11> :<C-u>call ExecuteWithShebangTerminal()<CR>
 " nnoremap <F11> :w<cr>:exec '!bash' shellescape(@%, 1)<cr>
 " nnoremap <leader><F11> :w<cr>ggVG :terminal bash<cr>
 " vnoremap <F11> <ESC>:w<cr>:exec '!bash' shellescape(@%, 1)<cr>
