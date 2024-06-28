@@ -155,6 +155,9 @@ ctrl-a ls = list all
 ctrl-a 0-9 = select
 tmux a / attach = go back to session
 
+Pasting with mouse (is no right-click)
+-> <shift>-<right-click>
+
 *** Prozesssteuerung -> https://wiki.ubuntuusers.de/Shell/Prozesssteuerung/
 ctrl-z = send job to background and stop it
 bg %x = continue process runinng in background
