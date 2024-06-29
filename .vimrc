@@ -412,10 +412,10 @@ nmap <F8> :NERDTreeTabsToggle<CR>
 
 " map F9 to start script based on shebang, <leader>-F9 to ouput in terminal
 " (default: new buffer)
-nnoremap <silent> <F9> :call ExecuteWithShebangBuffer()<CR>
-vnoremap <silent> <F9> :<C-u>call ExecuteWithShebangBuffer()<CR>
-nnoremap <silent> <leader><F9> :call ExecuteWithShebang()<CR>
-vnoremap <silent> <leader><F9> :<C-u>call ExecuteWithShebang()<CR>
+nnoremap <silent> <F9> :call ExecuteWithShebang()<CR>
+vnoremap <silent> <F9> :<C-u>call ExecuteWithShebang()<CR>
+nnoremap <silent> <leader><F9> :call ExecuteWithShebangBuffer()<CR>
+vnoremap <silent> <leader><F9> :<C-u>call ExecuteWithShebangBuffer()<CR>
 " nnoremap <F9> :w<cr>:exec '!python3' shellescape(@%, 1)<cr>
 " vnoremap <F9> :w<cr>:exec '!python3' shellescape(@%, 1)<cr>
 " nnoremap <silent> <leader><F9> :call SaveAndExecutePythonBuffer()<CR>
