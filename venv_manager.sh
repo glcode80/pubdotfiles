@@ -55,6 +55,7 @@ activate_venv() {
         fi
     else
         echo "Virtual environment does not exist at $venv"
+        usage
     fi
 }
 
@@ -104,6 +105,12 @@ case "$1" in
         ;;
     install)
         install_requirements
+        ;;
+    --help)
+        usage
+        ;;
+    help)
+        usage
         ;;
     "")
         activate_venv
